@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MADE-UP TEST DATA. Names are placeholders; IBANs and creditor ID are public documentation examples. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.004.001.09">
+  <PmtRtr>
+    <GrpHdr>
+      <MsgId>MSG-TEST-0007</MsgId>
+      <CreDtTm>2026-10-06T07:30:00.000+02:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <TtlRtrdIntrBkSttlmAmt Ccy="EUR">49.99</TtlRtrdIntrBkSttlmAmt>
+      <IntrBkSttlmDt>2026-10-06</IntrBkSttlmDt>
+      <SttlmInf><SttlmMtd>CLRG</SttlmMtd></SttlmInf>
+    </GrpHdr>
+    <TxInf>
+      <RtrId>RTR-TEST-0007</RtrId>
+      <OrgnlGrpInf>
+        <OrgnlMsgId>ORIG-TEST-0007</OrgnlMsgId>
+        <OrgnlMsgNmId>pacs.003.001.08</OrgnlMsgNmId>
+      </OrgnlGrpInf>
+      <OrgnlInstrId>INSTR-TEST-0007</OrgnlInstrId>
+      <OrgnlEndToEndId>E2E-TEST-0007</OrgnlEndToEndId>
+      <OrgnlTxId>TX-TEST-0007</OrgnlTxId>
+      <OrgnlIntrBkSttlmAmt Ccy="EUR">49.99</OrgnlIntrBkSttlmAmt>
+      <RtrdIntrBkSttlmAmt Ccy="EUR">49.99</RtrdIntrBkSttlmAmt>
+      <IntrBkSttlmDt>2026-10-06</IntrBkSttlmDt>
+      <RtrRsnInf>
+        <Orgtr><Id><OrgId><AnyBIC>TESTESMMXXX</AnyBIC></OrgId></Id></Orgtr>
+        <Rsn><Cd>AM04</Cd></Rsn>
+      </RtrRsnInf>
+      <OrgnlTxRef>
+        <ReqdColltnDt>2026-10-02</ReqdColltnDt>
+        <CdtrSchmeId><Id><PrvtId><Othr><Id>DE98ZZZ09999999999</Id><SchmeNm><Prtry>SEPA</Prtry></SchmeNm></Othr></PrvtId></Id></CdtrSchmeId>
+        <PmtTpInf>
+          <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+          <LclInstrm><Cd>CORE</Cd></LclInstrm>
+          <SeqTp>RCUR</SeqTp>
+        </PmtTpInf>
+        <MndtRltdInf><MndtId>MANDATE-TEST-0007</MndtId><DtOfSgntr>2025-01-15</DtOfSgntr></MndtRltdInf>
+        <Dbtr><Pty><Nm>Juan Perez</Nm></Pty></Dbtr>
+        <DbtrAcct><Id><IBAN>ES9121000418450200051332</IBAN></Id></DbtrAcct>
+        <DbtrAgt><FinInstnId><BICFI>TESTESMMXXX</BICFI></FinInstnId></DbtrAgt>
+        <CdtrAgt><FinInstnId><BICFI>TESTDEFFXXX</BICFI></FinInstnId></CdtrAgt>
+        <Cdtr><Pty><Nm>Example Fitness GmbH</Nm></Pty></Cdtr>
+        <CdtrAcct><Id><IBAN>DE89370400440532013000</IBAN></Id></CdtrAcct>
+      </OrgnlTxRef>
+    </TxInf>
+  </PmtRtr>
+</Document>

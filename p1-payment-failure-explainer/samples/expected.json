@@ -1,0 +1,61 @@
+{
+  "description": "What each sample should parse to. 'route' is null when the code is not in our table (escalate). 'pii' lists strings that must never appear after masking.",
+  "samples": [
+    {
+      "file": "sct_inst_ac04_closed.xml",
+      "message_type": "PACS_002", "rail": "SEPA_INSTANT", "status": "RJCT", "reason_code": "AC04",
+      "amount": "250.00", "currency": "EUR", "end_to_end_id": "E2E-TEST-0001",
+      "route": "FIRST_LINE",
+      "pii": ["Erika Mustermann", "DE89370400440532013000", "Jan Jansen", "NL91ABNA0417164300"]
+    },
+    {
+      "file": "sct_inst_ab05_timeout.xml",
+      "message_type": "PACS_002", "rail": "SEPA_INSTANT", "status": "RJCT", "reason_code": "AB05",
+      "amount": "1200.50", "currency": "EUR", "end_to_end_id": "E2E-TEST-0002",
+      "route": "DEVELOPER",
+      "pii": ["Max Mustermann", "DE75512108001245126199", "Jean Dupont", "FR1420041010050500013M02606"]
+    },
+    {
+      "file": "sct_inst_rr04_regulatory.xml",
+      "message_type": "PACS_002", "rail": "SEPA_INSTANT", "status": "RJCT", "reason_code": "RR04",
+      "amount": "9800.00", "currency": "EUR", "end_to_end_id": "E2E-TEST-0003",
+      "route": "COMPLIANCE",
+      "pii": ["Erika Mustermann", "DE89370400440532013000", "Mario Rossi", "IT60X0542811101000000123456"]
+    },
+    {
+      "file": "sct_inst_cnor_unknown.xml",
+      "message_type": "PACS_002", "rail": "SEPA_INSTANT", "status": "RJCT", "reason_code": "CNOR",
+      "amount": "75.20", "currency": "EUR", "end_to_end_id": "E2E-TEST-0004",
+      "route": null,
+      "pii": ["Max Mustermann", "DE75512108001245126199", "Jane Roe", "BE68539007547034"]
+    },
+    {
+      "file": "rtp_ac06_blocked.xml",
+      "message_type": "PACS_002", "rail": "RTP", "status": "RJCT", "reason_code": "AC06",
+      "amount": "480.00", "currency": "USD", "end_to_end_id": "E2E-TEST-0005",
+      "route": "FIRST_LINE",
+      "pii": ["John Q. Public", "123456789012", "Jane Doe", "000987654321"]
+    },
+    {
+      "file": "rtp_am04_prefunding.xml",
+      "message_type": "PACS_002", "rail": "RTP", "status": "RJCT", "reason_code": "AM04",
+      "amount": "25000.00", "currency": "USD", "end_to_end_id": "E2E-TEST-0006",
+      "route": "TREASURY",
+      "pii": ["Richard Roe", "555500001111", "Jane Doe", "000987654321"]
+    },
+    {
+      "file": "sdd_am04_insufficient.xml",
+      "message_type": "PACS_004", "rail": "SEPA_DD", "status": "RETURNED", "reason_code": "AM04",
+      "amount": "49.99", "currency": "EUR", "end_to_end_id": "E2E-TEST-0007",
+      "route": "FIRST_LINE",
+      "pii": ["Juan Perez", "ES9121000418450200051332", "Example Fitness GmbH", "DE89370400440532013000"]
+    },
+    {
+      "file": "sdd_md01_no_mandate.xml",
+      "message_type": "PACS_004", "rail": "SEPA_DD", "status": "RETURNED", "reason_code": "MD01",
+      "amount": "120.00", "currency": "EUR", "end_to_end_id": "E2E-TEST-0008",
+      "route": "FIRST_LINE",
+      "pii": ["Jane Roe", "BE68539007547034", "Example Fitness GmbH", "DE89370400440532013000"]
+    }
+  ]
+}

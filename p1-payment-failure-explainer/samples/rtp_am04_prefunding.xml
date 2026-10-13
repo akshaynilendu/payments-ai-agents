@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MADE-UP TEST DATA. Names are placeholders; account and routing numbers are invented.
+     Simplified RTP-style message: not validated against TCH's current specification.
+     On RTP, AM04 comes from the network: the sending bank's prefunded balance is too low. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>MSG-TEST-0006</MsgId>
+      <CreDtTm>2026-10-04T16:58:01.004-04:00</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>ORIG-TEST-0006</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <StsId>STS-TEST-0006</StsId>
+      <OrgnlInstrId>INSTR-TEST-0006</OrgnlInstrId>
+      <OrgnlEndToEndId>E2E-TEST-0006</OrgnlEndToEndId>
+      <OrgnlTxId>TX-TEST-0006</OrgnlTxId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn><Cd>AM04</Cd></Rsn>
+      </StsRsnInf>
+      <OrgnlTxRef>
+        <IntrBkSttlmAmt Ccy="USD">25000.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-10-04</IntrBkSttlmDt>
+        <SttlmInf>
+          <SttlmMtd>CLRG</SttlmMtd>
+          <ClrSys><Prtry>TCH</Prtry></ClrSys>
+        </SttlmInf>
+        <Dbtr><Pty><Nm>Richard Roe</Nm></Pty></Dbtr>
+        <DbtrAcct><Id><Othr><Id>555500001111</Id></Othr></Id></DbtrAcct>
+        <DbtrAgt><FinInstnId><ClrSysMmbId><MmbId>999999991</MmbId></ClrSysMmbId></FinInstnId></DbtrAgt>
+        <CdtrAgt><FinInstnId><ClrSysMmbId><MmbId>999999993</MmbId></ClrSysMmbId></FinInstnId></CdtrAgt>
+        <Cdtr><Pty><Nm>Jane Doe</Nm></Pty></Cdtr>
+        <CdtrAcct><Id><Othr><Id>000987654321</Id></Othr></Id></CdtrAcct>
+      </OrgnlTxRef>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>

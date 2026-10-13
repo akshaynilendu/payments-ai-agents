@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MADE-UP TEST DATA. Names are placeholders; IBANs are public documentation examples.
+     CNOR is a real SCT Inst reject code (EPC059-18) that is deliberately NOT in our table:
+     it tests the escalation path. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>MSG-TEST-0004</MsgId>
+      <CreDtTm>2026-10-03T08:20:41.902+02:00</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>ORIG-TEST-0004</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <StsId>STS-TEST-0004</StsId>
+      <OrgnlInstrId>INSTR-TEST-0004</OrgnlInstrId>
+      <OrgnlEndToEndId>E2E-TEST-0004</OrgnlEndToEndId>
+      <OrgnlTxId>TX-TEST-0004</OrgnlTxId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Rsn><Cd>CNOR</Cd></Rsn>
+      </StsRsnInf>
+      <OrgnlTxRef>
+        <IntrBkSttlmAmt Ccy="EUR">75.20</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-10-03</IntrBkSttlmDt>
+        <PmtTpInf>
+          <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+          <LclInstrm><Cd>INST</Cd></LclInstrm>
+        </PmtTpInf>
+        <Dbtr><Pty><Nm>Max Mustermann</Nm></Pty></Dbtr>
+        <DbtrAcct><Id><IBAN>DE75512108001245126199</IBAN></Id></DbtrAcct>
+        <DbtrAgt><FinInstnId><BICFI>TESTDEFFXXX</BICFI></FinInstnId></DbtrAgt>
+        <CdtrAgt><FinInstnId><BICFI>TESTBEBBXXX</BICFI></FinInstnId></CdtrAgt>
+        <Cdtr><Pty><Nm>Jane Roe</Nm></Pty></Cdtr>
+        <CdtrAcct><Id><IBAN>BE68539007547034</IBAN></Id></CdtrAcct>
+      </OrgnlTxRef>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>

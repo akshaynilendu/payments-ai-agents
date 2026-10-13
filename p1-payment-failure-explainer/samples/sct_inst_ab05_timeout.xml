@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MADE-UP TEST DATA. Names are placeholders; IBANs are public documentation examples.
+     The IBAN inside AddtlInf is deliberate: it tests free-text scrubbing. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>MSG-TEST-0002</MsgId>
+      <CreDtTm>2026-10-01T11:42:10.007+02:00</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>ORIG-TEST-0002</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <StsId>STS-TEST-0002</StsId>
+      <OrgnlInstrId>INSTR-TEST-0002</OrgnlInstrId>
+      <OrgnlEndToEndId>E2E-TEST-0002</OrgnlEndToEndId>
+      <OrgnlTxId>TX-TEST-0002</OrgnlTxId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Orgtr><Id><OrgId><AnyBIC>TESTFRPPXXX</AnyBIC></OrgId></Id></Orgtr>
+        <Rsn><Cd>AB05</Cd></Rsn>
+        <AddtlInf>No response from beneficiary PSP for account FR1420041010050500013M02606</AddtlInf>
+      </StsRsnInf>
+      <OrgnlTxRef>
+        <IntrBkSttlmAmt Ccy="EUR">1200.50</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-10-01</IntrBkSttlmDt>
+        <PmtTpInf>
+          <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+          <LclInstrm><Cd>INST</Cd></LclInstrm>
+        </PmtTpInf>
+        <Dbtr><Pty><Nm>Max Mustermann</Nm></Pty></Dbtr>
+        <DbtrAcct><Id><IBAN>DE75512108001245126199</IBAN></Id></DbtrAcct>
+        <DbtrAgt><FinInstnId><BICFI>TESTDEFFXXX</BICFI></FinInstnId></DbtrAgt>
+        <CdtrAgt><FinInstnId><BICFI>TESTFRPPXXX</BICFI></FinInstnId></CdtrAgt>
+        <Cdtr><Pty><Nm>Jean Dupont</Nm></Pty></Cdtr>
+        <CdtrAcct><Id><IBAN>FR1420041010050500013M02606</IBAN></Id></CdtrAcct>
+      </OrgnlTxRef>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>

@@ -4,3 +4,4 @@ D2 The AI never: (a) decides an action (retry, refund, block); it only recommend
 D3 When the check fails: retry once, then escalate. A small model may phrase things badly in a meaningful share of cases, and one retry saves a human intervention.
 D4 The bar vs the baseline (fixed message per code): accuracy no worse than the baseline; zero invented facts; a specific next step in at least 75% of cases; cost at most $0.10 per case (target well under $0.01); at most 10 seconds per case.
 D5 Model: start with the small model and let the evals decide. Upgrade only if the tests show the small model makes mistakes the large one doesn't.
+D6 Privacy first: in free text we mask anything that looks like an account number, even at the cost of hiding harmless numbers like dates.

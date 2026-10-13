@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MADE-UP TEST DATA. Names are placeholders; IBANs are public documentation examples. -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>MSG-TEST-0003</MsgId>
+      <CreDtTm>2026-10-02T14:03:55.310+02:00</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>ORIG-TEST-0003</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <StsId>STS-TEST-0003</StsId>
+      <OrgnlInstrId>INSTR-TEST-0003</OrgnlInstrId>
+      <OrgnlEndToEndId>E2E-TEST-0003</OrgnlEndToEndId>
+      <OrgnlTxId>TX-TEST-0003</OrgnlTxId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Orgtr><Id><OrgId><AnyBIC>TESTITMMXXX</AnyBIC></OrgId></Id></Orgtr>
+        <Rsn><Cd>RR04</Cd></Rsn>
+      </StsRsnInf>
+      <OrgnlTxRef>
+        <IntrBkSttlmAmt Ccy="EUR">9800.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-10-02</IntrBkSttlmDt>
+        <PmtTpInf>
+          <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+          <LclInstrm><Cd>INST</Cd></LclInstrm>
+        </PmtTpInf>
+        <Dbtr><Pty><Nm>Erika Mustermann</Nm></Pty></Dbtr>
+        <DbtrAcct><Id><IBAN>DE89370400440532013000</IBAN></Id></DbtrAcct>
+        <DbtrAgt><FinInstnId><BICFI>TESTDEFFXXX</BICFI></FinInstnId></DbtrAgt>
+        <CdtrAgt><FinInstnId><BICFI>TESTITMMXXX</BICFI></FinInstnId></CdtrAgt>
+        <Cdtr><Pty><Nm>Mario Rossi</Nm></Pty></Cdtr>
+        <CdtrAcct><Id><IBAN>IT60X0542811101000000123456</IBAN></Id></CdtrAcct>
+      </OrgnlTxRef>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>
