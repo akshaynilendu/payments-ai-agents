@@ -39,12 +39,34 @@ class Route(StrEnum):
     QC = "QC"
 
 
+class SourceType(StrEnum):
+    SCHEME_RULE = "scheme_rule"
+    # Our own operational guidance: must be labelled as team guidance, never as a scheme rule (D7).
+    TEAM_RUNBOOK = "team_runbook"
+
+
+@dataclass(frozen=True)
+class TeamRunbook:
+    """Our own guidance for a code, kept apart from scheme facts so it can be reviewed and signed off as one block."""
+    owner: str
+    needs_review: bool
+    rails: tuple[Rail, ...]
+    route_by_rail: Mapping[Rail, Route]
+    rail_notes: Mapping[Rail, str]
+    what_to_do_by_rail: Mapping[Rail, str]
+    evidence_source_ids: tuple[str, ...]
+    note: str
+
+
 @dataclass(frozen=True)
 class ReasonCode:
     code: str
     name: str
     meaning: str
+    # rails, route_by_rail and rail_notes merge scheme and team facts, so callers see one table;
+    # scheme_rails, team_runbook and rail_source() say where each fact comes from.
     rails: tuple[Rail, ...]
+    scheme_rails: tuple[Rail, ...]
     category: Category
     default_route: Route
     route_by_rail: Mapping[Rail, Route]
@@ -56,31 +78,90 @@ class ReasonCode:
     source_ids: tuple[str, ...]
     needs_review: bool
     review_note: str
+    team_runbook: TeamRunbook | None
 
     def route_for(self, rail: Rail) -> Route:
-        # Some codes mean different things per rail (e.g. AM04 on RTP is a bank liquidity issue).
+        # Some codes are handled differently per rail (e.g. AM04 on RTP goes to Treasury by team decision).
         return self.route_by_rail.get(rail, self.default_route)
+
+    def what_to_do_for(self, rail: Rail) -> str:
+        if self.team_runbook is not None and rail in self.team_runbook.what_to_do_by_rail:
+            return self.team_runbook.what_to_do_by_rail[rail]
+        return self.baseline_what_to_do
+
+    def rail_source(self, rail: Rail) -> SourceType | None:
+        if rail in self.scheme_rails:
+            return SourceType.SCHEME_RULE
+        if self.team_runbook is not None and rail in self.team_runbook.rails:
+            return SourceType.TEAM_RUNBOOK
+        return None
+
+
+def _parse_rails(values: list[str]) -> tuple[Rail, ...]:
+    rails = tuple(Rail(r) for r in values)
+    if Rail.UNKNOWN in rails:
+        raise ValueError("UNKNOWN is not a valid rail in the code table")
+    return rails
+
+
+def _keys_within(mapping: dict, rails: tuple[Rail, ...], what: str) -> None:
+    # An override for a rail the code isn't confirmed on would be a fact with no backing.
+    extra = {Rail(k) for k in mapping} - set(rails)
+    if extra:
+        raise ValueError(f"{what} has rails {sorted(extra)} not in its own rails")
+
+
+def _parse_team_runbook(raw: dict, scheme_rails: tuple[Rail, ...]) -> TeamRunbook:
+    owner = (raw.get("owner") or "").strip()
+    note = raw.get("note", "")
+    rails = _parse_rails(raw["rails"])
+    if not owner:
+        raise ValueError("team_runbook needs an owner")
+    if raw["needs_review"] and not note.strip():
+        raise ValueError("team_runbook needs_review is true but note is empty")
+    # A rail is backed either by a scheme source or by the team, never both, so provenance stays unambiguous.
+    overlap = set(rails) & set(scheme_rails)
+    if overlap:
+        raise ValueError(f"team_runbook rails {sorted(overlap)} are already scheme rails")
+    for field in ("route_by_rail", "rail_notes", "what_to_do_by_rail"):
+        _keys_within(raw.get(field, {}), rails, f"team_runbook.{field}")
+    # MappingProxyType makes the dicts read-only, so a frozen object really can't change.
+    return TeamRunbook(
+        owner=owner,
+        needs_review=raw["needs_review"],
+        rails=rails,
+        route_by_rail=MappingProxyType({Rail(k): Route(v) for k, v in raw.get("route_by_rail", {}).items()}),
+        rail_notes=MappingProxyType({Rail(k): v for k, v in raw.get("rail_notes", {}).items()}),
+        what_to_do_by_rail=MappingProxyType({Rail(k): v for k, v in raw.get("what_to_do_by_rail", {}).items()}),
+        evidence_source_ids=tuple(raw.get("evidence_source_ids", [])),
+        note=note,
+    )
 
 
 def _parse_entry(raw: dict) -> ReasonCode:
-    code = raw["code"]
-    rails = tuple(Rail(r) for r in raw["rails"])
-    if Rail.UNKNOWN in rails:
-        raise ValueError(f"{code}: UNKNOWN is not a valid rail in the code table")
-    # MappingProxyType makes the dicts read-only, so a frozen ReasonCode really can't change.
+    scheme_rails = _parse_rails(raw["rails"])
+    _keys_within(raw.get("route_by_rail", {}), scheme_rails, "route_by_rail")
+    _keys_within(raw.get("rail_notes", {}), scheme_rails, "rail_notes")
+    team = _parse_team_runbook(raw["team_runbook"], scheme_rails) if "team_runbook" in raw else None
+
+    route_by_rail = {Rail(k): Route(v) for k, v in raw.get("route_by_rail", {}).items()}
+    rail_notes = {Rail(k): v for k, v in raw.get("rail_notes", {}).items()}
+    rails = scheme_rails
+    if team is not None:
+        rails = scheme_rails + team.rails
+        route_by_rail |= team.route_by_rail
+        rail_notes |= team.rail_notes
+
     return ReasonCode(
-        code=code,
+        code=raw["code"],
         name=raw["name"],
         meaning=raw["meaning"],
         rails=rails,
+        scheme_rails=scheme_rails,
         category=Category(raw["category"]),
         default_route=Route(raw["default_route"]),
-        route_by_rail=MappingProxyType(
-            {Rail(k): Route(v) for k, v in raw.get("route_by_rail", {}).items()}
-        ),
-        rail_notes=MappingProxyType(
-            {Rail(k): v for k, v in raw.get("rail_notes", {}).items()}
-        ),
+        route_by_rail=MappingProxyType(route_by_rail),
+        rail_notes=MappingProxyType(rail_notes),
         baseline_what_happened=raw["baseline_what_happened"],
         baseline_what_to_do=raw["baseline_what_to_do"],
         baseline_customer_message=raw["baseline_customer_message"],
@@ -88,6 +169,7 @@ def _parse_entry(raw: dict) -> ReasonCode:
         source_ids=tuple(raw["source_ids"]),
         needs_review=raw["needs_review"],
         review_note=raw["review_note"],
+        team_runbook=team,
     )
 
 

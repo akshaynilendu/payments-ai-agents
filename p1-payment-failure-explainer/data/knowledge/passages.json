@@ -325,7 +325,7 @@
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of AG01; route_by_rail from reason_codes.json",
       "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. The DEVELOPER route for RTP AG01 was set in piece 1 using the gated TCH spec; that route needs re-confirming as a team decision."
+      "review_note": "Team runbook awaiting Akshay's sign-off. The DEVELOPER route for RTP AG01 is a team decision recorded in reason_codes.json team_runbook, not a scheme rule."
     },
     {
       "id": "KB-RTP-AM04-01",
@@ -338,7 +338,7 @@
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of AM04; route_by_rail from reason_codes.json",
       "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. The TREASURY route is Akshay's decision; the rail note behind it in reason_codes.json came from the gated TCH spec and needs re-sourcing or removal."
+      "review_note": "Team runbook awaiting Akshay's sign-off. The TREASURY route for RTP AM04 is a team decision recorded in reason_codes.json team_runbook. Supporting evidence that RTP settles against prefunded balances: FED_RTP_ORDER in reason_codes.json; no open source links AM04 to a prefunding shortfall."
     },
     {
       "id": "KB-RTP-DS24-01",

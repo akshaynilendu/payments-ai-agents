@@ -1,8 +1,8 @@
 {
   "description": "ISO 20022 reason codes for v1 rails (RTP, SEPA Instant, SEPA Direct Debit). Single source of truth for the explainer and the fixed-message baseline for evals.",
   "perspective": "Our bank is the sending side: the originator's bank for credit transfers (RTP, SEPA Instant) and the creditor's bank for direct debits (SEPA DD). 'Customer' means our customer who sent or collected the payment.",
-  "rails_meaning": "A rail is listed only when a source below confirms the code in a reject (pacs.002) or return/refund (pacs.004) on that rail. An empty list means the code exists in ISO but no rail use was confirmed.",
-  "retrieved_on": "2026-10-13",
+  "rails_meaning": "'rails' lists only rails where a public scheme source below confirms the code in a reject (pacs.002) or return/refund (pacs.004). Rails asserted by our own operational guidance live in 'team_runbook.rails' instead. An empty 'rails' with no team_runbook means the code exists in ISO but no rail use was confirmed.",
+  "retrieved_on": "2026-10-15",
   "routes": {
     "FIRST_LINE": "Platform support resolves it with the customer.",
     "DEVELOPER": "Technical or system issue.",
@@ -25,10 +25,10 @@
       "title": "EPC173-14 v8.0 Guidance on Reason Codes for SDD R-transactions (28 Nov 2024)",
       "url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf"
     },
-    "TCH_RTP": {
-      "title": "The Clearing House RTP Customer Documentation: Message Status Report v2.2 (April 2018), Appendix 3.1",
-      "url": "https://www.theclearinghouse.org/payment-systems/rtp/-/media/a211f4af08cb4a298e2909f71a2563e3.ashx",
-      "note": "Newest public RTP code list found is from 2018; the current spec may differ. Treat every RTP pairing as 'confirmed as of 2018'."
+    "FED_RTP_ORDER": {
+      "title": "Federal Reserve Board: Order Concerning the Payment of Interest on RTP Joint Account Balances (2023)",
+      "url": "https://federalreserve.gov/paymentsystems/files/interest_on_rtp_joint_balances.pdf",
+      "note": "Open public document. Supporting evidence only: it states that RTP ledger positions are backed by funds in a joint 'RTP Prefunded Balance Account' at the New York Fed, operated by TCH. It does not say which reason code signals a prefunding problem."
     }
   },
   "codes": [
@@ -45,93 +45,138 @@
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "Not in the RTP list; RTP uses AC03 (creditor account) and AC02 (debtor account) instead."
+      "review_note": ""
     },
     {
       "code": "AC03",
       "name": "Invalid Creditor Account Number",
-      "meaning": "The receiving customer's account number is invalid or missing.",
-      "rails": ["RTP"],
+      "meaning": "The recipient's account number is invalid or missing.",
+      "rails": [],
       "category": "account",
       "default_route": "FIRST_LINE",
       "baseline_what_happened": "The receiving bank rejected the payment because the recipient's account number is invalid or missing.",
       "baseline_what_to_do": "Ask the customer to confirm the recipient's account number directly with the recipient before sending again.",
       "baseline_customer_message": "Your payment could not be completed because the recipient's account details were not recognised. Please check the account number with the recipient before trying again.",
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
-      "source_ids": ["ISO", "TCH_RTP"],
+      "source_ids": ["ISO"],
       "needs_review": false,
-      "review_note": "Added beyond the original 12 so RTP has an invalid-account code. In SEPA Instant, EPC lists AC03 only for a Request for Recall by the Originator, not for rejects, so SEPA_INSTANT is not listed."
+      "review_note": "Added beyond the original 12. In SEPA Instant, EPC lists AC03 only for a Request for Recall by the Originator, not for rejects, so SEPA_INSTANT is not listed.",
+      "team_runbook": {
+        "owner": "Akshay",
+        "needs_review": true,
+        "rails": ["RTP"],
+        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+      }
     },
     {
       "code": "AC04",
       "name": "Closed Account Number",
       "meaning": "The other party's account has been closed.",
-      "rails": ["RTP", "SEPA_INSTANT", "SEPA_DD"],
+      "rails": ["SEPA_INSTANT", "SEPA_DD"],
       "category": "account",
       "default_route": "FIRST_LINE",
       "baseline_what_happened": "The other bank rejected or returned the payment because the other party's account is closed.",
       "baseline_what_to_do": "Ask the customer to get up-to-date account details from the other party.",
       "baseline_customer_message": "Your payment could not be completed because the other party's account is closed. Please contact them for their current account details.",
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
-      "source_ids": ["ISO", "TCH_RTP", "EPC_SCT_INST", "EPC_SDD"],
+      "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "Some SEPA countries forbid this code for data-protection reasons; their banks send MS03 instead."
+      "review_note": "Some SEPA countries forbid this code for data-protection reasons; their banks send MS03 instead.",
+      "team_runbook": {
+        "owner": "Akshay",
+        "needs_review": true,
+        "rails": ["RTP"],
+        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+      }
     },
     {
       "code": "AC06",
       "name": "Blocked Account",
       "meaning": "The other party's account is blocked for transactions.",
-      "rails": ["RTP", "SEPA_INSTANT", "SEPA_DD"],
+      "rails": ["SEPA_INSTANT", "SEPA_DD"],
       "category": "account",
       "default_route": "FIRST_LINE",
       "baseline_what_happened": "The other bank rejected or returned the payment because the other party's account is blocked.",
       "baseline_what_to_do": "Tell the customer the other party's account cannot receive or pay this transaction, and suggest they agree another account or payment method with the other party. Do not speculate about why it is blocked.",
       "baseline_customer_message": "Your payment could not be completed because the other party's account cannot accept it. Please contact them to agree another way to pay.",
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
-      "source_ids": ["ISO", "TCH_RTP", "EPC_SCT_INST", "EPC_SDD"],
+      "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "The block is the other bank's decision (e.g. court order or suspected misuse, per EPC), so our first line informs and does not investigate. Customer text deliberately gives no reason."
+      "review_note": "The block is the other bank's decision (e.g. court order or suspected misuse, per EPC), so our first line informs and does not investigate. Customer text deliberately gives no reason.",
+      "team_runbook": {
+        "owner": "Akshay",
+        "needs_review": true,
+        "rails": ["RTP"],
+        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+      }
     },
     {
       "code": "AG01",
       "name": "Transaction Forbidden",
-      "meaning": "This type of transaction is not allowed on the account (SEPA), or the bank is not authorised for this transaction type (RTP).",
-      "rails": ["RTP", "SEPA_INSTANT", "SEPA_DD"],
+      "meaning": "This type of transaction is not allowed on the account.",
+      "rails": ["SEPA_INSTANT", "SEPA_DD"],
       "rail_notes": {
-        "RTP": "When sent by TCH (the RTP network) it means a participant bank is not authorised to send or receive this transaction type: a setup issue, not the customer's account.",
         "SEPA_INSTANT": "The account cannot receive SCT Inst transactions.",
         "SEPA_DD": "The account does not allow direct debits for regulatory reasons (e.g. a savings account)."
       },
       "category": "regulatory",
       "default_route": "FIRST_LINE",
-      "route_by_rail": {"RTP": "DEVELOPER"},
-      "baseline_what_happened": "The payment was rejected because this type of transaction is not allowed for the account or bank involved.",
-      "baseline_what_to_do": "SEPA: ask the customer to agree a different account or payment method with the other party. RTP: check whether the rejection came from the network (participant not set up for this transaction type) and pass to the technical team if so.",
+      "baseline_what_happened": "The payment was rejected because this type of transaction is not allowed for the account involved.",
+      "baseline_what_to_do": "Ask the customer to agree a different account or payment method with the other party.",
       "baseline_customer_message": "Your payment could not be completed because this type of payment is not accepted for the account involved. Please agree another way to pay with the other party.",
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
-      "source_ids": ["ISO", "TCH_RTP", "EPC_SCT_INST", "EPC_SDD"],
+      "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "Meaning differs by rail, hence rail_notes and route_by_rail: the RTP network usage is a participant configuration problem, so it goes to DEVELOPER."
+      "review_note": "Meaning differs slightly between SEPA Instant and SEPA DD, hence rail_notes.",
+      "team_runbook": {
+        "owner": "Akshay",
+        "needs_review": true,
+        "rails": ["RTP"],
+        "route_by_rail": {
+          "RTP": "DEVELOPER"
+        },
+        "rail_notes": {
+          "RTP": "Team decision: on RTP we first check whether anything on our side (configuration or message content) caused the rejection, before involving the customer."
+        },
+        "what_to_do_by_rail": {
+          "RTP": "Pass to the developer team to check whether anything on our side caused the rejection. If not, ask the customer to agree another payment method with the other party."
+        },
+        "note": "Team runbook awaiting Akshay's sign-off. The DEVELOPER route on RTP is a team decision, not a scheme rule."
+      }
     },
     {
       "code": "AM04",
       "name": "Insufficient Funds",
-      "meaning": "There is not enough money to cover the payment (SEPA DD: in the debtor's account; RTP: in the sending bank's prefunded position).",
-      "rails": ["RTP", "SEPA_DD"],
+      "meaning": "There is not enough money available to cover the payment amount.",
+      "rails": ["SEPA_DD"],
       "rail_notes": {
-        "RTP": "Generated by TCH when the sending bank's net position would breach its prefunded balance. It is about the bank's liquidity, not the customer's balance.",
         "SEPA_DD": "The debtor's account did not have enough funds for the collection."
       },
       "category": "funds",
       "default_route": "FIRST_LINE",
-      "route_by_rail": {"RTP": "TREASURY"},
       "baseline_what_happened": "The payment failed because there were not enough funds to cover it.",
-      "baseline_what_to_do": "SEPA DD: tell the customer (the creditor) the debtor's account lacked funds, and suggest they contact the debtor before collecting again. RTP: this is our bank's prefunded position at the network, so pass to treasury; do not ask the customer to add funds.",
+      "baseline_what_to_do": "Tell the customer (the creditor) the debtor's account lacked funds, and suggest they contact the debtor before collecting again.",
       "baseline_customer_message": "Your payment could not be completed this time. Please contact us or the other party if you would like to arrange the payment again.",
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
-      "source_ids": ["ISO", "TCH_RTP", "EPC_SDD"],
+      "source_ids": ["ISO", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "On RTP it is a bank prefunding breach, so it goes to TREASURY; SEPA DD stays FIRST_LINE. In SCT Inst, EPC lists AM04 only as a negative answer to a recall, not a reject, so SEPA_INSTANT is not listed. Customer message is deliberately neutral because it must fit both meanings."
+      "review_note": "In SCT Inst, EPC lists AM04 only as a negative answer to a recall, not a reject, so SEPA_INSTANT is not listed. Customer message is deliberately neutral so it also fits the team's RTP handling.",
+      "team_runbook": {
+        "owner": "Akshay",
+        "needs_review": true,
+        "rails": ["RTP"],
+        "route_by_rail": {
+          "RTP": "TREASURY"
+        },
+        "rail_notes": {
+          "RTP": "Team decision: on RTP, AM04 goes to Treasury first, to check our bank's own funding position before the customer is told anything about funds."
+        },
+        "what_to_do_by_rail": {
+          "RTP": "Pass to Treasury to check our bank's funding position for RTP. Do not ask the customer to add funds unless Treasury confirms the cause was on the customer's side."
+        },
+        "evidence_source_ids": ["FED_RTP_ORDER"],
+        "note": "Team runbook awaiting Akshay's sign-off. The TREASURY route on RTP is a team decision. Supporting evidence: RTP settles against prefunded balances (FED_RTP_ORDER); no open source links AM04 to a prefunding shortfall."
+      }
     },
     {
       "code": "AM05",
@@ -146,7 +191,7 @@
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "Routed to DEVELOPER because EPC names technical or human error at the sender as the root cause. A sudden spike after a release suggests a QC case, but that depends on timing, not the code. RTP uses DUPL instead (not in this table)."
+      "review_note": "Routed to DEVELOPER because EPC names technical or human error at the sender as the root cause. A sudden spike after a release suggests a QC case, but that depends on timing, not the code."
     },
     {
       "code": "AB05",
@@ -161,22 +206,28 @@
       "iso_code_sets": ["ExternalStatusReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST"],
       "needs_review": false,
-      "review_note": "Routed to DEVELOPER because EPC names connection, processing or validation issues anywhere in the chain as the root cause. Not in the RTP list; RTP uses DS24 for system timeouts."
+      "review_note": "Routed to DEVELOPER because EPC names connection, processing or validation issues anywhere in the chain as the root cause."
     },
     {
       "code": "DS24",
       "name": "Waiting Time Expired Due To Incomplete Order",
-      "meaning": "The RTP network timed out waiting for the payment to complete.",
-      "rails": ["RTP"],
+      "meaning": "The payment timed out before it completed.",
+      "rails": [],
       "category": "timeout",
       "default_route": "DEVELOPER",
-      "baseline_what_happened": "The RTP network timed out before the payment completed, so it was not executed.",
+      "baseline_what_happened": "The payment timed out before it completed, so it was not executed.",
       "baseline_what_to_do": "Check our connection and processing logs for this payment. Suggest the customer try again later or use another payment method.",
       "baseline_customer_message": "Your instant payment could not be completed because it timed out. Please try again later or use another payment method.",
       "iso_code_sets": ["ExternalStatusReason1Code"],
-      "source_ids": ["ISO", "TCH_RTP"],
+      "source_ids": ["ISO"],
       "needs_review": false,
-      "review_note": "Added beyond the original 12 because AB05 is not in the RTP list; TCH uses DS24 for system time-out."
+      "review_note": "Added beyond the original 12 as a timeout code; its definition comes from the ISO code list.",
+      "team_runbook": {
+        "owner": "Akshay",
+        "needs_review": true,
+        "rails": ["RTP"],
+        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+      }
     },
     {
       "code": "MD01",
@@ -221,7 +272,7 @@
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "Not in the RTP list."
+      "review_note": ""
     },
     {
       "code": "MS03",
@@ -236,7 +287,7 @@
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "EPC: used in place of AC04, AM04, MD07, RR01-RR04 where privacy law forbids them, so the true cause may be account, funds or regulatory. Category 'technical' is a placeholder for 'unknown'. Not in the RTP list."
+      "review_note": "EPC: used in place of AC04, AM04, MD07, RR01-RR04 where privacy law forbids them, so the true cause may be account, funds or regulatory. Category 'technical' is a placeholder for 'unknown'."
     },
     {
       "code": "RR04",
@@ -251,7 +302,7 @@
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
-      "review_note": "Customer text is deliberately vague: AML law (e.g. EU AMLD 'tipping-off' ban) forbids telling a customer that a transaction may be under suspicion or investigation. Not in the RTP list."
+      "review_note": "Customer text is deliberately vague: AML law (e.g. EU AMLD 'tipping-off' ban) forbids telling a customer that a transaction may be under suspicion or investigation."
     },
     {
       "code": "FRAD",
@@ -266,7 +317,7 @@
       "iso_code_sets": ["ExternalStatusReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST"],
       "needs_review": true,
-      "review_note": "In ISO it exists in ExternalStatusReason1Code (and the cancellation reason set). EPC uses FRAD in SCT Inst only as a Recall reason (camt.056), which is outside v1's pacs.002/pacs.004 scope; a successful recall comes back as a pacs.004 with FOCR. Not in the 2018 RTP list. No rail is confirmed for pacs.002/pacs.004, so rails is empty."
+      "review_note": "In ISO it exists in ExternalStatusReason1Code (and the cancellation reason set). EPC uses FRAD in SCT Inst only as a Recall reason (camt.056), which is outside v1's pacs.002/pacs.004 scope; a successful recall comes back as a pacs.004 with FOCR. No rail is confirmed for pacs.002/pacs.004, so rails is empty."
     },
     {
       "code": "FR01",
@@ -281,7 +332,8 @@
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO"],
       "needs_review": true,
-      "review_note": "Exists in both ISO sets (definition: 'Returned as a result of fraud'). Not found in the EPC SCT Inst or SDD guidance or the 2018 RTP list, so rails is empty."
+      "review_note": "Exists in both ISO sets (definition: 'Returned as a result of fraud'). Not found in the EPC SCT Inst or SDD guidance, so rails is empty."
     }
-  ]
+  ],
+  "team_runbook_meaning": "'team_runbook' holds our own operational guidance for a code (rails, routes, notes, next steps per rail). It is owned by a named person and stays needs_review until they sign off. It must never be presented as a scheme rule (D7)."
 }

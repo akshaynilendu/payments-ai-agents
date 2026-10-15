@@ -6,7 +6,8 @@ from enum import StrEnum
 from functools import cache
 from pathlib import Path
 
-from explainer.codes import all_codes
+# SourceType lives in codes.py because the code table uses it too; re-exported here for passage users.
+from explainer.codes import SourceType, all_codes
 
 DEFAULT_PATH = Path(__file__).resolve().parent.parent / "data" / "knowledge" / "passages.json"
 MAX_WORDS = 150
@@ -27,12 +28,6 @@ class Topic(StrEnum):
     TIME_LIMIT = "time_limit"
     RECALL_RETURN = "recall_return"
     CUSTOMER_MESSAGE = "customer_message"
-
-
-class SourceType(StrEnum):
-    SCHEME_RULE = "scheme_rule"
-    # Our own operational guidance: the AI must label it as team guidance, never as a scheme rule (D7).
-    TEAM_RUNBOOK = "team_runbook"
 
 
 @dataclass(frozen=True)
