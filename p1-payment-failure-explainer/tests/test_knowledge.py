@@ -231,3 +231,22 @@ def test_amlr_passage_cites_no_article_number():
     p = next(p for p in all_passages() if p.id == "KB-ALL-GEN-03")
     assert not re.search(r"Art(icle|\.)\s*\d", p.text)
     assert "10 July 2027" in p.text
+
+
+# --- mandatory guardrails -----------------------------------------------------
+
+def test_only_the_tipping_off_guardrail_is_mandatory():
+    assert [p.id for p in all_passages() if p.mandatory] == ["KB-ALL-GEN-01"]
+
+
+def test_loader_rejects_mandatory_passage_without_codes(tmp_path):
+    raw = _valid_raw() | {"mandatory": True, "codes": []}
+    with pytest.raises(ValueError, match="mandatory passage must list the codes"):
+        load_passages(_write(tmp_path, [raw]))
+
+
+def test_every_all_rail_passage_names_the_codes_it_applies_to():
+    # An ALL passage with no codes would match every code on every rail.
+    for p in all_passages():
+        if p.rail is KbRail.ALL:
+            assert p.codes, p.id

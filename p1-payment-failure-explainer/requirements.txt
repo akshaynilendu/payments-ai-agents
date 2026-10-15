@@ -1,3 +1,8 @@
 # Pinned so tests and evals behave the same on every machine.
+# Each version was at least two weeks old when chosen, to avoid brand-new releases.
 defusedxml==0.7.1  # blocks XXE and "billion laughs" attacks in incoming XML
 pytest==9.1.1
+# Local embeddings for retrieval: ONNX runtime on CPU, no PyTorch/CUDA (~25 MB vs ~3 GB).
+fastembed==0.8.1
+onnxruntime==1.30.0
+numpy==2.5.3

@@ -13,3 +13,11 @@ The relevance threshold is set by evals, not guessed.
 Knowledge has two source types: scheme rules and team runbook; the AI must label runbook guidance as team guidance, never as a scheme rule.
 Why: small, reviewable and testable beats big and noisy; the no-guidance path costs $0 and
 cannot invent facts.
+D8 Ranking: build semantic ranking in v1 even though the KB is small. v2 adds full
+rulebooks (thousands of passages). Evals on day 3 compare filter-only vs filter+rank;
+if they tie, v1 ships the simpler one.
+Retrieval is for relevance; safety rules are enforced in code (piece 3 check), never left to ranking.
+D9 Vector store: in memory (array + cache file) for v1. Move to Postgres + pgvector (skip a
+separate vector DB, so ops runs no new database type) only when one of these is true: several
+services share the index, it updates while running, or we need an audit history of what was
+in it. Size alone isn't a trigger below ~100k passages.

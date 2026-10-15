@@ -36,6 +36,8 @@ class Passage:
     rail: KbRail
     codes: tuple[str, ...]
     topic: Topic
+    # A guardrail for its codes: always returned for them, never ranked out (D8).
+    mandatory: bool
     source_type: SourceType
     owner: str | None
     text: str
@@ -55,6 +57,7 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
         rail=KbRail(raw["rail"]),
         codes=tuple(raw["codes"]),
         topic=Topic(raw["topic"]),
+        mandatory=raw.get("mandatory", False),
         source_type=SourceType(raw["source_type"]),
         owner=raw.get("owner"),
         text=raw["text"],
@@ -70,6 +73,9 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
     unknown = [c for c in passage.codes if c not in known_codes]
     if unknown:
         raise ValueError(f"unknown code(s) {unknown}")
+    # A guardrail with no codes would apply to everything, or to nothing; either way it's a mistake.
+    if passage.mandatory and not passage.codes:
+        raise ValueError("mandatory passage must list the codes it guards")
     if not passage.source_url.strip():
         raise ValueError("empty source_url")
     if passage.source_type is SourceType.SCHEME_RULE and not passage.source_url.startswith("https://"):
