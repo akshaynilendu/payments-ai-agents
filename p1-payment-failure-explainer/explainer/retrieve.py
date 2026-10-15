@@ -12,7 +12,7 @@ from typing import Sequence
 import numpy as np
 
 from explainer import config, knowledge
-from explainer.codes import Rail, lookup
+from explainer.codes import FAILURE_STAGES, Rail, Stage, lookup
 from explainer.embed import Embedder, FastEmbedEmbedder, passage_vectors
 from explainer.knowledge import KbRail, Passage, Topic, all_passages
 
@@ -61,6 +61,13 @@ def matches(passage: Passage, code: str, rail: Rail) -> bool:
     return rail_ok and (code in passage.codes or not passage.codes)
 
 
+def stage_matches(passage: Passage, stage: Stage) -> bool:
+    # Unknown stage: we don't know whether money moved, so only advice true at every stage can't mislead.
+    if stage is Stage.UNKNOWN:
+        return set(passage.stages) == set(FAILURE_STAGES)
+    return stage in passage.stages
+
+
 def build_query(code: str, rail: Rail) -> str:
     entry = lookup(code)
     return (f"{code} {entry.name}: {entry.meaning} Payment rail: {RAIL_LABELS[rail]}. "
@@ -73,25 +80,30 @@ def _default_embedder() -> Embedder:
     return FastEmbedEmbedder()
 
 
-def retrieve(code: str, rail: Rail | str, mode: Mode | str = Mode.FILTER_RANK,
+def retrieve(code: str, rail: Rail | str, stage: Stage | str, mode: Mode | str = Mode.FILTER_RANK,
              k: int = config.RETRIEVAL_K, threshold: float = config.RETRIEVAL_THRESHOLD, *,
              embedder: Embedder | None = None,
              passages: Sequence[Passage] | None = None,
              passages_path: Path = knowledge.DEFAULT_PATH,
              cache_path: Path = config.EMBEDDINGS_CACHE,
              gaps_path: Path = config.GAPS_FILE) -> RetrievalResult:
+    """stage is required on purpose: a default would quietly bring back recall advice for rejects (D10)."""
     code = (code or "").strip().upper()
-    rail, mode = Rail(rail), Mode(mode)
+    rail, stage, mode = Rail(rail), Stage(stage), Mode(mode)
+    if stage in (Stage.NOT_A_FAILURE, Stage.PENDING):
+        # The caller must stop before retrieval; reaching here is a bug, not a knowledge gap.
+        raise ValueError(f"nothing to explain at stage {stage.value}; stop before retrieval")
 
     # Unknown codes escalate (D3); general rail passages would look like guidance they are not.
     if lookup(code) is None:
-        _record_gap(gaps_path, code, rail, mode, threshold, "unknown_code")
+        _record_gap(gaps_path, code, rail, stage, mode, threshold, "unknown_code")
         return RetrievalResult(ranked=(), mandatory=(), gap=True)
 
     pool = list(passages) if passages is not None else list(all_passages())
     candidates = [p for p in pool if matches(p, code, rail)]
+    # Guardrails apply at every stage, enforced here rather than trusted to their tags (D8).
     guardrails = [p for p in candidates if p.mandatory]
-    rankable = [p for p in candidates if not p.mandatory]
+    rankable = [p for p in candidates if not p.mandatory and stage_matches(p, stage)]
 
     if mode is Mode.FILTER_ONLY:
         ordered = sorted(rankable, key=lambda p: (not p.codes, _TOPIC_ORDER.index(p.topic), p.id))
@@ -107,7 +119,7 @@ def retrieve(code: str, rail: Rail | str, mode: Mode | str = Mode.FILTER_RANK,
 
     if not ranked:
         reason = "no_passage_matches_filter" if not rankable else "none_above_threshold"
-        _record_gap(gaps_path, code, rail, mode, threshold, reason)
+        _record_gap(gaps_path, code, rail, stage, mode, threshold, reason)
     return RetrievalResult(ranked=ranked, mandatory=mandatory, gap=not ranked)
 
 
@@ -120,13 +132,15 @@ def _scores(code: str, rail: Rail, pool: list[Passage], embedder: Embedder,
     return {p.id: float(s) for p, s in zip(pool, similarities)}
 
 
-def _record_gap(path: Path, code: str, rail: Rail, mode: Mode, threshold: float, reason: str) -> None:
+def _record_gap(path: Path, code: str, rail: Rail, stage: Stage, mode: Mode, threshold: float,
+                reason: str) -> None:
     """Append-only log of missing guidance. Only code and rail: never amounts, IDs, names or free text."""
     record = {
         "timestamp": datetime.now(UTC).isoformat(timespec="seconds"),
         # Proprietary codes can hold up to 35 characters; anything else is not logged as-is.
         "code": code if _SAFE_CODE.fullmatch(code) else "INVALID",
         "rail": rail.value,
+        "stage": stage.value,
         "mode": mode.value,
         "threshold": threshold,
         "reason": reason,

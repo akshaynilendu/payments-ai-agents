@@ -3,7 +3,7 @@ import re
 
 import pytest
 
-from explainer.codes import all_codes
+from explainer.codes import Stage, all_codes
 from explainer.knowledge import (
     DEFAULT_PATH, KbRail, SourceType, Topic, all_passages, load_passages,
 )
@@ -240,7 +240,9 @@ def test_only_the_tipping_off_guardrail_is_mandatory():
 
 
 def test_loader_rejects_mandatory_passage_without_codes(tmp_path):
-    raw = _valid_raw() | {"mandatory": True, "codes": []}
+    # Every stage listed, so the codes check is the one that fires.
+    raw = _valid_raw() | {"mandatory": True, "codes": [],
+                          "stages": ["REJECT", "RETURN", "RECALL", "RECALL_ANSWER"]}
     with pytest.raises(ValueError, match="mandatory passage must list the codes"):
         load_passages(_write(tmp_path, [raw]))
 
@@ -250,3 +252,44 @@ def test_every_all_rail_passage_names_the_codes_it_applies_to():
     for p in all_passages():
         if p.rail is KbRail.ALL:
             assert p.codes, p.id
+
+
+# --- stages (D10) ---------------------------------------------------------------
+
+@pytest.mark.parametrize(
+    "stages, message",
+    [
+        ([], "stages is empty"),
+        (["LATER"], "LATER"),
+        (["UNKNOWN"], "not valid on a passage"),
+        (["NOT_A_FAILURE"], "not valid on a passage"),
+        (["REJECT", "PENDING"], "not valid on a passage"),
+    ],
+)
+def test_loader_rejects_invalid_stages(tmp_path, stages, message):
+    with pytest.raises(ValueError, match=f"Invalid passage KB-SCTI-AC04-01.*{message}"):
+        load_passages(_write(tmp_path, [_valid_raw() | {"stages": stages}]))
+
+
+def test_loader_rejects_mandatory_passage_missing_a_stage(tmp_path):
+    raw = _valid_raw() | {"mandatory": True, "stages": ["REJECT", "RETURN", "RECALL"]}
+    with pytest.raises(ValueError, match="mandatory passage must list every stage"):
+        load_passages(_write(tmp_path, [raw]))
+
+
+def test_no_recall_or_return_passage_is_tagged_reject():
+    for p in all_passages():
+        if p.topic is Topic.RECALL_RETURN:
+            assert Stage.REJECT not in p.stages, p.id
+
+
+def test_frad_passages_are_recall_only():
+    for p in all_passages():
+        if "FRAD" in p.codes:
+            assert p.stages == (Stage.RECALL,), p.id
+
+
+def test_rtp_runbook_next_steps_are_reject_only():
+    for p in all_passages():
+        if p.source_type is SourceType.TEAM_RUNBOOK:
+            assert p.stages == (Stage.REJECT,), p.id

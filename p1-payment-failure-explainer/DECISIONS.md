@@ -21,3 +21,7 @@ D9 Vector store: in memory (array + cache file) for v1. Move to Postgres + pgvec
 separate vector DB, so ops runs no new database type) only when one of these is true: several
 services share the index, it updates while running, or we need an audit history of what was
 in it. Size alone isn't a trigger below ~100k passages.
+D10 Stage filter. Retrieval filters on the payment's lifecycle stage (reject / return /
+recall), not just code and rail. Whether the money moved is a known fact from the message
+type, so it is filtered in code, never left to similarity scores or a prompt instruction.
+Found by hand-testing: rejects were retrieving recall and return-of-funds passages.

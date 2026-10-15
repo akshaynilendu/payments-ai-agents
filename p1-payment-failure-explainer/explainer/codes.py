@@ -20,6 +20,22 @@ class Rail(StrEnum):
     UNKNOWN = "UNKNOWN"
 
 
+class Stage(StrEnum):
+    """Where the payment is in its lifecycle; decides whether money has moved (D10)."""
+    REJECT = "REJECT"                  # pacs.002 RJCT: stopped before settlement, no money moved
+    RETURN = "RETURN"                  # pacs.004: money moved and came back (incl. SDD refunds)
+    RECALL = "RECALL"                  # camt.056: sender asks for settled money back (not parsed in v1)
+    RECALL_ANSWER = "RECALL_ANSWER"    # camt.029 / answer to a recall (not parsed in v1)
+    # The three below are never valid on a passage: they describe the message, not advice.
+    NOT_A_FAILURE = "NOT_A_FAILURE"    # pacs.002 accepted/settled: nothing to explain
+    PENDING = "PENDING"                # pacs.002 PDNG and similar: no final outcome yet
+    UNKNOWN = "UNKNOWN"                # a status we don't recognise
+
+
+# Stages a passage can describe; the explainer only explains these.
+FAILURE_STAGES = (Stage.REJECT, Stage.RETURN, Stage.RECALL, Stage.RECALL_ANSWER)
+
+
 class Category(StrEnum):
     ACCOUNT = "account"
     FUNDS = "funds"

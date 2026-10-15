@@ -7,7 +7,7 @@ from functools import cache
 from pathlib import Path
 
 # SourceType lives in codes.py because the code table uses it too; re-exported here for passage users.
-from explainer.codes import SourceType, all_codes, check_sign_off
+from explainer.codes import FAILURE_STAGES, SourceType, Stage, all_codes, check_sign_off
 
 DEFAULT_PATH = Path(__file__).resolve().parent.parent / "data" / "knowledge" / "passages.json"
 MAX_WORDS = 150
@@ -35,6 +35,8 @@ class Passage:
     id: str
     rail: KbRail
     codes: tuple[str, ...]
+    # Lifecycle stages where this advice is true; retrieval filters on it (D10).
+    stages: tuple[Stage, ...]
     topic: Topic
     # A guardrail for its codes: always returned for them, never ranked out (D8).
     mandatory: bool
@@ -56,6 +58,7 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
         id=raw["id"],
         rail=KbRail(raw["rail"]),
         codes=tuple(raw["codes"]),
+        stages=tuple(Stage(s) for s in raw["stages"]),
         topic=Topic(raw["topic"]),
         mandatory=raw.get("mandatory", False),
         source_type=SourceType(raw["source_type"]),
@@ -73,6 +76,14 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
     unknown = [c for c in passage.codes if c not in known_codes]
     if unknown:
         raise ValueError(f"unknown code(s) {unknown}")
+    if not passage.stages:
+        raise ValueError("stages is empty")
+    # NOT_A_FAILURE, PENDING and UNKNOWN describe a message, not a situation advice can be written for.
+    invalid = [s.value for s in passage.stages if s not in FAILURE_STAGES]
+    if invalid:
+        raise ValueError(f"stages {invalid} are not valid on a passage")
+    if passage.mandatory and set(passage.stages) != set(FAILURE_STAGES):
+        raise ValueError("mandatory passage must list every stage")
     # A guardrail with no codes would apply to everything, or to nothing; either way it's a mistake.
     if passage.mandatory and not passage.codes:
         raise ValueError("mandatory passage must list the codes it guards")

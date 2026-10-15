@@ -8,7 +8,7 @@ from pathlib import Path
 
 from defusedxml import DefusedXmlException, ElementTree
 
-from explainer.codes import Rail
+from explainer.codes import Rail, Stage
 
 # Raw names and account numbers must never leave this module, so they are masked
 # while the PaymentStatus is being built, not afterwards.
@@ -22,6 +22,13 @@ _IBAN_IN_TEXT = re.compile(r"\b[A-Z]{2}\d{2}(?: ?[A-Z0-9]{4}){2,7}(?: ?[A-Z0-9]{
 _LONG_NUMBER_IN_TEXT = re.compile(r"\d(?:[ -]?\d){5,}")
 # ISO 20022 amounts: up to 18 digits, up to 5 decimals. Rejects "NaN", "1e3", "12,50" that Decimal() would accept or misread.
 _ISO_AMOUNT = re.compile(r"\d{1,18}(\.\d{1,5})?")
+
+# pacs.002 statuses from the ISO 20022 external code list ExternalPaymentTransactionStatus1Code (D10):
+# https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets
+# Accepted or settled: there is no failure to explain.
+_SUCCESS_STATUSES = {"ACSC", "ACCC", "ACSP", "ACTC", "ACCP", "ACFC", "ACPD", "ACWC"}
+# No final outcome yet; resending now risks paying twice.
+_PENDING_STATUSES = {"PDNG", "RCVD", "ACWP", "ACFW", "PATC"}
 
 _PARTY_ROLES = {
     "UltmtDbtr": ("ultimate_debtor", None),
@@ -51,8 +58,10 @@ class MaskedParty:
 class PaymentStatus:
     rail: Rail
     message_type: MessageType
+    stage: Stage
     status: str
-    reason_code: str
+    # None only when there is nothing to explain (accepted, pending or unrecognised status without a reason).
+    reason_code: str | None
     amount: Decimal
     currency: str
     end_to_end_id: str
@@ -113,11 +122,15 @@ def parse_xml(data: bytes | str) -> PaymentStatus:
         amount_el = tx.find("{*}RtrdIntrBkSttlmAmt")
 
     amount, currency = _amount(amount_el)
+    stage = _stage(message_type, status)
+    # A reject or return without a reason can't be explained, so it is a broken message.
+    reason_code = _reason_code(reason_info, required=stage in (Stage.REJECT, Stage.RETURN))
     return PaymentStatus(
         rail=_detect_rail(tx, currency),
         message_type=message_type,
+        stage=stage,
         status=status,
-        reason_code=_reason_code(reason_info),
+        reason_code=reason_code,
         amount=amount,
         currency=currency,
         end_to_end_id=_required_text(tx, "OrgnlEndToEndId"),
@@ -154,14 +167,29 @@ def _required_text(parent, tag: str) -> str:
     return el.text.strip()
 
 
-def _reason_code(reason_info) -> str:
+def _stage(message_type: MessageType, status: str) -> Stage:
+    # Whether money moved is read from the message, never guessed (D10).
+    if message_type is MessageType.PACS_004:
+        return Stage.RETURN
+    if status == "RJCT":
+        return Stage.REJECT
+    if status in _SUCCESS_STATUSES:
+        return Stage.NOT_A_FAILURE
+    if status in _PENDING_STATUSES:
+        return Stage.PENDING
+    return Stage.UNKNOWN
+
+
+def _reason_code(reason_info, *, required: bool) -> str | None:
     if reason_info is not None:
         # RTP also sends proprietary codes (e.g. 1100, 9910); they are kept so lookup() returns None and we escalate.
         for path in ("{*}Rsn/{*}Cd", "{*}Rsn/{*}Prtry"):
             el = reason_info.find(path)
             if el is not None and (el.text or "").strip():
                 return el.text.strip().upper()
-    raise ParseError("Missing reason code")
+    if required:
+        raise ParseError("Missing reason code")
+    return None
 
 
 def _amount(el) -> tuple[Decimal, str]:

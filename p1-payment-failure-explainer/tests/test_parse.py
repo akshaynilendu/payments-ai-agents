@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from explainer.codes import Rail, lookup
+from explainer.codes import Rail, Stage, lookup
 from explainer.parse import MessageType, ParseError, parse_file, parse_xml
 
 SAMPLES_DIR = Path(__file__).resolve().parent.parent / "samples"
@@ -133,3 +133,41 @@ def test_more_than_one_transaction_is_rejected():
 def test_xml_attacks_are_rejected(attack):
     with pytest.raises(ParseError, match="Unsafe XML"):
         parse_xml(attack)
+
+
+# --- stage (D10) ------------------------------------------------------------------
+
+@pytest.mark.parametrize("sample", EXPECTED, ids=lambda s: s["file"])
+def test_sample_parses_to_expected_stage(sample):
+    assert parse_file(SAMPLES_DIR / sample["file"]).stage == Stage(sample["stage"])
+
+
+def _with_status(status: str, keep_reason: bool) -> str:
+    xml = _sample_text("sct_inst_ac04_closed.xml").replace("<TxSts>RJCT</TxSts>", f"<TxSts>{status}</TxSts>")
+    if not keep_reason:
+        start = xml.index("<StsRsnInf>")
+        xml = xml[:start] + xml[xml.index("</StsRsnInf>") + len("</StsRsnInf>"):]
+    return xml
+
+
+@pytest.mark.parametrize("status", ["ACSC", "ACCC", "ACSP", "ACTC", "ACCP", "ACFC", "ACPD", "ACWC"])
+def test_success_status_is_not_a_failure_and_needs_no_reason(status):
+    result = parse_xml(_with_status(status, keep_reason=False))
+    assert (result.stage, result.reason_code) == (Stage.NOT_A_FAILURE, None)
+
+
+@pytest.mark.parametrize("status", ["PDNG", "RCVD", "ACWP", "ACFW", "PATC"])
+def test_pending_status_is_pending(status):
+    assert parse_xml(_with_status(status, keep_reason=False)).stage == Stage.PENDING
+
+
+@pytest.mark.parametrize("status", ["CANC", "BLCK", "XXXX"])
+def test_unrecognised_or_non_final_status_is_unknown_and_keeps_its_reason(status):
+    result = parse_xml(_with_status(status, keep_reason=True))
+    assert (result.stage, result.reason_code) == (Stage.UNKNOWN, "AC04")
+
+
+def test_return_without_reason_is_still_a_parse_error():
+    xml = _sample_text("sdd_md01_no_mandate.xml").replace("<Rsn><Cd>MD01</Cd></Rsn>", "")
+    with pytest.raises(ParseError, match="Missing reason code"):
+        parse_xml(xml)
