@@ -13,7 +13,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code AC01",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-AC04-01",
@@ -26,7 +29,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code AC04",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-AC06-01",
@@ -39,7 +45,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code AC06",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-AG01-01",
@@ -52,7 +61,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code AG01",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-AM05-01",
@@ -65,7 +77,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code AM05",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-AB05-01",
@@ -78,7 +93,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code AB05",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-MS02-01",
@@ -91,7 +109,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code MS02",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-MS03-01",
@@ -104,7 +125,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code MS03",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-RR04-01",
@@ -117,7 +141,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, code RR04",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-AC01-01",
@@ -130,7 +157,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code AC01",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-AC04-01",
@@ -143,7 +173,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code AC04",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-AC06-01",
@@ -156,7 +189,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code AC06 and footnote 1",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-AG01-01",
@@ -169,7 +205,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code AG01",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-AM04-01",
@@ -182,7 +221,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code AM04",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-AM05-01",
@@ -195,7 +237,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code AM05",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-MD01-01",
@@ -208,7 +253,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code MD01",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-MD01-02",
@@ -221,7 +269,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code MD01 (exhaustive list of use-cases)",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-MD06-01",
@@ -234,7 +285,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code MD06",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-MS02-01",
@@ -247,7 +301,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code MS02",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-MS03-01",
@@ -260,7 +317,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code MS03",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-RR04-01",
@@ -273,7 +333,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, code RR04",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-AC03-01",
@@ -285,8 +348,11 @@
       "text": "Team guidance, not a scheme rule: an RTP rejection with AC03 means, per the ISO 20022 definition, that the creditor account number is invalid or missing. Our first-line team handles it. Ask the customer to confirm the recipient's account number directly with the recipient before sending a new payment, and do not resubmit with the same details. If several AC03 rejections hit the same saved payee, check whether the customer's saved payee details are wrong.",
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of AC03; route from reason_codes.json",
-      "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. Built only from the ISO definition and our routing table, not from any TCH document."
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Team runbook signed off by Akshay; built from the ISO definition and our routing table.",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-AC04-01",
@@ -298,8 +364,11 @@
       "text": "Team guidance, not a scheme rule: an RTP rejection with AC04 means, per the ISO 20022 definition, that the account number specified has been closed on the books of the bank holding the account. Our first-line team handles it. Tell the customer that the recipient's account is closed and ask them to get current account details from the recipient. Do not retry the payment to the same account, and do not suggest that the recipient's bank made an error.",
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of AC04; route from reason_codes.json",
-      "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. Built only from the ISO definition and our routing table, not from any TCH document."
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Team runbook signed off by Akshay; built from the ISO definition and our routing table.",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-AC06-01",
@@ -311,8 +380,11 @@
       "text": "Team guidance, not a scheme rule: an RTP rejection with AC06 means, per the ISO 20022 definition, that the account specified is blocked, prohibiting posting of transactions against it. Our first-line team handles it. Tell the customer that the recipient's account cannot accept the payment and suggest they agree another account or payment method with the recipient. Do not guess or share why the account is blocked; that decision belongs to the recipient's bank.",
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of AC06; route from reason_codes.json",
-      "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. Built only from the ISO definition and our routing table, not from any TCH document."
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Team runbook signed off by Akshay; built from the ISO definition and our routing table.",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-AG01-01",
@@ -324,8 +396,11 @@
       "text": "Team guidance, not a scheme rule: an RTP rejection with AG01 means, per the ISO 20022 definition, that the transaction is forbidden on this type of account. Our routing table sends RTP AG01 to the developer team rather than first line. The developer team first checks whether anything on our side, such as configuration or message content, caused the rejection. If nothing is wrong on our side, first line asks the customer to agree another payment method with the recipient.",
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of AG01; route_by_rail from reason_codes.json",
-      "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. The DEVELOPER route for RTP AG01 is a team decision recorded in reason_codes.json team_runbook, not a scheme rule."
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Team runbook signed off by Akshay; built from the ISO definition and our routing table.",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-AM04-01",
@@ -337,8 +412,11 @@
       "text": "Team guidance, not a scheme rule: an RTP rejection with AM04 means, per the ISO 20022 definition, that the funds available are insufficient to cover the message amount. Our routing table sends RTP AM04 to Treasury, not to first line. Treasury checks our bank's own funding position for RTP before anyone contacts the customer. Do not tell the customer they lack funds unless Treasury confirms that the cause was on the customer's side; until then the customer message stays neutral.",
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of AM04; route_by_rail from reason_codes.json",
-      "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. The TREASURY route for RTP AM04 is a team decision recorded in reason_codes.json team_runbook. Supporting evidence that RTP settles against prefunded balances: FED_RTP_ORDER in reason_codes.json; no open source links AM04 to a prefunding shortfall."
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Team runbook signed off by Akshay; built from the ISO definition and our routing table.",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-DS24-01",
@@ -347,11 +425,14 @@
       "topic": "next_step",
       "source_type": "team_runbook",
       "owner": "Akshay",
-      "text": "Team guidance, not a scheme rule: an RTP rejection with DS24 means, per the ISO 20022 definition, that the waiting time expired due to an incomplete order, so the payment timed out and was not completed. Our routing table sends it to the developer team, who check our connection and processing logs for this payment. First line may suggest that the customer try again later or use another payment method, without promising when it will work.",
+      "text": "Team guidance, not a scheme rule: an RTP rejection with DS24 means, per the ISO 20022 definition, that the waiting time expired due to an incomplete order, so the payment timed out and was not completed. Our routing table sends it to the developer team, who check our connection and processing logs for this payment. Before anyone resends, confirm the original payment's final status (pacs.028 status request) to avoid a duplicate payment. First line may suggest that the customer try again later or use another payment method, without promising when it will work.",
       "source_url": "DECISIONS.md#d7",
       "source_section": "Team runbook; ISO 20022 ExternalStatusReason1Code definition of DS24; route from reason_codes.json",
-      "needs_review": true,
-      "review_note": "Team runbook awaiting Akshay's sign-off. Built only from the ISO definition and our routing table, not from any TCH document."
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Team runbook signed off by Akshay; built from the ISO definition and our routing table.",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-FRAD-01",
@@ -364,7 +445,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, codes FRAD and FOCR",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-GEN-01",
@@ -377,7 +461,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 1; section 3, codes DUPL, TECH, FRAD, AC03, AM09",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-GEN-02",
@@ -386,11 +473,14 @@
       "topic": "time_limit",
       "source_type": "scheme_rule",
       "owner": null,
-      "text": "SEPA Instant recall window (not yet verified): secondary sources state that the originator's bank must send a recall for duplicate sending or a technical problem within 10 banking business days of the original payment, and that a recall for fraud (FRAD) can be sent up to 13 months later. These limits are set in the SCT Inst rulebook itself, which was not checked in this session. Until this passage is verified, staff should confirm the current deadline in the rulebook before telling anyone that a recall is still possible.",
-      "source_url": "https://www.europeanpaymentscouncil.eu/what-we-do/sepa-instant-credit-transfer",
-      "source_section": "SCT Inst rulebook, exception-processing timelines (not checked)",
-      "needs_review": true,
-      "review_note": "The 10-day and 13-month figures come from secondary sources (a payment provider's documentation and EPC guidance for standard SCT). The EPC reason-code guidance does not state them. Verify against the current SCT Inst rulebook."
+      "text": "SEPA Instant recall window: only the originator's bank can start a recall, possibly on the originator's behalf, and only for duplicate sending, technical problems that produced an erroneous payment, or a fraudulently originated instruction (FRAD). The recall must be sent within 10 banking business days of the original payment's execution date for duplicates and technical problems, and within 13 months for fraud. Only one recall can be sent per payment. The originator's bank may refuse a customer's recall request that falls outside these reasons or time limits.",
+      "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC004-16%202025%20SCT%20Instant%20Rulebook%20v1.1.pdf",
+      "source_section": "EPC004-16 2025 SCT Inst Rulebook v1.1, section 4.3.2.2 'SCT Inst Recall' (page 39) and rule CT-02.01R",
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Both figures verified against the 2025 SCT Inst Rulebook v1.1 on 2026-10-15.",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-GEN-03",
@@ -403,7 +493,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 1; section 3, codes FOCR, CUST, AC04, AM04",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SCTI-GEN-04",
@@ -416,7 +509,10 @@
       "source_url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2025-10/EPC059-18%20v7.0%20Guidance%20on%20Reason%20Codes%20for%20SCT%20Inst%20R-transactions.pdf",
       "source_section": "EPC059-18 v7.0, section 3, codes CUST, AM04, AC04",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-GEN-01",
@@ -429,7 +525,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 1; section 3, code AM05",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-GEN-02",
@@ -442,7 +541,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, codes MD06 and MD01",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-SDD-GEN-03",
@@ -455,7 +557,10 @@
       "source_url": "https://europeanpaymentscouncil.eu/sites/default/files/kb/file/2024-11/EPC173-14%20v8.0%20Guidance%20on%20Reason%20Codes%20for%20SDD%20R-transactions.pdf",
       "source_section": "EPC173-14 v8.0, section 3, codes MD06, MD01 and AG01",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-GEN-01",
@@ -468,7 +573,10 @@
       "source_url": "https://www.theclearinghouse.org/payment-systems/rtp/institution",
       "source_section": "TCH public RTP page for financial institutions (FAQ)",
       "needs_review": false,
-      "review_note": ""
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": ""
     },
     {
       "id": "KB-RTP-GEN-02",
@@ -481,7 +589,10 @@
       "source_url": "https://www.theclearinghouse.org/payment-systems/Articles/2023/11/110123_PaymentsPulse_November1stEdition",
       "source_section": "TCH Payments Pulse, 1 Nov 2023, 'We Get Questions', Instant Payments (citing RTP Operating Rules section VII.D)",
       "needs_review": false,
-      "review_note": "Published TCH newsletter from November 2023; the current Operating Rules may have changed since."
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": "Published TCH newsletter from November 2023; the current Operating Rules may have changed since."
     },
     {
       "id": "KB-RTP-GEN-03",
@@ -494,7 +605,10 @@
       "source_url": "https://www.theclearinghouse.org/payment-systems/Articles/2023/11/110123_PaymentsPulse_November1stEdition",
       "source_section": "TCH Payments Pulse, 1 Nov 2023, 'We Get Questions', Instant Payments (citing RTP Operating Rules section VII.D)",
       "needs_review": false,
-      "review_note": "Published TCH newsletter from November 2023; the current Operating Rules may have changed since."
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": "Published TCH newsletter from November 2023; the current Operating Rules may have changed since."
     },
     {
       "id": "KB-ALL-GEN-01",
@@ -507,7 +621,10 @@
       "source_url": "https://www.legislation.gov.uk/eudr/2015/849/article/39/adopted",
       "source_section": "Directive (EU) 2015/849, Article 39(1)-(2), adopted text (official version: https://eur-lex.europa.eu/eli/dir/2015/849/oj)",
       "needs_review": false,
-      "review_note": "Checked against the adopted text as republished on legislation.gov.uk. Later amendments added group-sharing exceptions; paragraphs 1-2 as summarised here are unchanged in substance."
+      "reviewed_by": null,
+      "reviewed_on": null,
+      "review_note": "",
+      "caveat": "Checked against the adopted text as republished on legislation.gov.uk. Later amendments added group-sharing exceptions; paragraphs 1-2 as summarised here are unchanged in substance."
     },
     {
       "id": "KB-ALL-GEN-03",
@@ -516,11 +633,14 @@
       "topic": "customer_message",
       "source_type": "scheme_rule",
       "owner": null,
-      "text": "From 10 July 2027 the EU Anti-Money Laundering Regulation, Regulation (EU) 2024/1624 (AMLR), applies directly in all member states and replaces most of the anti-money-laundering obligations that banks currently have under Directive 2015/849, including the prohibition on tipping off the customer. The article number of the AMLR's prohibition of disclosure, and the exact application date, have not been verified in this session. Until they are, cite the Directive (passage KB-ALL-GEN-01) and treat any AMLR reference as provisional.",
-      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
-      "source_section": "Regulation (EU) 2024/1624, final provisions (application date) and prohibition-of-disclosure article (number not verified)",
-      "needs_review": true,
-      "review_note": "Application date 10 July 2027 seen only in a secondary reproduction of the Official Journal text. The article number of the prohibition of disclosure is unverified, and EUR-Lex returned no content to the fetch tool."
+      "text": "The EU Anti-Money Laundering Regulation, Regulation (EU) 2024/1624 (AMLR), applies from 10 July 2027, and from 10 July 2029 for football agents and certain professional football club transactions. The Fourth Anti-Money Laundering Directive (MLD4, Directive 2015/849) is repealed with effect from 10 July 2027. The tipping-off rule cited in KB-ALL-GEN-01 comes from that Directive, so from July 2027 staff should check the AMLR's own disclosure rules before relying on that passage.",
+      "source_url": "https://finreg.aoshearman.com/Package-of-EU-Anti-Money-Laundering-Legislation-P",
+      "source_section": "A&O Shearman FinReg, 'Package of EU Anti-Money Laundering Legislation Published' (19 June 2024); official text: https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "needs_review": false,
+      "reviewed_by": "Akshay",
+      "reviewed_on": "2026-10-15",
+      "review_note": "Dates verified against the A&O Shearman summary on 2026-10-15; AMLR article number deliberately not cited.",
+      "caveat": ""
     }
   ]
 }

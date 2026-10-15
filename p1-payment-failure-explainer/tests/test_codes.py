@@ -155,12 +155,14 @@ def test_every_team_evidence_source_is_defined():
 
 
 def test_rtp_is_only_ever_a_team_runbook_rail():
-    # No open scheme source confirms our RTP pairings, so every one must be team guidance awaiting sign-off.
+    # No open scheme source confirms our RTP pairings, so every one must be team guidance,
+    # either still under review or signed off by a named reviewer.
     for entry in all_codes():
         assert Rail.RTP not in entry.scheme_rails, entry.code
         if Rail.RTP in entry.rails:
-            assert entry.team_runbook.owner == "Akshay"
-            assert entry.team_runbook.needs_review
+            team = entry.team_runbook
+            assert team.owner == "Akshay"
+            assert team.needs_review or team.reviewed_by, entry.code
 
 
 def test_review_notes_no_longer_compare_with_rtp_lists():
@@ -235,3 +237,53 @@ def test_loader_merges_team_rails_and_routes(tmp_path):
     assert entry.scheme_rails == (Rail.SEPA_DD,)
     assert entry.route_for(Rail.RTP) == Route.TREASURY
     assert entry.route_for(Rail.SEPA_DD) == Route.FIRST_LINE
+
+
+# --- sign-off: approval needs a recorded reviewer and date -------------------
+
+@pytest.mark.parametrize(
+    "fields, message",
+    [
+        ({"needs_review": False}, "reviewed_by and reviewed_on"),
+        ({"needs_review": False, "reviewed_by": "Akshay"}, "reviewed_by and reviewed_on"),
+        ({"needs_review": False, "reviewed_on": "2026-10-15"}, "reviewed_by and reviewed_on"),
+        ({"needs_review": False, "reviewed_by": " ", "reviewed_on": "2026-10-15"}, "reviewed_by and reviewed_on"),
+        ({"needs_review": False, "reviewed_by": "Akshay", "reviewed_on": "15/10/2026"}, "must be a date"),
+    ],
+)
+def test_loader_rejects_team_approval_without_sign_off(tmp_path, fields, message):
+    with pytest.raises(ValueError, match=f"Invalid entry AC04.*{message}"):
+        load_codes(_write_table(tmp_path, [_with_team(**fields)]))
+
+
+def test_loader_accepts_signed_off_team_block(tmp_path):
+    raw = _with_team(needs_review=False, reviewed_by="Akshay", reviewed_on="2026-10-15")
+    team = load_codes(_write_table(tmp_path, [raw]))["AC04"].team_runbook
+    assert (team.reviewed_by, team.reviewed_on) == ("Akshay", "2026-10-15")
+
+
+SIGNED_OFF_TEAM_BLOCKS = {"AC03", "AC04", "AC06", "AG01", "AM04", "DS24"}
+
+
+def test_signed_off_team_blocks_are_exactly_the_approved_ones():
+    # Sign-off is Akshay's call; this list changes deliberately, never as a side effect.
+    signed = {e.code for e in all_codes() if e.team_runbook and e.team_runbook.reviewed_by}
+    assert signed == SIGNED_OFF_TEAM_BLOCKS
+    for code in signed:
+        team = lookup(code).team_runbook
+        assert (team.reviewed_by, team.reviewed_on, team.needs_review) == ("Akshay", "2026-10-15", False)
+
+
+@pytest.mark.parametrize(
+    "code, phrase",
+    [
+        # The team baseline must be as strong as its runbook passage, so evals compare like with like.
+        ("AC03", "do not resubmit with the same details"),
+        ("AC03", "saved payee"),
+        ("AC04", "Do not retry the payment to the same account"),
+        ("AC06", "that decision belongs to the recipient's bank"),
+        ("DS24", "pacs.028"),
+    ],
+)
+def test_rtp_team_next_step_matches_its_runbook_passage(code, phrase):
+    assert phrase in lookup(code).what_to_do_for(Rail.RTP)

@@ -63,9 +63,14 @@
       "review_note": "Added beyond the original 12. In SEPA Instant, EPC lists AC03 only for a Request for Recall by the Originator, not for rejects, so SEPA_INSTANT is not listed.",
       "team_runbook": {
         "owner": "Akshay",
-        "needs_review": true,
+        "needs_review": false,
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-15",
         "rails": ["RTP"],
-        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+        "what_to_do_by_rail": {
+          "RTP": "Ask the customer to confirm the recipient's account number directly with the recipient before sending a new payment, and do not resubmit with the same details. If several AC03 rejections hit the same saved payee, check whether the customer's saved payee details are wrong."
+        },
+        "note": "Team runbook signed off by Akshay. RTP usage is our operational assumption; no open TCH source was used."
       }
     },
     {
@@ -84,9 +89,14 @@
       "review_note": "Some SEPA countries forbid this code for data-protection reasons; their banks send MS03 instead.",
       "team_runbook": {
         "owner": "Akshay",
-        "needs_review": true,
+        "needs_review": false,
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-15",
         "rails": ["RTP"],
-        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+        "what_to_do_by_rail": {
+          "RTP": "Ask the customer to get current account details from the recipient. Do not retry the payment to the same account, and do not suggest that the recipient's bank made an error."
+        },
+        "note": "Team runbook signed off by Akshay. RTP usage is our operational assumption; no open TCH source was used."
       }
     },
     {
@@ -105,9 +115,14 @@
       "review_note": "The block is the other bank's decision (e.g. court order or suspected misuse, per EPC), so our first line informs and does not investigate. Customer text deliberately gives no reason.",
       "team_runbook": {
         "owner": "Akshay",
-        "needs_review": true,
+        "needs_review": false,
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-15",
         "rails": ["RTP"],
-        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+        "what_to_do_by_rail": {
+          "RTP": "Tell the customer the recipient's account cannot accept the payment, and suggest they agree another account or payment method with the recipient. Do not guess or share why the account is blocked; that decision belongs to the recipient's bank."
+        },
+        "note": "Team runbook signed off by Akshay. RTP usage is our operational assumption; no open TCH source was used."
       }
     },
     {
@@ -130,7 +145,9 @@
       "review_note": "Meaning differs slightly between SEPA Instant and SEPA DD, hence rail_notes.",
       "team_runbook": {
         "owner": "Akshay",
-        "needs_review": true,
+        "needs_review": false,
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-15",
         "rails": ["RTP"],
         "route_by_rail": {
           "RTP": "DEVELOPER"
@@ -141,7 +158,7 @@
         "what_to_do_by_rail": {
           "RTP": "Pass to the developer team to check whether anything on our side caused the rejection. If not, ask the customer to agree another payment method with the other party."
         },
-        "note": "Team runbook awaiting Akshay's sign-off. The DEVELOPER route on RTP is a team decision, not a scheme rule."
+        "note": "Team runbook signed off by Akshay. The DEVELOPER route on RTP is a team decision, not a scheme rule."
       }
     },
     {
@@ -163,7 +180,9 @@
       "review_note": "In SCT Inst, EPC lists AM04 only as a negative answer to a recall, not a reject, so SEPA_INSTANT is not listed. Customer message is deliberately neutral so it also fits the team's RTP handling.",
       "team_runbook": {
         "owner": "Akshay",
-        "needs_review": true,
+        "needs_review": false,
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-15",
         "rails": ["RTP"],
         "route_by_rail": {
           "RTP": "TREASURY"
@@ -175,7 +194,7 @@
           "RTP": "Pass to Treasury to check our bank's funding position for RTP. Do not ask the customer to add funds unless Treasury confirms the cause was on the customer's side."
         },
         "evidence_source_ids": ["FED_RTP_ORDER"],
-        "note": "Team runbook awaiting Akshay's sign-off. The TREASURY route on RTP is a team decision. Supporting evidence: RTP settles against prefunded balances (FED_RTP_ORDER); no open source links AM04 to a prefunding shortfall."
+        "note": "Team runbook signed off by Akshay. The TREASURY route on RTP is a team decision. Supporting evidence: RTP settles against prefunded balances (FED_RTP_ORDER); no open source links AM04 to a prefunding shortfall."
       }
     },
     {
@@ -224,9 +243,14 @@
       "review_note": "Added beyond the original 12 as a timeout code; its definition comes from the ISO code list.",
       "team_runbook": {
         "owner": "Akshay",
-        "needs_review": true,
+        "needs_review": false,
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-15",
         "rails": ["RTP"],
-        "note": "Team runbook awaiting Akshay's sign-off. RTP usage is our operational assumption; no open TCH source was used."
+        "what_to_do_by_rail": {
+          "RTP": "Check our connection and processing logs for this payment. Before anyone resends, confirm the original payment's final status (pacs.028 status request) to avoid a duplicate payment. First line may then suggest the customer try again later or use another payment method, without promising when it will work."
+        },
+        "note": "Team runbook signed off by Akshay. RTP usage is our operational assumption; no open TCH source was used."
       }
     },
     {

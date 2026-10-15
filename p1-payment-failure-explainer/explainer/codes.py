@@ -2,6 +2,7 @@
 
 import json
 from dataclasses import dataclass
+from datetime import date
 from enum import StrEnum
 from functools import cache
 from pathlib import Path
@@ -45,11 +46,28 @@ class SourceType(StrEnum):
     TEAM_RUNBOOK = "team_runbook"
 
 
+def check_sign_off(needs_review: bool, reviewed_by: str | None, reviewed_on: str | None,
+                   *, required: bool = True) -> None:
+    """Team guidance only counts as approved with a recorded reviewer and date, so approval is auditable.
+
+    required=False (scheme rules) still checks the date format, but doesn't demand a sign-off.
+    """
+    if reviewed_on is not None:
+        try:
+            date.fromisoformat(reviewed_on)
+        except (TypeError, ValueError):
+            raise ValueError("reviewed_on must be a date like 2026-10-15") from None
+    if required and not needs_review and not ((reviewed_by or "").strip() and reviewed_on):
+        raise ValueError("needs_review is false but reviewed_by and reviewed_on are not both set")
+
+
 @dataclass(frozen=True)
 class TeamRunbook:
     """Our own guidance for a code, kept apart from scheme facts so it can be reviewed and signed off as one block."""
     owner: str
     needs_review: bool
+    reviewed_by: str | None
+    reviewed_on: str | None
     rails: tuple[Rail, ...]
     route_by_rail: Mapping[Rail, Route]
     rail_notes: Mapping[Rail, str]
@@ -119,6 +137,7 @@ def _parse_team_runbook(raw: dict, scheme_rails: tuple[Rail, ...]) -> TeamRunboo
         raise ValueError("team_runbook needs an owner")
     if raw["needs_review"] and not note.strip():
         raise ValueError("team_runbook needs_review is true but note is empty")
+    check_sign_off(raw["needs_review"], raw.get("reviewed_by"), raw.get("reviewed_on"))
     # A rail is backed either by a scheme source or by the team, never both, so provenance stays unambiguous.
     overlap = set(rails) & set(scheme_rails)
     if overlap:
@@ -129,6 +148,8 @@ def _parse_team_runbook(raw: dict, scheme_rails: tuple[Rail, ...]) -> TeamRunboo
     return TeamRunbook(
         owner=owner,
         needs_review=raw["needs_review"],
+        reviewed_by=raw.get("reviewed_by"),
+        reviewed_on=raw.get("reviewed_on"),
         rails=rails,
         route_by_rail=MappingProxyType({Rail(k): Route(v) for k, v in raw.get("route_by_rail", {}).items()}),
         rail_notes=MappingProxyType({Rail(k): v for k, v in raw.get("rail_notes", {}).items()}),

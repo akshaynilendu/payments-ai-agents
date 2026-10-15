@@ -77,7 +77,7 @@ def test_runbook_is_labelled_as_team_guidance(passage):
     assert labelled == (passage.source_type is SourceType.TEAM_RUNBOOK)
 
 
-def test_rtp_next_steps_are_team_runbook_awaiting_sign_off():
+def test_rtp_next_steps_are_team_runbook_owned_by_akshay():
     rtp_steps = [p for p in all_passages() if p.rail is KbRail.RTP and p.topic is Topic.NEXT_STEP]
     assert rtp_steps
     for p in rtp_steps:
@@ -132,8 +132,10 @@ def test_loader_rejects_invalid_passage(tmp_path, bad, message):
 
 
 def test_loader_accepts_team_runbook_with_owner_and_local_link(tmp_path):
+    # An unsigned runbook must still be under review; approval needs a sign-off (tested below).
     raw = _valid_raw() | {"source_type": "team_runbook", "owner": "Akshay",
-                          "source_url": "DECISIONS.md#d7"}
+                          "source_url": "DECISIONS.md#d7",
+                          "needs_review": True, "review_note": "awaiting sign-off"}
     assert load_passages(_write(tmp_path, [raw]))[0].owner == "Akshay"
 
 
@@ -142,3 +144,90 @@ def test_loader_rejects_missing_field(tmp_path):
     del raw["source_section"]
     with pytest.raises(ValueError, match="Invalid passage KB-SCTI-AC04-01"):
         load_passages(_write(tmp_path, [raw]))
+
+
+# --- sign-off: approval needs a recorded reviewer and date -------------------
+
+def _runbook_raw(**fields):
+    return _valid_raw() | {"source_type": "team_runbook", "owner": "Akshay",
+                           "source_url": "DECISIONS.md#d7"} | fields
+
+
+@pytest.mark.parametrize(
+    "fields, message",
+    [
+        ({"needs_review": False, "reviewed_by": None, "reviewed_on": None}, "reviewed_by and reviewed_on"),
+        ({"needs_review": False, "reviewed_by": "Akshay", "reviewed_on": None}, "reviewed_by and reviewed_on"),
+        ({"needs_review": False, "reviewed_by": None, "reviewed_on": "2026-10-15"}, "reviewed_by and reviewed_on"),
+        ({"needs_review": False, "reviewed_by": "Akshay", "reviewed_on": "yesterday"}, "must be a date"),
+    ],
+)
+def test_loader_rejects_runbook_approval_without_sign_off(tmp_path, fields, message):
+    with pytest.raises(ValueError, match=f"Invalid passage KB-SCTI-AC04-01.*{message}"):
+        load_passages(_write(tmp_path, [_runbook_raw(**fields)]))
+
+
+def test_loader_accepts_signed_off_runbook(tmp_path):
+    raw = _runbook_raw(needs_review=False, reviewed_by="Akshay", reviewed_on="2026-10-15")
+    assert load_passages(_write(tmp_path, [raw]))[0].reviewed_on == "2026-10-15"
+
+
+def test_scheme_rule_needs_no_sign_off_but_dates_must_be_valid(tmp_path):
+    # Scheme passages are checked against their source, not signed off by the team.
+    assert load_passages(_write(tmp_path, [_valid_raw()]))[0].reviewed_by is None
+    with pytest.raises(ValueError, match="must be a date"):
+        load_passages(_write(tmp_path, [_valid_raw() | {"reviewed_on": "soon"}]))
+
+
+def test_every_passage_has_sign_off_fields():
+    raw = json.loads(DEFAULT_PATH.read_text(encoding="utf-8"))["passages"]
+    for p in raw:
+        assert "reviewed_by" in p and "reviewed_on" in p, p["id"]
+
+
+SIGNED_OFF_PASSAGES = {
+    "KB-RTP-AC03-01", "KB-RTP-AC04-01", "KB-RTP-AC06-01", "KB-RTP-AG01-01", "KB-RTP-AM04-01",
+    "KB-RTP-DS24-01", "KB-SCTI-GEN-02", "KB-ALL-GEN-03",
+}
+
+
+def test_signed_off_passages_are_exactly_the_approved_ones():
+    # Sign-off is Akshay's call; this list changes deliberately, never as a side effect.
+    signed = {p.id for p in all_passages() if p.reviewed_by}
+    assert signed == SIGNED_OFF_PASSAGES
+    for p in all_passages():
+        if p.id in signed:
+            assert (p.reviewed_by, p.reviewed_on, p.needs_review) == ("Akshay", "2026-10-15", False)
+
+
+def test_review_queue_is_empty():
+    assert [p.id for p in all_passages() if p.needs_review] == []
+
+
+def test_approved_scheme_passage_with_review_note_needs_sign_off(tmp_path):
+    raw = _valid_raw() | {"needs_review": False, "review_note": "checked by hand", "reviewed_by": None}
+    with pytest.raises(ValueError, match="reviewed_by and reviewed_on"):
+        load_passages(_write(tmp_path, [raw]))
+
+
+def test_approved_scheme_passage_with_only_a_caveat_needs_no_sign_off(tmp_path):
+    # Caveats are context, not review work, so they don't demand a reviewer.
+    raw = _valid_raw() | {"needs_review": False, "review_note": "", "caveat": "source is from 2023"}
+    assert load_passages(_write(tmp_path, [raw]))[0].caveat == "source is from 2023"
+
+
+def test_dated_tch_sources_carry_a_caveat():
+    for pid in ["KB-RTP-GEN-02", "KB-RTP-GEN-03"]:
+        assert "November 2023" in next(p for p in all_passages() if p.id == pid).caveat
+
+
+def test_scti_recall_window_cites_the_rulebook_section():
+    p = next(p for p in all_passages() if p.id == "KB-SCTI-GEN-02")
+    assert "4.3.2.2" in p.source_section
+    assert "10 banking business days" in p.text and "13 months" in p.text
+
+
+def test_amlr_passage_cites_no_article_number():
+    p = next(p for p in all_passages() if p.id == "KB-ALL-GEN-03")
+    assert not re.search(r"Art(icle|\.)\s*\d", p.text)
+    assert "10 July 2027" in p.text

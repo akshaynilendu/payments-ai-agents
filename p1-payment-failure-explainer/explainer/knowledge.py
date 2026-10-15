@@ -7,7 +7,7 @@ from functools import cache
 from pathlib import Path
 
 # SourceType lives in codes.py because the code table uses it too; re-exported here for passage users.
-from explainer.codes import SourceType, all_codes
+from explainer.codes import SourceType, all_codes, check_sign_off
 
 DEFAULT_PATH = Path(__file__).resolve().parent.parent / "data" / "knowledge" / "passages.json"
 MAX_WORDS = 150
@@ -42,7 +42,11 @@ class Passage:
     source_url: str
     source_section: str
     needs_review: bool
+    reviewed_by: str | None
+    reviewed_on: str | None
     review_note: str
+    # True-but-may-age context (e.g. "source is a 2023 newsletter"); unlike review_note, it asks for no action.
+    caveat: str
 
 
 def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
@@ -57,7 +61,10 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
         source_url=raw["source_url"],
         source_section=raw["source_section"],
         needs_review=raw["needs_review"],
+        reviewed_by=raw.get("reviewed_by"),
+        reviewed_on=raw.get("reviewed_on"),
         review_note=raw.get("review_note", ""),
+        caveat=raw.get("caveat", ""),
     )
     # A passage about a code we don't know can never be retrieved correctly, so it is a data error.
     unknown = [c for c in passage.codes if c not in known_codes]
@@ -74,6 +81,9 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
         raise ValueError(f"text has {words} words (max {MAX_WORDS})")
     if passage.needs_review and not passage.review_note.strip():
         raise ValueError("needs_review is true but review_note is empty")
+    # A review note on an approved passage means someone reviewed something, so record who and when.
+    check_sign_off(passage.needs_review, passage.reviewed_by, passage.reviewed_on,
+                   required=passage.source_type is SourceType.TEAM_RUNBOOK or bool(passage.review_note.strip()))
     return passage
 
 
