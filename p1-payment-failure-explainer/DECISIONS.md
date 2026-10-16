@@ -25,3 +25,23 @@ D10 Stage filter. Retrieval filters on the payment's lifecycle stage (reject / r
 recall), not just code and rail. Whether the money moved is a known fact from the message
 type, so it is filtered in code, never left to similarity scores or a prompt instruction.
 Found by hand-testing: rejects were retrieving recall and return-of-funds passages.
+D11 AI output: exactly 4 fields: what_happened (for ops), next_step (for ops),
+customer_message (neutral draft, or null; always null when the route is COMPLIANCE),
+citations (passage IDs used). No route (the table decides, D2), no confidence score
+(self-rated confidence is unreliable).
+The free-text field is excluded from the prompt: data minimisation and no prompt-injection surface.
+D12 Policy-fixed answers are owned by code, not generated. Found in the first live run: the AI
+retrieved and cited the no-tipping-off rule, then still suggested telling the customer about the
+regulatory concern. On a COMPLIANCE route code writes next_step (team runbook text) and
+customer_message stays null; the AI writes only what_happened, and a check blocks any customer-contact
+instruction. Law (e.g. the AML Directive) gets its own source type, "regulation", next to scheme
+rules and team runbook.
+
+## V2 list
+Parked ideas, not in v1:
+- camt.056 (recall) and camt.029 (recall answer) parsing, with samples.
+- Full rulebooks in the knowledge base (downloaded locally, never committed; D7).
+- Postgres + pgvector, only when a D9 trigger applies.
+- Claude Haiku 5.5 as an eval contender on day 3 (released Oct 7, 2026; 10x cheaper; rejects temperature).
+- Masking names written in free text (the xfail test in test_masking.py).
+- Treating a pacs.004 with FOCR as a recall answer rather than a return.

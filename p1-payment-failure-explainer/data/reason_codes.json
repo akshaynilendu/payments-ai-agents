@@ -321,7 +321,7 @@
       "category": "regulatory",
       "default_route": "COMPLIANCE",
       "baseline_what_happened": "The other bank stopped the payment for regulatory reasons.",
-      "baseline_what_to_do": "Pass to the compliance team. Do not tell the customer anything beyond the customer message, and do not suggest workarounds.",
+      "baseline_what_to_do": "Hand to Compliance. Do not contact the customer about the reason; Compliance decides what, if anything, is said.",
       "baseline_customer_message": "Your payment could not be completed. Please contact us if you need help.",
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],

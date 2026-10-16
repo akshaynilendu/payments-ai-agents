@@ -58,6 +58,8 @@ class Route(StrEnum):
 
 class SourceType(StrEnum):
     SCHEME_RULE = "scheme_rule"
+    # Law (e.g. the AML Directive), kept apart from scheme rules because it binds the bank, not the scheme (D12).
+    REGULATION = "regulation"
     # Our own operational guidance: must be labelled as team guidance, never as a scheme rule (D7).
     TEAM_RUNBOOK = "team_runbook"
 
@@ -239,3 +241,10 @@ def lookup(code: str | None) -> ReasonCode | None:
 
 def all_codes() -> list[ReasonCode]:
     return list(_default_codes().values())
+
+
+@cache
+def route_descriptions() -> dict[Route, str]:
+    """What each route means, from the same file as the codes, so the prompt can't drift from it."""
+    data = json.loads(DEFAULT_PATH.read_text(encoding="utf-8"))
+    return {Route(name): text for name, text in data["routes"].items()}

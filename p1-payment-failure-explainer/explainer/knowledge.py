@@ -89,8 +89,10 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
         raise ValueError("mandatory passage must list the codes it guards")
     if not passage.source_url.strip():
         raise ValueError("empty source_url")
-    if passage.source_type is SourceType.SCHEME_RULE and not passage.source_url.startswith("https://"):
-        raise ValueError("scheme_rule needs an https source_url")
+    # Scheme rules and regulations are public sources, so they must link to them.
+    if passage.source_type in (SourceType.SCHEME_RULE, SourceType.REGULATION) \
+            and not passage.source_url.startswith("https://"):
+        raise ValueError(f"{passage.source_type.value} needs an https source_url")
     if passage.source_type is SourceType.TEAM_RUNBOOK and not (passage.owner or "").strip():
         raise ValueError("team_runbook needs an owner")
     words = len(passage.text.split())

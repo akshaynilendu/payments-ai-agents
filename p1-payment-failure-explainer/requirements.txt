@@ -6,3 +6,10 @@ pytest==9.1.1
 fastembed==0.8.1
 onnxruntime==1.30.0
 numpy==2.5.3
+# Claude API (piece 3). httpx2 comes with it: the SDK's own HTTP library, a maintained fork of
+# httpx by its original author, published by Pydantic (github.com/pydantic/httpx2).
+anthropic==1.11.0
+python-dotenv==1.2.4  # loads ANTHROPIC_API_KEY from the gitignored .env.server
+# Pinned below their newest releases, which were under two weeks old when chosen.
+pydantic==2.13.5
+truststore==0.10.4

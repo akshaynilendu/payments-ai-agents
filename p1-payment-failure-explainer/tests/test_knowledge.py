@@ -293,3 +293,21 @@ def test_rtp_runbook_next_steps_are_reject_only():
     for p in all_passages():
         if p.source_type is SourceType.TEAM_RUNBOOK:
             assert p.stages == (Stage.REJECT,), p.id
+
+
+# --- regulation source type (D12) -----------------------------------------------------------
+
+def test_law_passages_are_regulation_not_scheme_rules():
+    law = {p.id for p in all_passages() if p.source_type is SourceType.REGULATION}
+    assert law == {"KB-ALL-GEN-01", "KB-ALL-GEN-03"}
+
+
+def test_regulation_label_comes_from_data():
+    from explainer.explain import source_label
+    assert source_label(SourceType.REGULATION) == "Regulation"
+
+
+def test_loader_requires_https_for_regulation(tmp_path):
+    raw = _valid_raw() | {"source_type": "regulation", "source_url": "DECISIONS.md#d12"}
+    with pytest.raises(ValueError, match="regulation needs an https source_url"):
+        load_passages(_write(tmp_path, [raw]))

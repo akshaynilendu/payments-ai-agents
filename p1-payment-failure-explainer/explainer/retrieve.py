@@ -55,6 +55,11 @@ _TOPIC_ORDER = [Topic.NEXT_STEP, Topic.MEANING, Topic.WHO_ACTS, Topic.CUSTOMER_M
 _SAFE_CODE = re.compile(r"[A-Z0-9]{1,35}")
 
 
+def safe_code(code: str) -> str:
+    """Codes go into logs; proprietary codes can hold up to 35 characters, anything else is not logged as-is."""
+    return code if _SAFE_CODE.fullmatch(code or "") else "INVALID"
+
+
 def matches(passage: Passage, code: str, rail: Rail) -> bool:
     """Same rail (or ALL), and either about this code or a general passage that names no code."""
     rail_ok = passage.rail is KbRail.ALL or passage.rail.value == rail.value
@@ -137,8 +142,7 @@ def _record_gap(path: Path, code: str, rail: Rail, stage: Stage, mode: Mode, thr
     """Append-only log of missing guidance. Only code and rail: never amounts, IDs, names or free text."""
     record = {
         "timestamp": datetime.now(UTC).isoformat(timespec="seconds"),
-        # Proprietary codes can hold up to 35 characters; anything else is not logged as-is.
-        "code": code if _SAFE_CODE.fullmatch(code) else "INVALID",
+        "code": safe_code(code),
         "rail": rail.value,
         "stage": stage.value,
         "mode": mode.value,
