@@ -25,11 +25,28 @@ LLM_TEMPERATURE = 0  # D5: repeatable answers, so evals compare like with like
 LLM_MAX_OUTPUT_TOKENS = 1024  # four short fields; a hard cap on cost per call
 LLM_TIMEOUT_SECONDS = 10.0  # D4: at most 10 seconds per case
 LLM_SDK_RETRIES = 1  # network/5xx/429 retries inside the SDK; check-failure retries are separate (D3)
+
+# Per-model request settings. Capabilities checked with the Models API and the Claude API docs on 2026-10-17.
+# A model missing here is an error, so no model runs with settings meant for another.
+MODEL_SETTINGS = {
+    # No effort or adaptive thinking on Haiku 4.5; temperature 0 for repeatable answers (D5).
+    "claude-haiku-4-5-20251001": {"max_tokens": LLM_MAX_OUTPUT_TOKENS, "temperature": LLM_TEMPERATURE},
+    # Haiku 5.5 rejects any temperature but 1, so it is omitted. Thinking is on by default and counts toward
+    # max_tokens, and its tokenizer uses ~30% more tokens, hence the higher cap. Effort defaults to medium;
+    # low is the documented way to think less, and this is a short, tightly constrained task.
+    "claude-haiku-5-5": {"max_tokens": 4096, "effort": "low"},
+    # LLM judge (D13). Non-default temperature is rejected; effort defaults to high, medium is enough for
+    # three pass/fail grades. Thinking makes it slower than the 10 s case budget, which doesn't apply to grading.
+    "claude-sonnet-5-5": {"max_tokens": 3000, "effort": "medium", "timeout_s": 60.0},
+}
+JUDGE_MODEL = "claude-sonnet-5-5"
 EXPLAIN_LOG = VAR_DIR / "explain_log.jsonl"
 
 # Prices per million tokens (input, output), from the official pricing page.
 PRICING_URL = "https://platform.claude.com/docs/en/about-claude/pricing"
-PRICING_CHECKED_ON = "2026-10-15"
+PRICING_CHECKED_ON = "2026-10-17"
 MODEL_PRICES_PER_MTOK = {
     "claude-haiku-4-5-20251001": (1.00, 5.00),
+    "claude-haiku-5-5": (0.10, 0.50),  # prompts up to 100K tokens; ours are ~2K
+    "claude-sonnet-5-5": (2.00, 10.00),
 }

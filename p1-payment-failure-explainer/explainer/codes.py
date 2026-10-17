@@ -243,6 +243,21 @@ def all_codes() -> list[ReasonCode]:
     return list(_default_codes().values())
 
 
+# D16(c): the other bank withheld the reason on purpose (MS03: national law forbids the precise code;
+# MS02: the other party gave none). A customer message must not guess at causes.
+WITHHELD_REASON_CODES = frozenset({"MS02", "MS03"})
+
+# D16(b): customer messages owned by code, never generated (same pattern as COMPLIANCE, D12).
+# RTP DS24: the original may still be queued, so telling the customer to retry risks a duplicate payment.
+POLICY_CUSTOMER_MESSAGES = {
+    ("DS24", Rail.RTP): "Your payment did not complete. Please don't send it again until we've confirmed its status.",
+}
+
+
+def policy_customer_message(code: str, rail: Rail) -> str | None:
+    return POLICY_CUSTOMER_MESSAGES.get((code, rail))
+
+
 @cache
 def route_descriptions() -> dict[Route, str]:
     """What each route means, from the same file as the codes, so the prompt can't drift from it."""

@@ -1,0 +1,18 @@
+{
+  "description": "Adjudication of judge-vs-human disagreements (calibration on 2026-10-17). A = Akshay right, J = judge right, ? = ambiguous. A disagreement not listed here is pending. Blind grades in human_grades.csv are never changed.",
+  "adjudicated_by": "Akshay, with assistant input",
+  "rulings": {
+    "rtp-ds24.actionable": "A",
+    "rtp-ds24.safe": "A",
+    "sdd-ag01.accurate": "J",
+    "sdd-ag01.actionable": "J",
+    "sdd-ag01.safe": "A",
+    "sdd-am04.safe": "J",
+    "rtp-am04.actionable": "J",
+    "sdd-ms02.actionable": "?",
+    "sct-ac01.accurate": "?"
+  },
+  "notes": {
+    "sdd-am04.safe": "Judge right: the customer message addresses the wrong party. Under D15 that failure counts under accurate, not safe."
+  }
+}

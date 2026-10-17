@@ -40,24 +40,34 @@ class AnthropicClient:
         load_dotenv(env_file, override=False)
         if not os.environ.get("ANTHROPIC_API_KEY"):
             raise LLMError(f"ANTHROPIC_API_KEY is not set; add it to {env_file.name} (gitignored)")
+        if model not in config.MODEL_SETTINGS:
+            # Each model needs its own settings (e.g. Haiku 5.5 rejects temperature 0), so never guess them.
+            raise LLMError(f"no settings for model {model!r} in config.MODEL_SETTINGS")
         self.model = model
+        self._settings = config.MODEL_SETTINGS[model]
         self._anthropic = anthropic
-        self._client = anthropic.Anthropic(timeout=config.LLM_TIMEOUT_SECONDS, max_retries=config.LLM_SDK_RETRIES)
+        self._client = anthropic.Anthropic(timeout=self._settings.get("timeout_s", config.LLM_TIMEOUT_SECONDS),
+                                           max_retries=config.LLM_SDK_RETRIES)
+
+    def _request(self, system: str, user: str, schema: dict) -> dict:
+        settings = self._settings
+        output_config = {"format": {"type": "json_schema", "schema": schema}}
+        if "effort" in settings:
+            output_config["effort"] = settings["effort"]
+        request = dict(model=self.model, max_tokens=settings["max_tokens"], system=system,
+                       messages=[{"role": "user", "content": user}], output_config=output_config)
+        if "temperature" in settings:
+            # SDK 1.x dropped sampling arguments; Haiku 4.5 still honours temperature, so it goes in the body (D5).
+            request["extra_body"] = {"temperature": settings["temperature"]}
+        return request
 
     def complete(self, system: str, user: str, schema: dict) -> LLMResponse:
         try:
-            response = self._client.messages.create(
-                model=self.model,
-                max_tokens=config.LLM_MAX_OUTPUT_TOKENS,
-                system=system,
-                messages=[{"role": "user", "content": user}],
-                output_config={"format": {"type": "json_schema", "schema": schema}},
-                # SDK 1.x dropped sampling arguments; Haiku 4.5 still honours temperature, so it goes in the body (D5).
-                extra_body={"temperature": config.LLM_TEMPERATURE},
-            )
+            response = self._client.messages.create(**self._request(system, user, schema))
         except self._anthropic.APIError as e:
             # Only the error type: the exception text could echo request details.
             raise LLMError(f"model call failed: {type(e).__name__}") from None
+        # Read by type: Haiku 5.5 and Sonnet 5.5 may return thinking blocks before the text.
         text = "".join(block.text for block in response.content if block.type == "text")
         return LLMResponse(
             text=text,

@@ -2,7 +2,8 @@
 
 from typing import Sequence
 
-from explainer.codes import Rail, ReasonCode, Route, SourceType, Stage, route_descriptions
+from explainer.codes import (WITHHELD_REASON_CODES, Rail, ReasonCode, Route, SourceType, Stage,
+                             policy_customer_message, route_descriptions)
 from explainer.retrieve import RAIL_LABELS, Retrieved
 
 FIELDS = ("what_happened", "next_step", "customer_message", "citations")
@@ -44,7 +45,9 @@ Rules:
 6. The route comes from the bank's routing table. Treat it as fixed context and keep your advice consistent with it.
 7. Follow every passage marked MANDATORY.
 8. Keep "what_happened" and "next_step" under 600 characters each and "customer_message" under 400.
-9. When the route is COMPLIANCE, write "what_happened" for the compliance team, return "next_step" as an empty string and "customer_message" as null: the bank's policy sets both."""
+9. When the route is COMPLIANCE, write "what_happened" for the compliance team, return "next_step" as an empty string and "customer_message" as null: the bank's policy sets both.
+10. When the case facts say the customer message is set by bank policy, return "customer_message" as null.
+11. Keep "customer_message" consistent with "next_step": it never asks the customer to do something the next step rules out."""
 
 
 SOURCE_LABELS = {
@@ -59,17 +62,39 @@ def source_label(source_type: SourceType) -> str:
     return SOURCE_LABELS[source_type]
 
 
+# Which bank we are decides who "the customer" is; without it a draft can address the wrong party (D16).
+PERSPECTIVE = {
+    Rail.SEPA_INSTANT: "We are the payer's bank (the debtor's bank). The customer is the payer who sent this "
+                       "payment; the other party is the beneficiary.",
+    Rail.RTP: "We are the payer's bank (the sending bank). The customer is the payer who sent this payment; "
+              "the other party is the receiver.",
+    Rail.SEPA_DD: "We are the creditor's bank. The customer is the creditor who collected this direct debit; "
+                  "the other party is the debtor (the payer).",
+    Rail.UNKNOWN: "The rail is unknown, so which bank we are, and who the customer is, is not known.",
+}
+
+
+def case_facts(code: ReasonCode, rail: Rail, stage: Stage, route: Route) -> list[str]:
+    """The case facts the AI sees. The eval judge gets exactly these too, so both judge the same case (D13)."""
+    return [
+        f"Reason code: {code.code} ({code.name})",
+        f"Baseline meaning: {code.meaning}",
+        f"Rail: {RAIL_LABELS[rail]}",
+        f"Our role: {PERSPECTIVE[rail]}",
+        f"Stage: {stage.value} ({STAGE_LABELS[stage]})",
+        f"Route (fixed by the routing table): {route.value}: {route_descriptions()[route]}",
+    ] + ([
+        "Reason withheld: the other bank gave no reason on purpose. The customer message says only that no "
+        "reason was given, without suggesting possible causes.",
+    ] if code.code in WITHHELD_REASON_CODES else []) + ([
+        "Customer message: set by bank policy.",
+    ] if policy_customer_message(code.code, rail) else [])
+
+
 def build_prompt(code: ReasonCode, rail: Rail, stage: Stage, route: Route, passages: Sequence[Retrieved],
                  failures: Sequence[str] = ()) -> tuple[str, str]:
     """Return (system, user). Only code-level facts go in: no amounts, IDs, parties or free text (D11)."""
-    facts = "\n".join([
-        "Case facts:",
-        f"- Reason code: {code.code} ({code.name})",
-        f"- Baseline meaning: {code.meaning}",
-        f"- Rail: {RAIL_LABELS[rail]}",
-        f"- Stage: {stage.value} ({STAGE_LABELS[stage]})",
-        f"- Route (fixed by the routing table): {route.value}: {route_descriptions()[route]}",
-    ])
+    facts = "\n".join(["Case facts:"] + [f"- {fact}" for fact in case_facts(code, rail, stage, route)])
     blocks = []
     for item in passages:
         p = item.passage

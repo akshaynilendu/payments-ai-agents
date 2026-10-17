@@ -12,7 +12,7 @@ from pathlib import Path
 
 from explainer import config
 from explainer.check import check
-from explainer.codes import Rail, ReasonCode, Route, Stage, lookup
+from explainer.codes import Rail, ReasonCode, Route, Stage, lookup, policy_customer_message
 from explainer.explain import OUTPUT_SCHEMA, build_prompt, source_label
 from explainer.llm import LLMClient, LLMError, cost_usd
 from explainer.parse import PaymentStatus
@@ -73,6 +73,7 @@ class CaseOutcome(StrEnum):
     NO_GUIDANCE = "no_guidance"
     NOT_A_FAILURE = "not_a_failure"
     PENDING = "pending"
+    BASELINE = "baseline"  # no AI by choice: the code table's fixed text, the D4 baseline for evals
 
 
 @dataclass(frozen=True)
@@ -107,8 +108,9 @@ class CaseResult:
     latency_s: float
 
 
-def explain_case(status: PaymentStatus, llm: LLMClient, mode: Mode | str = Mode.FILTER_RANK, *,
+def explain_case(status: PaymentStatus, llm: LLMClient | None, mode: Mode | str = Mode.FILTER_RANK, *,
                  log_path: Path = config.EXPLAIN_LOG, **retrieve_options) -> CaseResult:
+    """llm=None gives the no-AI baseline through the same stops, routing and policy as the AI path (D4)."""
     started = time.perf_counter()
     result = _explain(status, llm, mode, retrieve_options)
     result = _with(result, latency_s=round(time.perf_counter() - started, 3))
@@ -116,7 +118,7 @@ def explain_case(status: PaymentStatus, llm: LLMClient, mode: Mode | str = Mode.
     return result
 
 
-def _explain(status: PaymentStatus, llm: LLMClient, mode, retrieve_options: dict) -> CaseResult:
+def _explain(status: PaymentStatus, llm: LLMClient | None, mode, retrieve_options: dict) -> CaseResult:
     prepared = prepare(status, mode, **retrieve_options)
     base = dict(code=status.reason_code, rail=status.rail, stage=status.stage, citations=(), note=None,
                 attempts=0, failures=(), model=None, input_tokens=0, output_tokens=0, cost_usd=0.0, latency_s=0.0)
@@ -136,12 +138,18 @@ def _explain(status: PaymentStatus, llm: LLMClient, mode, retrieve_options: dict
             next_step_source=NextStepSource.BASELINE, customer_message=None, **base | {"note": "unknown_code"})
 
     route = code.route_for(status.rail)
+    # D16(b): where policy fixes the customer message, code owns it and the AI is asked for null.
+    customer_policy = policy_customer_message(code.code, status.rail)
     # Tipping off: on a compliance route code owns next_step and nothing goes to the customer (D11, D12).
     compliance = route is Route.COMPLIANCE
     policy = dict(next_step=COMPLIANCE_NEXT_STEP, next_step_source=NextStepSource.POLICY, customer_message=None)
     baseline = dict(route=route, what_happened=code.baseline_what_happened) | (policy if compliance else dict(
         next_step=code.what_to_do_for(status.rail), next_step_source=NextStepSource.BASELINE,
-        customer_message=code.baseline_customer_message))
+        # D16(b): a policy-owned customer message replaces the table text in the baseline too.
+        customer_message=policy_customer_message(code.code, status.rail) or code.baseline_customer_message))
+
+    if llm is None:
+        return CaseResult(outcome=CaseOutcome.BASELINE, **baseline, **base)
 
     if prepared.retrieval.gap:
         # D7: no relevant guidance, so no AI call: $0 and nothing can be invented.
@@ -164,7 +172,8 @@ def _explain(status: PaymentStatus, llm: LLMClient, mode, retrieve_options: dict
             break
         input_tokens += response.input_tokens
         output_tokens += response.output_tokens
-        checked = check(response.text, allowed_citations=set(by_id), route=route, stop_reason=response.stop_reason)
+        checked = check(response.text, allowed_citations=set(by_id), route=route, stop_reason=response.stop_reason,
+                        code=code.code, customer_policy=bool(customer_policy))
         if checked.ok:
             answer = checked.answer
             return CaseResult(
@@ -174,7 +183,7 @@ def _explain(status: PaymentStatus, llm: LLMClient, mode, retrieve_options: dict
                 # On COMPLIANCE the AI writes only what_happened; the rest is policy (D12).
                 **(policy if compliance else dict(next_step=answer["next_step"],
                                                   next_step_source=NextStepSource.AI,
-                                                  customer_message=answer["customer_message"])),
+                                                  customer_message=customer_policy or answer["customer_message"])),
                 **base | dict(
                     citations=tuple(_citation(by_id[cid]) for cid in dict.fromkeys(answer["citations"])),
                     attempts=attempt, failures=tuple(failures_log), model=llm.model,

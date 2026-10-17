@@ -42,7 +42,7 @@ def test_unknown_or_empty_code_returns_none(code):
         ("AG01", Rail.SEPA_INSTANT, Route.FIRST_LINE),
         ("RR04", Rail.SEPA_DD, Route.COMPLIANCE),
         ("FRAD", Rail.SEPA_INSTANT, Route.FRAUD),
-        ("AB05", Rail.SEPA_INSTANT, Route.DEVELOPER),
+        ("AB05", Rail.SEPA_INSTANT, Route.FIRST_LINE),  # D14: a single timeout is a customer problem
     ],
 )
 def test_route_for_rail(code, rail, expected):

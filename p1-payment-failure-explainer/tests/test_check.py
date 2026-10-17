@@ -148,3 +148,64 @@ def test_compliance_allows_empty_or_negated_next_step(next_step):
 def test_customer_contact_is_normal_advice_outside_compliance():
     assert check(answer(next_step="Advise the customer to check the IBAN with the recipient."),
                  allowed_citations=ALLOWED, route=Route.FIRST_LINE).ok
+
+
+# --- D16: customer message vs next_step, and withheld reasons ---------------------------
+
+RESEND_FORBIDDEN_STEP = ("Check the logs. Before anyone resends, confirm the original payment's final status "
+                         "(pacs.028 status request) to avoid a duplicate payment.")
+
+
+@pytest.mark.parametrize("customer", [
+    "Your payment timed out. Please try again later.",
+    "Please resend the payment.",
+    "You can send it again in a moment.",
+])
+def test_customer_retry_contradicting_next_step_is_blocked(customer):
+    result = check(answer(next_step=RESEND_FORBIDDEN_STEP, customer_message=customer),
+                   allowed_citations=ALLOWED, route=Route.DEVELOPER)
+    assert "customer_contradicts_next_step" in names(result)
+
+
+@pytest.mark.parametrize("customer", [
+    "Your payment did not complete. Please don't send it again until we've confirmed its status.",
+    "Your payment did not complete. We are checking its status.",
+])
+def test_negated_or_neutral_customer_message_is_fine(customer):
+    result = check(answer(next_step=RESEND_FORBIDDEN_STEP, customer_message=customer),
+                   allowed_citations=ALLOWED, route=Route.DEVELOPER)
+    assert "customer_contradicts_next_step" not in names(result)
+
+
+def test_retry_advice_is_fine_when_next_step_does_not_forbid_it():
+    result = check(answer(customer_message="Please try again later or use a standard transfer."),
+                   allowed_citations=ALLOWED, route=Route.FIRST_LINE)
+    assert result.ok
+
+
+@pytest.mark.parametrize("customer", [
+    "Your payment was returned without a reason. This may be due to their account status or a regulatory restriction.",
+    "No reason was given; possible causes include insufficient funds.",
+    "The other bank declined it, likely because the account is closed.",
+])
+@pytest.mark.parametrize("code", ["MS02", "MS03"])
+def test_speculating_about_a_withheld_reason_is_blocked(code, customer):
+    result = check(answer(customer_message=customer), allowed_citations=ALLOWED, route=Route.FIRST_LINE, code=code)
+    assert "speculative_reason" in names(result)
+
+
+def test_saying_no_reason_was_given_is_fine_for_withheld_codes():
+    customer = "Your payment was returned and no reason was given. Please contact the other party to arrange payment."
+    assert check(answer(customer_message=customer), allowed_citations=ALLOWED, route=Route.FIRST_LINE, code="MS03").ok
+
+
+def test_speculation_rule_only_applies_to_withheld_codes():
+    customer = "Your payment was declined because the account is closed."
+    assert check(answer(customer_message=customer), allowed_citations=ALLOWED, route=Route.FIRST_LINE, code="AC04").ok
+
+
+def test_policy_owned_customer_message_must_come_back_null():
+    result = check(answer(), allowed_citations=ALLOWED, route=Route.DEVELOPER, customer_policy=True)
+    assert "policy_customer_message" in names(result)
+    assert check(answer(customer_message=None), allowed_citations=ALLOWED, route=Route.DEVELOPER,
+                 customer_policy=True).ok

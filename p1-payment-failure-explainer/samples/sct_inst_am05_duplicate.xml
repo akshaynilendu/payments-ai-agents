@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MADE-UP TEST DATA. Names are placeholders; IBANs are public documentation examples.
+     AM05 keeps a sample on the DEVELOPER route after AB05 moved to FIRST_LINE (D14). -->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.002.001.10">
+  <FIToFIPmtStsRpt>
+    <GrpHdr>
+      <MsgId>MSG-TEST-0009</MsgId>
+      <CreDtTm>2026-10-08T13:12:44.615+02:00</CreDtTm>
+    </GrpHdr>
+    <OrgnlGrpInfAndSts>
+      <OrgnlMsgId>ORIG-TEST-0009</OrgnlMsgId>
+      <OrgnlMsgNmId>pacs.008.001.08</OrgnlMsgNmId>
+    </OrgnlGrpInfAndSts>
+    <TxInfAndSts>
+      <StsId>STS-TEST-0009</StsId>
+      <OrgnlInstrId>INSTR-TEST-0009</OrgnlInstrId>
+      <OrgnlEndToEndId>E2E-TEST-0009</OrgnlEndToEndId>
+      <OrgnlTxId>TX-TEST-0009</OrgnlTxId>
+      <TxSts>RJCT</TxSts>
+      <StsRsnInf>
+        <Orgtr><Id><OrgId><AnyBIC>TESTPTPLXXX</AnyBIC></OrgId></Id></Orgtr>
+        <Rsn><Cd>AM05</Cd></Rsn>
+      </StsRsnInf>
+      <OrgnlTxRef>
+        <IntrBkSttlmAmt Ccy="EUR">310.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-10-08</IntrBkSttlmDt>
+        <PmtTpInf>
+          <SvcLvl><Cd>SEPA</Cd></SvcLvl>
+          <LclInstrm><Cd>INST</Cd></LclInstrm>
+        </PmtTpInf>
+        <Dbtr><Pty><Nm>Hans Muster</Nm></Pty></Dbtr>
+        <DbtrAcct><Id><IBAN>AT611904300234573201</IBAN></Id></DbtrAcct>
+        <DbtrAgt><FinInstnId><BICFI>TESTATWWXXX</BICFI></FinInstnId></DbtrAgt>
+        <CdtrAgt><FinInstnId><BICFI>TESTPTPLXXX</BICFI></FinInstnId></CdtrAgt>
+        <Cdtr><Pty><Nm>Ana Silva</Nm></Pty></Cdtr>
+        <CdtrAcct><Id><IBAN>PT50000201231234567890154</IBAN></Id></CdtrAcct>
+      </OrgnlTxRef>
+    </TxInfAndSts>
+  </FIToFIPmtStsRpt>
+</Document>

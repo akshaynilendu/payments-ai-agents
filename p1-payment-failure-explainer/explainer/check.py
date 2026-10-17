@@ -4,7 +4,7 @@ import json
 import re
 from dataclasses import dataclass
 
-from explainer.codes import Route
+from explainer.codes import WITHHELD_REASON_CODES, Route
 from explainer.explain import FIELDS
 
 LENGTH_LIMITS = {"what_happened": 600, "next_step": 600, "customer_message": 400}
@@ -38,6 +38,41 @@ CUSTOMER_CONTACT_PATTERNS = [re.compile(p, re.IGNORECASE) for p in (
 _NEGATION = re.compile(r"\b(?:not|never|no)\b|n't", re.IGNORECASE)
 
 
+# D16(b): next_step forbids resending (e.g. "before anyone resends, confirm ... pacs.028")...
+_RESEND_FORBIDDEN = re.compile(
+    r"\bpacs\.028\b|\bbefore\s+(?:anyone|the\s+customer|they|you)?\s*(?:re-?sends?|resubmits?|retr(?:y|ies)|tries\s+again)"
+    r"|\b(?:do\s+not|don't|never)\s+(?:re-?send|resubmit|retry|send\s+(?:it|the\s+payment)\s+again)", re.IGNORECASE)
+# ...so the customer message must not tell the customer to do it.
+_RETRY_INSTRUCTION = re.compile(
+    r"\b(?:try\s+(?:it\s+)?again|re-?send|resubmit|retry|re-?issue|send\s+(?:it|the\s+payment|a\s+new\s+payment)\s+again"
+    r"|send\s+again)\b", re.IGNORECASE)
+
+# D16(c): guessing at a withheld reason. MS03 exists because national law can forbid giving the cause.
+_SPECULATION = re.compile(
+    r"\b(?:may|might|could)\s+(?:be|have\s+been)\s+(?:due|because|caused|related)|\bpossibl[ey]\b|\blikely\b"
+    r"|\bdue\s+to\b|\bsuch\s+as\b|\bfor\s+example\b|\breasons?\s+(?:include|like|could|may|might)"
+    r"|\bregulat|\bsanction|\binsufficient|\bclosed\b|\bblocked\b|\bdeceased\b|\bfraud|\baccount\s+status", re.IGNORECASE)
+
+
+def contradiction(next_step: str, customer_message: str | None) -> str | None:
+    """The retry phrase in the customer message, if next_step forbids resending; else None."""
+    if not customer_message or not _RESEND_FORBIDDEN.search(next_step or ""):
+        return None
+    for match in _RETRY_INSTRUCTION.finditer(customer_message):
+        # "Please don't send it again" is the policy itself, not a retry instruction.
+        if not _NEGATION.search(customer_message[max(0, match.start() - 25):match.start()]):
+            return match.group(0)
+    return None
+
+
+def speculation(code: str | None, customer_message: str | None) -> str | None:
+    """The guessing phrase in a customer message for a reason-withheld code; else None."""
+    if code not in WITHHELD_REASON_CODES or not customer_message:
+        return None
+    match = _SPECULATION.search(customer_message)
+    return match.group(0) if match else None
+
+
 def _customer_contact(text: str) -> str | None:
     for pattern in CUSTOMER_CONTACT_PATTERNS:
         for match in pattern.finditer(text):
@@ -66,7 +101,7 @@ class CheckResult:
 
 
 def check(text: str, *, allowed_citations: set[str], route: Route | None,
-          stop_reason: str = "end_turn") -> CheckResult:
+          stop_reason: str = "end_turn", code: str | None = None, customer_policy: bool = False) -> CheckResult:
     failures: list[Failure] = []
     if stop_reason != "end_turn":
         # Cut off by the token cap or refused: even valid-looking JSON may be incomplete.
@@ -107,6 +142,16 @@ def check(text: str, *, allowed_citations: set[str], route: Route | None,
             phrase = _customer_contact(answer[field])
             if phrase:
                 failures.append(Failure("compliance_customer_contact", f"{field}: {phrase}"))
+    if customer_policy and customer is not None:
+        # D16(b): the bank's policy text replaces it, so the AI is asked for null.
+        failures.append(Failure("policy_customer_message", "customer_message is set by bank policy; return null"))
+    if not compliance:
+        phrase = contradiction(answer["next_step"], customer)
+        if phrase:
+            failures.append(Failure("customer_contradicts_next_step", phrase))
+    phrase = speculation(code, customer)
+    if phrase:
+        failures.append(Failure("speculative_reason", phrase))
     if customer:
         for pattern in PROMISE_PATTERNS:
             match = pattern.search(customer)

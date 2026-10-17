@@ -12,8 +12,15 @@
       "file": "sct_inst_ab05_timeout.xml",
       "message_type": "PACS_002", "stage": "REJECT", "rail": "SEPA_INSTANT", "status": "RJCT", "reason_code": "AB05",
       "amount": "1200.50", "currency": "EUR", "end_to_end_id": "E2E-TEST-0002",
-      "route": "DEVELOPER",
+      "route": "FIRST_LINE",
       "pii": ["Max Mustermann", "DE75512108001245126199", "Jean Dupont", "FR1420041010050500013M02606"]
+    },
+    {
+      "file": "sct_inst_am05_duplicate.xml",
+      "message_type": "PACS_002", "stage": "REJECT", "rail": "SEPA_INSTANT", "status": "RJCT", "reason_code": "AM05",
+      "amount": "310.00", "currency": "EUR", "end_to_end_id": "E2E-TEST-0009",
+      "route": "DEVELOPER",
+      "pii": ["Hans Muster", "AT611904300234573201", "Ana Silva", "PT50000201231234567890154"]
     },
     {
       "file": "sct_inst_rr04_regulatory.xml",

@@ -72,4 +72,5 @@ def test_sample_really_contains_the_pii_that_masking_must_remove(sample):
 def test_samples_cover_every_route_that_a_confirmed_code_can_reach():
     covered = {s["route"] for s in EXPECTED}
     # FRAUD has no code with a confirmed rail yet (FRAD/FR01), and QC is never a default route.
+    # DEVELOPER is covered by the SEPA Instant AM05 sample, added when AB05 moved to FIRST_LINE (D14).
     assert covered == {"FIRST_LINE", "DEVELOPER", "TREASURY", "COMPLIANCE", None}

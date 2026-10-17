@@ -218,14 +218,14 @@
       "meaning": "The receiving bank did not get or process the instant payment within the scheme's time limit.",
       "rails": ["SEPA_INSTANT"],
       "category": "timeout",
-      "default_route": "DEVELOPER",
+      "default_route": "FIRST_LINE",
       "baseline_what_happened": "The instant payment timed out before the receiving bank completed it, so it was not executed.",
-      "baseline_what_to_do": "Check our connection and processing logs for this payment. Suggest the customer try again later or use a non-instant transfer.",
+      "baseline_what_to_do": "Suggest the customer send the payment again later or use a standard (non-instant) SEPA credit transfer, or contact the beneficiary for another way to pay.",
       "baseline_customer_message": "Your instant payment could not be completed because the receiving bank did not respond in time. Please try again later or use a standard transfer.",
       "iso_code_sets": ["ExternalStatusReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST"],
       "needs_review": false,
-      "review_note": "Routed to DEVELOPER because EPC names connection, processing or validation issues anywhere in the chain as the root cause."
+      "review_note": "Routed to FIRST_LINE: team decision (D14) signed off by Akshay on 2026-10-17. EPC059-18's suggested action is customer-side (resend later, use another instrument such as SCT, or contact the beneficiary), and the root cause can be anywhere between the PSPs and CSMs. A spike of timeouts is a system problem (v2: spike monitoring / QC route)."
     },
     {
       "code": "DS24",
@@ -236,7 +236,7 @@
       "default_route": "DEVELOPER",
       "baseline_what_happened": "The payment timed out before it completed, so it was not executed.",
       "baseline_what_to_do": "Check our connection and processing logs for this payment. Suggest the customer try again later or use another payment method.",
-      "baseline_customer_message": "Your instant payment could not be completed because it timed out. Please try again later or use another payment method.",
+      "baseline_customer_message": "Your payment did not complete. Please don't send it again until we've confirmed its status.",
       "iso_code_sets": ["ExternalStatusReason1Code"],
       "source_ids": ["ISO"],
       "needs_review": false,

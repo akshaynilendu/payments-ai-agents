@@ -276,3 +276,58 @@ def test_non_compliance_next_step_source_is_recorded(run):
 def test_prompt_tells_the_ai_what_to_return_on_compliance(run):
     _, llm = run("sct_inst_rr04_regulatory.xml", [LIVE_RR04_ANSWER | {"next_step": ""}])
     assert 'When the route is COMPLIANCE, write "what_happened" for the compliance team' in llm.calls[0]["system"]
+
+
+# --- D16 --------------------------------------------------------------------------------
+
+DS24_POLICY = "Your payment did not complete. Please don't send it again until we've confirmed its status."
+
+
+def _rtp_ds24():
+    xml = (SAMPLES_DIR / "rtp_ac06_blocked.xml").read_text(encoding="utf-8")
+    return parse_xml(xml.replace("<Rsn><Cd>AC06</Cd></Rsn>", "<Rsn><Cd>DS24</Cd></Rsn>"))
+
+
+def test_rtp_ds24_customer_message_is_policy_text_in_the_ai_path(run):
+    result, llm = run(_rtp_ds24(), [ok_answer(["KB-RTP-DS24-01"], customer_message=None)])
+    assert result.outcome is CaseOutcome.AI_OK
+    assert result.customer_message == DS24_POLICY
+    assert "Customer message: set by bank policy." in llm.calls[0]["user"]
+
+
+def test_rtp_ds24_ai_customer_message_is_retried_then_replaced(run):
+    result, llm = run(_rtp_ds24(), [ok_answer(["KB-RTP-DS24-01"], customer_message="Please try again later."),
+                                    ok_answer(["KB-RTP-DS24-01"], customer_message=None)])
+    assert result.outcome is CaseOutcome.AI_RETRY_OK
+    assert "policy_customer_message" in llm.calls[1]["user"]
+    assert result.customer_message == DS24_POLICY
+
+
+def test_rtp_ds24_baseline_uses_the_policy_text(run, tmp_path):
+    status = _rtp_ds24()
+    result = explain_case(status, None, log_path=tmp_path / "l.jsonl", embedder=FakeEmbedder(),
+                          cache_path=tmp_path / "e.npz", gaps_path=tmp_path / "g.jsonl")
+    assert result.outcome is CaseOutcome.BASELINE and result.customer_message == DS24_POLICY
+    assert lookup("DS24").baseline_customer_message == DS24_POLICY
+
+
+def test_withheld_reason_fact_is_in_the_prompt_and_speculation_is_retried(run):
+    speculative = "Your payment was rejected. This may be due to a regulatory restriction."
+    xml =(SAMPLES_DIR / "sct_inst_ac04_closed.xml").read_text(encoding="utf-8").replace("<Cd>AC04</Cd>", "<Cd>MS03</Cd>")
+    result, llm = run(parse_xml(xml), [ok_answer(["KB-SCTI-MS03-01"], customer_message=speculative),
+                                       ok_answer(["KB-SCTI-MS03-01"], customer_message="No reason was given.")])
+    assert "Reason withheld" in llm.calls[0]["user"]
+    assert "speculative_reason" in llm.calls[1]["user"]
+    assert result.outcome is CaseOutcome.AI_RETRY_OK
+
+
+@pytest.mark.parametrize("sample, role", [
+    ("sct_inst_ac04_closed.xml", "We are the payer's bank (the debtor's bank)"),
+    ("rtp_ac06_blocked.xml", "We are the payer's bank (the sending bank)"),
+    ("sdd_am04_insufficient.xml", "We are the creditor's bank"),
+])
+def test_prompt_states_which_bank_we_are(run, sample, role):
+    code = parse_file(SAMPLES_DIR / sample).reason_code
+    cite = {"AC04": "KB-SCTI-AC04-01", "AC06": "KB-RTP-AC06-01", "AM04": "KB-SDD-AM04-01"}[code]
+    _, llm = run(sample, [ok_answer([cite])])
+    assert f"Our role: {role}" in llm.calls[0]["user"]

@@ -110,3 +110,46 @@ def test_api_errors_become_llm_errors_without_details(stubbed_client, monkeypatc
         client.complete("s", "u", OUTPUT_SCHEMA)
     assert str(exc_info.value) == "model call failed: APIConnectionError"
     assert exc_info.value.__cause__ is None  # not chained, so a traceback can't print the original text
+
+
+# --- per-model settings (piece 4) -----------------------------------------------------
+
+@pytest.fixture
+def client_for(monkeypatch):
+    def make(model):
+        monkeypatch.setenv("ANTHROPIC_API_KEY", FAKE_KEY)
+        client = AnthropicClient(model=model, env_file=Path("/nonexistent/.env.server"))
+        sent = {}
+
+        def create(**kwargs):
+            sent.update(kwargs)
+            # Thinking blocks come first on Haiku 5.5 / Sonnet 5.5; only text blocks are the answer.
+            return SimpleNamespace(content=[SimpleNamespace(type="thinking", thinking=""),
+                                            SimpleNamespace(type="text", text='{"ok": 1}')],
+                                   usage=SimpleNamespace(input_tokens=11, output_tokens=7), stop_reason="end_turn")
+
+        monkeypatch.setattr(client._client, "messages", SimpleNamespace(create=create))
+        return client, sent
+    return make
+
+
+def test_haiku55_request_omits_temperature_and_sets_low_effort(client_for):
+    client, sent = client_for("claude-haiku-5-5")
+    response = client.complete("S", "U", OUTPUT_SCHEMA)
+    assert "extra_body" not in sent  # any temperature but 1 is rejected
+    assert sent["output_config"] == {"format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}, "effort": "low"}
+    assert sent["max_tokens"] == 4096  # room for thinking, which counts toward max_tokens
+    assert response.text == '{"ok": 1}'
+
+
+def test_judge_model_settings(client_for):
+    client, sent = client_for("claude-sonnet-5-5")
+    client.complete("S", "U", OUTPUT_SCHEMA)
+    assert "extra_body" not in sent and sent["output_config"]["effort"] == "medium"
+    assert client._client.timeout == config.MODEL_SETTINGS["claude-sonnet-5-5"]["timeout_s"]
+
+
+def test_unknown_model_is_refused(monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", FAKE_KEY)
+    with pytest.raises(LLMError, match="no settings"):
+        AnthropicClient(model="claude-made-up", env_file=Path("/nonexistent/.env.server"))
