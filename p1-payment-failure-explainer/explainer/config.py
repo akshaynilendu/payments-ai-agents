@@ -13,6 +13,11 @@ RETRIEVAL_K = 3
 # Placeholder: 0.0 never drops a passage for its score. The day-3 evals set the real value (D7).
 RETRIEVAL_THRESHOLD = 0.0
 
+# Official ISO 20022 external code sets (D17), downloaded by hand from https://www.iso20022.org/
+# (the site blocks automated downloads). Gitignored: only a small attributed extract is committed.
+ISO_CODE_SETS_FILE = PROJECT_ROOT / "data" / "external" / "2Q2026_externalcodesets_v3.json"
+ISO_CODE_SETS_RELEASE = "2Q2026 v3"
+
 # Local runtime files: all under gitignored folders, never committed.
 VAR_DIR = PROJECT_ROOT / "var"
 EMBEDDINGS_CACHE = VAR_DIR / "embeddings.npz"

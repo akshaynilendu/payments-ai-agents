@@ -1,0 +1,24 @@
+{
+  "config": "haiku45_rank",
+  "slice": "beyond",
+  "model": "claude-haiku-4-5-20251001",
+  "mode": "filter_rank",
+  "settings": {
+    "max_tokens": 1024,
+    "temperature": 0
+  },
+  "judge_model": "claude-sonnet-5-5",
+  "judge_settings": {
+    "max_tokens": 3000,
+    "effort": "medium",
+    "timeout_s": 60.0
+  },
+  "retrieval_threshold": 0.0,
+  "retrieval_k": 3,
+  "cases_planned": 14,
+  "cases_run": 14,
+  "stopped": null,
+  "spent_usd": 0.090182,
+  "cap_usd": 2.0,
+  "run_at": "2026-10-19T19:49:27+00:00"
+}

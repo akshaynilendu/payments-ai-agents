@@ -156,8 +156,10 @@ def test_gap_makes_no_ai_call_and_shows_the_baseline(run):
 
 
 def test_unknown_code_escalates_without_an_ai_call(run):
-    result, llm = run("sct_inst_cnor_unknown.xml", [])
-    assert result.outcome is CaseOutcome.ESCALATED
+    # CNOR is a valid ISO code now handled beyond the table (D17); ZZ99 is not an ISO code at all.
+    xml = (SAMPLES_DIR / "sct_inst_cnor_unknown.xml").read_text(encoding="utf-8").replace("<Cd>CNOR</Cd>", "<Cd>ZZ99</Cd>")
+    result, llm = run(parse_xml(xml), [])
+    assert result.outcome is CaseOutcome.ESCALATED and result.note == "unknown_code"
     assert llm.calls == [] and result.route is None
 
 
@@ -331,3 +333,100 @@ def test_prompt_states_which_bank_we_are(run, sample, role):
     cite = {"AC04": "KB-SCTI-AC04-01", "AC06": "KB-RTP-AC06-01", "AM04": "KB-SDD-AM04-01"}[code]
     _, llm = run(sample, [ok_answer([cite])])
     assert f"Our role: {role}" in llm.calls[0]["user"]
+
+
+# --- D17: beyond the table -----------------------------------------------------------
+
+# D19: CNOR is a routing code, so a SEPA Instant reject gets the default family text.
+CNOR_CUSTOMER_TEXT = "This payment did not complete."
+
+
+def beyond_answer(citations=("ISO-CNOR", "KB-ALL-FAM-RT-01"), customer_message=None):
+    return {"what_happened": "The beneficiary's bank is not registered under this BIC in the clearing system.",
+            "next_step": "Manual triage: check the beneficiary's BIC with the customer.",
+            "customer_message": customer_message, "citations": list(citations)}
+
+
+def test_valid_iso_code_outside_the_table_is_explained_for_staff(run):
+    result, llm = run("sct_inst_cnor_unknown.xml", [beyond_answer()])
+    assert result.outcome is CaseOutcome.AI_BEYOND_TABLE
+    assert result.route is None  # manual triage: the table can't route it
+    assert result.customer_message == CNOR_CUSTOMER_TEXT
+    assert [(c.id, c.label) for c in result.citations] == [("ISO-CNOR", "ISO 20022 code list"),
+                                                           ("KB-ALL-FAM-RT-01", "Team guidance")]
+    assert result.citations[0].url == "https://www.iso20022.org/"
+    prompt = llm.calls[0]["user"]
+    assert "[ISO-CNOR] (ISO 20022 code list)" in prompt
+    assert "Creditor bank is not registered under this BIC in the CSM" in prompt
+    assert "Route: none" in prompt and "Customer message: set by bank policy." in prompt
+
+
+def test_missing_iso_citation_is_retried(run):
+    result, llm = run("sct_inst_cnor_unknown.xml", [beyond_answer(citations=[]), beyond_answer()])
+    assert result.outcome is CaseOutcome.AI_BEYOND_TABLE and result.attempts == 2
+    assert "missing_required_citation" in llm.calls[1]["user"]
+
+
+def test_ai_customer_message_is_never_used_beyond_the_table(run):
+    result, llm = run("sct_inst_cnor_unknown.xml",
+                      [beyond_answer(customer_message="Your payment will arrive tomorrow."), beyond_answer()])
+    assert "policy_customer_message" in llm.calls[1]["user"]
+    assert result.customer_message == CNOR_CUSTOMER_TEXT
+
+
+def test_failing_twice_beyond_the_table_escalates_with_no_customer_message(run):
+    result, _ = run("sct_inst_cnor_unknown.xml", [beyond_answer(citations=[]), beyond_answer(citations=[])])
+    assert result.outcome is CaseOutcome.ESCALATED and result.note.startswith("beyond_table_check_failed")
+    assert result.customer_message is None and result.route is None and result.attempts == 2
+
+
+def test_baseline_beyond_the_table_is_escalate_only(tmp_path):
+    status = parse_file(SAMPLES_DIR / "sct_inst_cnor_unknown.xml")
+    result = explain_case(status, None, log_path=tmp_path / "l.jsonl", embedder=FakeEmbedder(),
+                          cache_path=tmp_path / "e.npz", gaps_path=tmp_path / "g.jsonl")
+    assert (result.outcome, result.note, result.customer_message) == (CaseOutcome.ESCALATED, "beyond_table_no_ai", None)
+
+
+def test_in_table_codes_are_unaffected_by_the_iso_list(run):
+    result, llm = run("sct_inst_ac04_closed.xml", [ok_answer(["KB-SCTI-AC04-01"])])
+    assert result.outcome is CaseOutcome.AI_OK and "ISO-" not in llm.calls[0]["user"]
+
+
+# --- D19: fixed customer text per family, sensitive words ------------------------------------
+
+from explainer.codes import Rail, Stage  # noqa: E402
+from explainer.pipeline import beyond_table_customer_message  # noqa: E402
+
+
+@pytest.mark.parametrize("code, rail, stage, expected", [
+    ("MD07", Rail.SEPA_DD, Stage.RETURN, None),
+    ("MD07", Rail.SEPA_INSTANT, Stage.REJECT, None),
+    ("SL01", Rail.SEPA_DD, Stage.RETURN,
+     "This collection was returned and no reason was given. Please contact the other party."),
+    ("MS99", Rail.SEPA_INSTANT, Stage.REJECT,
+     "This payment did not complete and no reason was given. Please contact the other party."),
+    ("AM23", Rail.SEPA_INSTANT, Stage.REJECT, "This payment could not be made for this amount."),
+    ("AM99", Rail.SEPA_DD, Stage.RETURN, "This collection was returned because of the amount."),
+    ("AC13", Rail.SEPA_DD, Stage.RETURN, "This collection was returned."),
+    ("BE05", Rail.SEPA_DD, Stage.RETURN, "This collection was returned."),
+    ("CNOR", Rail.SEPA_INSTANT, Stage.REJECT, "This payment did not complete."),
+    ("AC02", Rail.RTP, Stage.REJECT, "This payment did not complete."),
+    ("FF01", Rail.SEPA_INSTANT, Stage.REJECT, "This payment did not complete."),
+])
+def test_beyond_table_customer_text_per_family_and_stage(code, rail, stage, expected):
+    assert beyond_table_customer_message(code, rail, stage) == expected
+
+
+def test_md07_beyond_the_table_sends_no_customer_message(run):
+    xml = (SAMPLES_DIR / "sdd_md01_no_mandate.xml").read_text(encoding="utf-8").replace("<Cd>MD01</Cd>", "<Cd>MD07</Cd>")
+    answer = {"what_happened": "The end customer is deceased.", "next_step": "Hand to the specialist team.",
+              "customer_message": None, "citations": ["ISO-MD07", "KB-ALL-FAM-MD-01"]}
+    result, _ = run(parse_xml(xml), [answer])
+    assert result.outcome is CaseOutcome.AI_BEYOND_TABLE and result.customer_message is None
+
+
+def test_unsupported_sensitive_word_is_retried_then_escalated(run):
+    fraud = beyond_answer() | {"what_happened": "This looks like fraud at the beneficiary's bank."}
+    result, llm = run("sct_inst_cnor_unknown.xml", [fraud, fraud])
+    assert "unsupported_sensitive_word (fraud)" in llm.calls[1]["user"]
+    assert result.outcome is CaseOutcome.ESCALATED and result.customer_message is None

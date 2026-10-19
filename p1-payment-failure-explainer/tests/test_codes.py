@@ -287,3 +287,45 @@ def test_signed_off_team_blocks_are_exactly_the_approved_ones():
 )
 def test_rtp_team_next_step_matches_its_runbook_passage(code, phrase):
     assert phrase in lookup(code).what_to_do_for(Rail.RTP)
+
+
+# --- D18: signed-off per-rail customer messages -------------------------------------------
+
+@pytest.mark.parametrize("code, rail, start", [
+    ("AM04", Rail.RTP, "Your payment could not be completed. Please don't resend it for now"),
+    ("AG01", Rail.RTP, "Your payment could not be completed because this type of payment isn't accepted"),
+    ("AM05", Rail.SEPA_INSTANT, "This payment was stopped because it matched one already sent."),
+    ("AM05", Rail.SEPA_DD, "This collection was stopped because it matched one already submitted."),
+])
+def test_per_rail_customer_message(code, rail, start):
+    assert lookup(code).customer_message_for(rail).startswith(start)
+
+
+def test_other_rails_keep_the_table_message():
+    assert lookup("AM04").customer_message_for(Rail.SEPA_DD) == lookup("AM04").baseline_customer_message
+    assert lookup("AG01").customer_message_for(Rail.SEPA_INSTANT) == lookup("AG01").baseline_customer_message
+
+
+@pytest.mark.parametrize("entry", [c for c in all_codes() if c.customer_message_by_rail], ids=lambda c: c.code)
+def test_per_rail_customer_messages_make_no_promises(entry):
+    for text in entry.customer_message_by_rail.values():
+        assert not TIMING_OR_PROMISE.search(text), text
+
+
+@pytest.mark.parametrize("review, message", [
+    ({}, "reviewed_by and reviewed_on"),
+    ({"reviewed_by": "Akshay", "reviewed_on": "soon"}, "must be a date"),
+])
+def test_per_rail_customer_message_needs_a_sign_off(tmp_path, review, message):
+    raw = _valid_raw() | {"customer_message_by_rail": {"SEPA_DD": "Fixed text."}, "customer_message_review": review}
+    with pytest.raises(ValueError, match=message):
+        load_codes(_write_table(tmp_path, [raw]))
+
+
+def test_per_rail_customer_message_only_for_the_codes_rails(tmp_path):
+    # AC04 has RTP as a team rail, so drop the team block: here RTP is not one of the code's rails.
+    raw = {k: v for k, v in _valid_raw().items() if k != "team_runbook"} | {
+        "rails": ["SEPA_DD"], "customer_message_by_rail": {"RTP": "Fixed text."},
+        "customer_message_review": {"reviewed_by": "Akshay", "reviewed_on": "2026-10-19"}}
+    with pytest.raises(ValueError, match="customer_message_by_rail"):
+        load_codes(_write_table(tmp_path, [raw]))

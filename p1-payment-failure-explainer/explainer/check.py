@@ -54,6 +54,18 @@ _SPECULATION = re.compile(
     r"|\bregulat|\bsanction|\binsufficient|\bclosed\b|\bblocked\b|\bdeceased\b|\bfraud|\baccount\s+status", re.IGNORECASE)
 
 
+# D19: words that can alarm, mislead or tip off, allowed only when the ISO definition or a cited passage
+# uses them. Stems, so "fraudulent", "sanctions", "regulation", "investigate" are caught too.
+SENSITIVE_STEMS = ("fraud", "sanction", "regulat", "deceas", "investigat")
+
+
+def unsupported_sensitive_words(answer: dict, sources: dict[str, str], always_allowed: str) -> list[str]:
+    allowed = (always_allowed + " " + " ".join(sources.get(c, "") for c in answer["citations"])).lower()
+    text = " ".join(answer[f] or "" for f in ("what_happened", "next_step", "customer_message")).lower()
+    return [stem for stem in SENSITIVE_STEMS
+            if re.search(rf"\b{stem}\w*", text) and not re.search(rf"\b{stem}\w*", allowed)]
+
+
 def contradiction(next_step: str, customer_message: str | None) -> str | None:
     """The retry phrase in the customer message, if next_step forbids resending; else None."""
     if not customer_message or not _RESEND_FORBIDDEN.search(next_step or ""):
@@ -101,7 +113,9 @@ class CheckResult:
 
 
 def check(text: str, *, allowed_citations: set[str], route: Route | None,
-          stop_reason: str = "end_turn", code: str | None = None, customer_policy: bool = False) -> CheckResult:
+          stop_reason: str = "end_turn", code: str | None = None, customer_policy: bool = False,
+          required_citations: frozenset[str] = frozenset(), sensitive_sources: dict[str, str] | None = None,
+          always_allowed: str = "") -> CheckResult:
     failures: list[Failure] = []
     if stop_reason != "end_turn":
         # Cut off by the token cap or refused: even valid-looking JSON may be incomplete.
@@ -131,6 +145,13 @@ def check(text: str, *, allowed_citations: set[str], route: Route | None,
     unknown = sorted({c for c in citations if c not in allowed_citations})
     if unknown:
         failures.append(Failure("unknown_citation", ", ".join(unknown)))
+    if sensitive_sources is not None:
+        for stem in unsupported_sensitive_words(answer, sensitive_sources, always_allowed):
+            failures.append(Failure("unsupported_sensitive_word", stem))
+    missing = sorted(required_citations - set(citations))
+    if missing:
+        # D17/D18: outside the table the ISO definition and the family's team guidance must both be cited.
+        failures.append(Failure("missing_required_citation", ", ".join(missing)))
     if len(citations) > MAX_CITATIONS:
         failures.append(Failure("too_long", f"citations: {len(citations)} > {MAX_CITATIONS}"))
 

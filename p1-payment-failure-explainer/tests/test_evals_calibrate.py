@@ -144,3 +144,30 @@ def test_adjudication_rejects_unknown_rulings(tmp_path):
     path.write_text(json.dumps({"rulings": {"x.safe": "maybe"}}))
     with pytest.raises(ValueError, match="A, J or"):
         read_adjudications(path)
+
+
+# --- majority vote over judge passes ----------------------------------------------------
+
+def _pass(path, grades_by_id):
+    path.write_text("".join(json.dumps({"id": i, "grades": g, "error": None if g else "x"}) + "\n"
+                            for i, g in grades_by_id.items()))
+
+
+def test_majority_vote_and_stability(tmp_path):
+    from evals.majority import majority
+    _pass(tmp_path / "judge_v1.jsonl", {"a": _grade(True, True, True), "b": _grade(False, True, True)})
+    _pass(tmp_path / "judge_v2.jsonl", {"a": _grade(True, False, True), "b": _grade(False, True, False)})
+    _pass(tmp_path / "judge.jsonl", {"a": _grade(True, True, True), "b": None})
+    rows, stats = majority(tmp_path)
+    a, b = rows
+    assert (a["grades"]["actionable"]["pass"], a["grades"]["accurate"]["pass"]) == (True, True)
+    # b has only 2 votes (one judge error): a 1-1 safe split is not a majority, so it fails.
+    assert b["grades"]["safe"]["pass"] is False and stats["missing_votes"] == 3
+    assert stats["grades"] == 3 and stats["unanimous"] == 2 and stats["split"]["actionable"] == 1
+
+
+def test_majority_needs_three_passes(tmp_path):
+    from evals.majority import majority
+    _pass(tmp_path / "judge.jsonl", {"a": _grade(True, True, True)})
+    with pytest.raises(ValueError, match="needs 3"):
+        majority(tmp_path)

@@ -12,11 +12,17 @@ from pathlib import Path
 
 from explainer import config
 from explainer.check import check
-from explainer.codes import Rail, ReasonCode, Route, Stage, lookup, policy_customer_message
-from explainer.explain import OUTPUT_SCHEMA, build_prompt, source_label
+from explainer.codes import (FAILURE_STAGES, Rail, ReasonCode, Route, SourceType, Stage, lookup,
+                             policy_customer_message)
+from explainer.explain import OUTPUT_SCHEMA, build_beyond_prompt, build_prompt, source_label
+from explainer.iso_codes import SOURCE_NOTE as ISO_SOURCE_NOTE
+from explainer.iso_codes import SOURCE_URL as ISO_SOURCE_URL
+from explainer.iso_codes import IsoCode, lookup_iso
+from explainer.knowledge import KbRail, Passage, Topic, family_of
 from explainer.llm import LLMClient, LLMError, cost_usd
 from explainer.parse import PaymentStatus
-from explainer.retrieve import Mode, RetrievalResult, retrieve, safe_code
+from explainer.retrieve import (Mode, RetrievalResult, Retrieved, family_passages, general_passages, retrieve,
+                                safe_code)
 
 NO_FAILURE_MESSAGE = "No failure to explain: the payment was accepted or settled."
 # Resending a pending payment is the classic way to pay twice (same reasoning as the DS24 runbook).
@@ -56,6 +62,27 @@ NO_GUIDANCE_NOTE = "No guidance available: showing the baseline for this code (D
 # D12: a policy-fixed answer is owned by code, never generated. Team runbook text.
 COMPLIANCE_NEXT_STEP = ("Hand to Compliance. Do not contact the customer about the reason; "
                         "Compliance decides what, if anything, is said.")
+# D19: outside the table the customer text is fixed by policy per code family, never generated: no promise,
+# no guess, nothing that contradicts the family's runbook. None = no customer message (MD: the specialist
+# team decides). A return already settled and came back, so it says "returned", not "did not complete".
+_BEYOND_TEXTS = {
+    "MD": None,
+    "MS_SL": ("{this} did not complete and no reason was given. Please contact the other party.",
+              "{this} was returned and no reason was given. Please contact the other party."),
+    "AM": ("{this} could not be made for this amount.", "{this} was returned because of the amount."),
+    None: ("{this} did not complete.", "{this} was returned."),
+}
+
+
+def beyond_table_customer_message(code: str, rail: Rail, stage: Stage) -> str | None:
+    family = family_of(code)
+    texts = _BEYOND_TEXTS[family if family in _BEYOND_TEXTS else None]
+    if texts is None:
+        return None
+    returned = stage is Stage.RETURN
+    # SDD returns are collections our customer (the creditor) made; everything else is a payment.
+    this = "This collection" if returned and rail is Rail.SEPA_DD else "This payment"
+    return texts[1 if returned else 0].format(this=this)
 MAX_ATTEMPTS = 2  # one try plus one retry with the failures fed back (D3)
 
 
@@ -73,6 +100,7 @@ class CaseOutcome(StrEnum):
     NO_GUIDANCE = "no_guidance"
     NOT_A_FAILURE = "not_a_failure"
     PENDING = "pending"
+    AI_BEYOND_TABLE = "ai_beyond_table"  # code not in our table; AI explained it from the ISO definition (D17)
     BASELINE = "baseline"  # no AI by choice: the code table's fixed text, the D4 baseline for evals
 
 
@@ -130,12 +158,18 @@ def _explain(status: PaymentStatus, llm: LLMClient | None, mode, retrieve_option
 
     code = prepared.code
     if code is None:
-        # Not in our table: no facts to explain from, and the table can't route it (D3).
-        return CaseResult(
-            outcome=CaseOutcome.ESCALATED, route=None,
-            what_happened=f"Reason code {safe_code(status.reason_code or '')} is not in our code table.",
+        # Not in our table, so the table can't route it (D3). A valid ISO code still has an official
+        # definition the AI can explain from (D17); anything else has no guidance at all.
+        escalate = dict(
+            route=None, what_happened=f"Reason code {safe_code(status.reason_code or '')} is not in our code table.",
             next_step="Escalate for manual triage; no explanation is available for this code.",
-            next_step_source=NextStepSource.BASELINE, customer_message=None, **base | {"note": "unknown_code"})
+            next_step_source=NextStepSource.BASELINE, customer_message=None)
+        iso = lookup_iso(status.reason_code, status.message_type.value)
+        if iso is None:
+            return CaseResult(outcome=CaseOutcome.ESCALATED, **escalate, **base | {"note": "unknown_code"})
+        if llm is None:
+            return CaseResult(outcome=CaseOutcome.ESCALATED, **escalate, **base | {"note": "beyond_table_no_ai"})
+        return _explain_beyond(status, iso, llm, base, escalate)
 
     route = code.route_for(status.rail)
     # D16(b): where policy fixes the customer message, code owns it and the AI is asked for null.
@@ -146,7 +180,7 @@ def _explain(status: PaymentStatus, llm: LLMClient | None, mode, retrieve_option
     baseline = dict(route=route, what_happened=code.baseline_what_happened) | (policy if compliance else dict(
         next_step=code.what_to_do_for(status.rail), next_step_source=NextStepSource.BASELINE,
         # D16(b): a policy-owned customer message replaces the table text in the baseline too.
-        customer_message=policy_customer_message(code.code, status.rail) or code.baseline_customer_message))
+        customer_message=policy_customer_message(code.code, status.rail) or code.customer_message_for(status.rail)))
 
     if llm is None:
         return CaseResult(outcome=CaseOutcome.BASELINE, **baseline, **base)
@@ -157,13 +191,89 @@ def _explain(status: PaymentStatus, llm: LLMClient | None, mode, retrieve_option
 
     passages = prepared.retrieval.all()
     by_id = {r.passage.id: r.passage for r in passages}
+    asked = _ask(
+        llm,
+        lambda feedback: build_prompt(code, status.rail, status.stage, route, passages, feedback),
+        lambda response: check(response.text, allowed_citations=set(by_id), route=route,
+                               stop_reason=response.stop_reason, code=code.code,
+                               customer_policy=bool(customer_policy)))
+    if asked.answer:
+        answer = asked.answer
+        return CaseResult(
+            outcome=CaseOutcome.AI_OK if asked.attempts == 1 else CaseOutcome.AI_RETRY_OK,
+            route=route,  # never from the AI
+            what_happened=answer["what_happened"],
+            # On COMPLIANCE the AI writes only what_happened; the rest is policy (D12).
+            **(policy if compliance else dict(next_step=answer["next_step"],
+                                              next_step_source=NextStepSource.AI,
+                                              customer_message=customer_policy or answer["customer_message"])),
+            **base | dict(citations=_citations(answer, by_id)) | asked.usage(llm.model))
+
+    # D3: still failing after one retry, so a person takes over with the baseline text.
+    return CaseResult(outcome=CaseOutcome.ESCALATED, **baseline, **base | dict(
+        note="AI answer failed the checks; showing the baseline (D3).") | asked.usage(llm.model))
+
+
+def beyond_table_passages(iso: IsoCode, rail: Rail, stage: Stage) -> list[Retrieved]:
+    """What the AI gets for a code outside the table: the official definition, then the rail's general passages."""
+    iso_passage = Passage(
+        id=iso.passage_id, rail=KbRail.ALL, codes=(), stages=FAILURE_STAGES, families=(), topic=Topic.MEANING,
+        mandatory=False,
+        source_type=SourceType.ISO_CODE_LIST, owner=None, text=f"{iso.code}: {iso.definition}",
+        source_url=ISO_SOURCE_URL, source_section=f"{iso.code_set}. {ISO_SOURCE_NOTE.format(release=iso.release)}",
+        needs_review=False, reviewed_by=None, reviewed_on=None, review_note="", caveat="")
+    return ([Retrieved(iso_passage, None)] + family_passages(iso.code, stage)  # D18: what to do, by family
+            + general_passages(rail, stage))
+
+
+def _explain_beyond(status: PaymentStatus, iso: IsoCode, llm: LLMClient, base: dict, escalate: dict) -> CaseResult:
+    """D17: a valid ISO code our table doesn't cover. The AI explains it for staff from the official
+    definition; the route stays manual triage and the customer gets fixed policy text, never AI text."""
+    passages = beyond_table_passages(iso, status.rail, status.stage)
+    by_id = {r.passage.id: r.passage for r in passages}
+    asked = _ask(
+        llm,
+        lambda feedback: build_beyond_prompt(iso, status.rail, status.stage, passages, feedback),
+        lambda response: check(response.text, allowed_citations=set(by_id), route=None,
+                               stop_reason=response.stop_reason, code=iso.code, customer_policy=True,
+                               required_citations=frozenset({iso.passage_id} | {
+                                   r.passage.id for r in passages if r.passage.families}),
+                               # D19: sensitive words only where the definition or a cited passage uses them.
+                               sensitive_sources={pid: p.text for pid, p in by_id.items()},
+                               always_allowed=iso.definition))
+    if asked.answer:
+        return CaseResult(
+            outcome=CaseOutcome.AI_BEYOND_TABLE, route=None,
+            what_happened=asked.answer["what_happened"], next_step=asked.answer["next_step"],
+            next_step_source=NextStepSource.AI,
+            customer_message=beyond_table_customer_message(iso.code, status.rail, status.stage),
+            **base | dict(citations=_citations(asked.answer, by_id)) | asked.usage(llm.model))
+    return CaseResult(outcome=CaseOutcome.ESCALATED, **escalate, **base | dict(
+        note="beyond_table_check_failed: AI answer failed the checks; escalated (D3).") | asked.usage(llm.model))
+
+
+@dataclass(frozen=True)
+class _Asked:
+    answer: dict | None  # None when no attempt passed the checks
+    attempts: int
+    failures: tuple[str, ...]
+    input_tokens: int
+    output_tokens: int
+
+    def usage(self, model: str) -> dict:
+        return dict(attempts=self.attempts, failures=self.failures, model=model, input_tokens=self.input_tokens,
+                    output_tokens=self.output_tokens,
+                    cost_usd=cost_usd(model, self.input_tokens, self.output_tokens))
+
+
+def _ask(llm: LLMClient, prompt_for, check_answer) -> _Asked:
+    """One try plus one retry with the failed checks fed back (D3). Shared by both AI paths."""
     failures_log: list[str] = []
     feedback: list[str] = []
-    input_tokens = output_tokens = 0
-    attempts = 0
+    input_tokens = output_tokens = attempts = 0
     for attempt in range(1, MAX_ATTEMPTS + 1):
         attempts = attempt
-        system, user = build_prompt(code, status.rail, status.stage, route, passages, feedback)
+        system, user = prompt_for(feedback)
         try:
             response = llm.complete(system, user, OUTPUT_SCHEMA)
         except LLMError as e:
@@ -172,31 +282,16 @@ def _explain(status: PaymentStatus, llm: LLMClient | None, mode, retrieve_option
             break
         input_tokens += response.input_tokens
         output_tokens += response.output_tokens
-        checked = check(response.text, allowed_citations=set(by_id), route=route, stop_reason=response.stop_reason,
-                        code=code.code, customer_policy=bool(customer_policy))
+        checked = check_answer(response)
         if checked.ok:
-            answer = checked.answer
-            return CaseResult(
-                outcome=CaseOutcome.AI_OK if attempt == 1 else CaseOutcome.AI_RETRY_OK,
-                route=route,  # never from the AI
-                what_happened=answer["what_happened"],
-                # On COMPLIANCE the AI writes only what_happened; the rest is policy (D12).
-                **(policy if compliance else dict(next_step=answer["next_step"],
-                                                  next_step_source=NextStepSource.AI,
-                                                  customer_message=customer_policy or answer["customer_message"])),
-                **base | dict(
-                    citations=tuple(_citation(by_id[cid]) for cid in dict.fromkeys(answer["citations"])),
-                    attempts=attempt, failures=tuple(failures_log), model=llm.model,
-                    input_tokens=input_tokens, output_tokens=output_tokens,
-                    cost_usd=cost_usd(llm.model, input_tokens, output_tokens)))
+            return _Asked(checked.answer, attempt, tuple(failures_log), input_tokens, output_tokens)
         feedback = [str(f) for f in checked.failures]
         failures_log += [f"attempt {attempt}: {f}" for f in feedback]
+    return _Asked(None, attempts, tuple(failures_log), input_tokens, output_tokens)
 
-    # D3: still failing after one retry, so a person takes over with the baseline text.
-    return CaseResult(outcome=CaseOutcome.ESCALATED, **baseline, **base | dict(
-        note="AI answer failed the checks; showing the baseline (D3).", attempts=attempts,
-        failures=tuple(failures_log), model=llm.model, input_tokens=input_tokens, output_tokens=output_tokens,
-        cost_usd=cost_usd(llm.model, input_tokens, output_tokens)))
+
+def _citations(answer: dict, by_id: dict) -> tuple:
+    return tuple(_citation(by_id[cid]) for cid in dict.fromkeys(answer["citations"]))
 
 
 def _citation(passage) -> Citation:

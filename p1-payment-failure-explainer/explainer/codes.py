@@ -60,6 +60,8 @@ class SourceType(StrEnum):
     SCHEME_RULE = "scheme_rule"
     # Law (e.g. the AML Directive), kept apart from scheme rules because it binds the bank, not the scheme (D12).
     REGULATION = "regulation"
+    # The official ISO 20022 code list: the only source for codes our table doesn't cover (D17).
+    ISO_CODE_LIST = "iso_code_list"
     # Our own operational guidance: must be labelled as team guidance, never as a scheme rule (D7).
     TEAM_RUNBOOK = "team_runbook"
 
@@ -110,6 +112,8 @@ class ReasonCode:
     baseline_what_happened: str
     baseline_what_to_do: str
     baseline_customer_message: str
+    # Team-signed-off per-rail texts that replace baseline_customer_message on that rail (D18).
+    customer_message_by_rail: Mapping[Rail, str]
     iso_code_sets: tuple[str, ...]
     source_ids: tuple[str, ...]
     needs_review: bool
@@ -119,6 +123,9 @@ class ReasonCode:
     def route_for(self, rail: Rail) -> Route:
         # Some codes are handled differently per rail (e.g. AM04 on RTP goes to Treasury by team decision).
         return self.route_by_rail.get(rail, self.default_route)
+
+    def customer_message_for(self, rail: Rail) -> str:
+        return self.customer_message_by_rail.get(rail, self.baseline_customer_message)
 
     def what_to_do_for(self, rail: Rail) -> str:
         if self.team_runbook is not None and rail in self.team_runbook.what_to_do_by_rail:
@@ -185,12 +192,20 @@ def _parse_entry(raw: dict) -> ReasonCode:
 
     route_by_rail = {Rail(k): Route(v) for k, v in raw.get("route_by_rail", {}).items()}
     rail_notes = {Rail(k): v for k, v in raw.get("rail_notes", {}).items()}
+    customer_by_rail = {Rail(k): v for k, v in raw.get("customer_message_by_rail", {}).items()}
+    if customer_by_rail:
+        # A per-rail customer text is a team decision, so it needs a recorded reviewer and date.
+        review = raw.get("customer_message_review") or {}
+        check_sign_off(False, review.get("reviewed_by"), review.get("reviewed_on"))
+        if not all(text.strip() for text in customer_by_rail.values()):
+            raise ValueError("customer_message_by_rail has an empty text")
     rails = scheme_rails
     if team is not None:
         rails = scheme_rails + team.rails
         route_by_rail |= team.route_by_rail
         rail_notes |= team.rail_notes
 
+    _keys_within(raw.get("customer_message_by_rail", {}), rails, "customer_message_by_rail")
     return ReasonCode(
         code=raw["code"],
         name=raw["name"],
@@ -204,6 +219,7 @@ def _parse_entry(raw: dict) -> ReasonCode:
         baseline_what_happened=raw["baseline_what_happened"],
         baseline_what_to_do=raw["baseline_what_to_do"],
         baseline_customer_message=raw["baseline_customer_message"],
+        customer_message_by_rail=MappingProxyType(customer_by_rail),
         iso_code_sets=tuple(raw["iso_code_sets"]),
         source_ids=tuple(raw["source_ids"]),
         needs_review=raw["needs_review"],

@@ -21,7 +21,7 @@ ID_PREFIX_FOR_RAIL = {
     KbRail.RTP: "KB-RTP-",
     KbRail.ALL: "KB-ALL-",
 }
-ID_PATTERN = re.compile(r"KB-(SCTI|SDD|RTP|ALL)-([A-Z0-9]{4}|GEN)-\d{2}")
+ID_PATTERN = re.compile(r"KB-(SCTI|SDD|RTP|ALL)-([A-Z0-9]{4}|GEN|FAM-[A-Z]{2})-\d{2}")
 
 
 def _next_step_passages_for(code: str, rail: str) -> list:
@@ -185,6 +185,9 @@ def test_every_passage_has_sign_off_fields():
         assert "reviewed_by" in p and "reviewed_on" in p, p["id"]
 
 
+FAMILY_PASSAGES = {f"KB-ALL-FAM-{f}-01" for f in ("AC", "AG", "AM", "AB", "BE", "RT", "MD", "MS")}
+
+
 SIGNED_OFF_PASSAGES = {
     "KB-RTP-AC03-01", "KB-RTP-AC04-01", "KB-RTP-AC06-01", "KB-RTP-AG01-01", "KB-RTP-AM04-01",
     "KB-RTP-DS24-01", "KB-SCTI-GEN-02", "KB-ALL-GEN-03",
@@ -194,13 +197,16 @@ SIGNED_OFF_PASSAGES = {
 def test_signed_off_passages_are_exactly_the_approved_ones():
     # Sign-off is Akshay's call; this list changes deliberately, never as a side effect.
     signed = {p.id for p in all_passages() if p.reviewed_by}
-    assert signed == SIGNED_OFF_PASSAGES
+    assert signed == SIGNED_OFF_PASSAGES | FAMILY_PASSAGES
     for p in all_passages():
         if p.id in signed:
-            assert (p.reviewed_by, p.reviewed_on, p.needs_review) == ("Akshay", "2026-10-15", False)
+            # First review pass on 2026-10-15; the D18 family runbook on 2026-10-19.
+            date = "2026-10-19" if p.id in FAMILY_PASSAGES else "2026-10-15"
+            assert (p.reviewed_by, p.reviewed_on, p.needs_review) == ("Akshay", date, False)
 
 
 def test_review_queue_is_empty():
+    # The D18 family passages were signed off by Akshay on 2026-10-19.
     assert [p.id for p in all_passages() if p.needs_review] == []
 
 
@@ -247,11 +253,11 @@ def test_loader_rejects_mandatory_passage_without_codes(tmp_path):
         load_passages(_write(tmp_path, [raw]))
 
 
-def test_every_all_rail_passage_names_the_codes_it_applies_to():
-    # An ALL passage with no codes would match every code on every rail.
+def test_every_all_rail_passage_names_the_codes_or_families_it_applies_to():
+    # An ALL passage with neither would match every code on every rail.
     for p in all_passages():
         if p.rail is KbRail.ALL:
-            assert p.codes, p.id
+            assert p.codes or p.families, p.id
 
 
 # --- stages (D10) ---------------------------------------------------------------
@@ -291,7 +297,7 @@ def test_frad_passages_are_recall_only():
 
 def test_rtp_runbook_next_steps_are_reject_only():
     for p in all_passages():
-        if p.source_type is SourceType.TEAM_RUNBOOK:
+        if p.source_type is SourceType.TEAM_RUNBOOK and p.rail is KbRail.RTP:
             assert p.stages == (Stage.REJECT,), p.id
 
 
@@ -311,3 +317,35 @@ def test_loader_requires_https_for_regulation(tmp_path):
     raw = _valid_raw() | {"source_type": "regulation", "source_url": "DECISIONS.md#d12"}
     with pytest.raises(ValueError, match="regulation needs an https source_url"):
         load_passages(_write(tmp_path, [raw]))
+
+
+# --- D18: family runbook for codes outside the table -----------------------------------
+
+@pytest.mark.parametrize("code, family", [
+    ("AC02", "AC"), ("AC13", "AC"), ("AG02", "AG"), ("AM23", "AM"), ("AB06", "AB"), ("BE05", "BE"),
+    ("CNOR", "ROUTING"), ("DNOR", "ROUTING"), ("RC01", "ROUTING"), ("MD07", "MD"), ("MS02", "MS_SL"),
+    ("SL01", "MS_SL"), ("FF01", None), ("ZZ99", None), (None, None),
+])
+def test_family_of(code, family):
+    from explainer.knowledge import family_of
+    assert family_of(code) == family
+
+
+def test_every_family_has_exactly_one_unsigned_runbook_passage():
+    from explainer.knowledge import CODE_FAMILIES
+    fam = [p for p in all_passages() if p.families]
+    assert sorted(f for p in fam for f in p.families) == sorted(CODE_FAMILIES)
+    for p in fam:
+        assert p.source_type is SourceType.TEAM_RUNBOOK and p.owner == "Akshay"
+        assert (p.needs_review, p.reviewed_by, p.reviewed_on) == (False, "Akshay", "2026-10-19")
+        assert p.codes == () and p.rail is KbRail.ALL
+
+
+@pytest.mark.parametrize("bad, message", [
+    ({"families": ["XX"]}, "unknown families"),
+    ({"families": ["AC"], "codes": ["AC04"], "rail": "ALL"}, "names no codes"),
+    ({"families": ["AC"], "codes": []}, "rail ALL"),
+])
+def test_loader_rejects_bad_family_passages(tmp_path, bad, message):
+    with pytest.raises(ValueError, match=message):
+        load_passages(_write(tmp_path, [_valid_raw() | bad]))

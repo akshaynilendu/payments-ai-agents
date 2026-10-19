@@ -223,3 +223,7 @@ __marimo__/
 .env
 .env.*
 !.env.example
+
+# Official ISO 20022 external code sets (iso20022.org terms: copies must say they are not the official site).
+# The full file stays local; only a small attributed extract is committed (tests/fixtures).
+p1-payment-failure-explainer/data/external/

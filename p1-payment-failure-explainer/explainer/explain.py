@@ -4,6 +4,7 @@ from typing import Sequence
 
 from explainer.codes import (WITHHELD_REASON_CODES, Rail, ReasonCode, Route, SourceType, Stage,
                              policy_customer_message, route_descriptions)
+from explainer.iso_codes import IsoCode
 from explainer.retrieve import RAIL_LABELS, Retrieved
 
 FIELDS = ("what_happened", "next_step", "customer_message", "citations")
@@ -54,6 +55,7 @@ SOURCE_LABELS = {
     SourceType.SCHEME_RULE: "Scheme rule",
     SourceType.REGULATION: "Regulation",
     SourceType.TEAM_RUNBOOK: "Team guidance",
+    SourceType.ISO_CODE_LIST: "ISO 20022 code list",
 }
 
 
@@ -94,14 +96,43 @@ def case_facts(code: ReasonCode, rail: Rail, stage: Stage, route: Route) -> list
 def build_prompt(code: ReasonCode, rail: Rail, stage: Stage, route: Route, passages: Sequence[Retrieved],
                  failures: Sequence[str] = ()) -> tuple[str, str]:
     """Return (system, user). Only code-level facts go in: no amounts, IDs, parties or free text (D11)."""
-    facts = "\n".join(["Case facts:"] + [f"- {fact}" for fact in case_facts(code, rail, stage, route)])
+    return _render(case_facts(code, rail, stage, route), passages, RULES, failures)
+
+
+# --- beyond the table (D17): a valid ISO code our table doesn't cover -------------------
+
+BEYOND_RULES = RULES + """
+12. This code is not in the bank's code table. Base "what_happened" on its ISO 20022 definition and cite that passage. Base "next_step" on the team guidance passage for its code family when one is given, cite it too, and say it is team guidance; say that the case goes to manual triage and do not name a route."""
+
+
+def beyond_table_facts(iso: IsoCode, rail: Rail, stage: Stage) -> list[str]:
+    """Case facts for a code outside the table. The eval judge gets exactly these too (D13)."""
+    return [
+        f"Reason code: {iso.code} (not in the bank's code table; defined in the ISO 20022 code list, "
+        f"passage {iso.passage_id})",
+        f"Rail: {RAIL_LABELS[rail]}",
+        f"Our role: {PERSPECTIVE[rail]}",
+        f"Stage: {stage.value} ({STAGE_LABELS[stage]})",
+        "Route: none. The code is not in the routing table, so a person triages the case manually.",
+        "Customer message: set by bank policy.",
+    ]
+
+
+def build_beyond_prompt(iso: IsoCode, rail: Rail, stage: Stage, passages: Sequence[Retrieved],
+                        failures: Sequence[str] = ()) -> tuple[str, str]:
+    return _render(beyond_table_facts(iso, rail, stage), passages, BEYOND_RULES, failures)
+
+
+def _render(facts: list[str], passages: Sequence[Retrieved], rules: str, failures: Sequence[str]) -> tuple[str, str]:
+    lines = "\n".join(["Case facts:"] + [f"- {fact}" for fact in facts])
     blocks = []
     for item in passages:
         p = item.passage
         tags = source_label(p.source_type) + (", MANDATORY" if p.mandatory else "")
         blocks.append(f"[{p.id}] ({tags})\n{p.text}")
-    user = f"{facts}\n\nPassages:\n\n" + "\n\n".join(blocks) + f"\n\n{RULES}"
+    # Rules open (system) and close (user) the prompt, so they stay in view.
+    user = f"{lines}\n\nPassages:\n\n" + "\n\n".join(blocks) + f"\n\n{rules}"
     if failures:
         user += ("\n\nYour previous answer failed these checks: " + "; ".join(failures)
                  + ". Write a new answer that passes them.")
-    return RULES, user
+    return rules, user

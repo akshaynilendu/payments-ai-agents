@@ -62,6 +62,37 @@ send it again until we've confirmed its status."), in the AI path and the baseli
 reason-withheld codes (MS02, MS03) the customer message never speculates about causes; a code
 check blocks it. Found in the first eval run (sdd-ms03 named a "regulatory restriction").
 
+D17 Table when it knows, AI when the table has no answer. Codes in reason_codes.json get the table's
+fixed text (the only system that met the ship rule). A code outside the table that is a valid ISO 20022
+code (ExternalStatusReason1Code for pacs.002, ExternalReturnReason1Code for pacs.004) goes to the AI:
+it writes what_happened and next_step for staff from the official definition, which it must cite; the
+route stays manual triage (none) and the customer gets fixed policy text ("This payment did not complete.
+We're looking into this."), never AI text. Anything else escalates with no guidance, as before. Source:
+the official ISO 20022 External Code Sets (2Q2026 v3), downloaded by hand from iso20022.org; its terms
+allow free use and reproduction under the ISO 20022 IPR policy if copies say they are not the official
+site and point to https://www.iso20022.org/. The full file stays local (gitignored); only a small
+attributed extract is committed for tests. Fair grading: the judge grades every system against the
+passages the AI is given, never against the code table's own text. Evals report two slices, "in the
+table" and "beyond the table", each with the majority of 3 judge passes.
+
+D18 Fixes after the fair-graded D17 eval. (a) Four table customer messages flagged unsafe are replaced
+per rail (team decision, signed off by Akshay on 2026-10-19): RTP AM04 and RTP AG01 no longer invite a
+retry or contact before we've checked the cause; SEPA Instant AM05 and SDD AM05 ask the customer to check
+the earlier payment went through before sending another. (b) Codes outside the table get "what to do"
+guidance per code family (AC, AG, AM, AB, BE, bank/BIC routing CNOR/DNOR/RC, MD with deceased = hand to
+a specialist team with no standard script, MS/SL = never guess the reason): one team runbook passage
+each, owner Akshay, reviewed before use. The AI path for an ISO code outside the table gets the ISO
+definition plus its family's passage and must cite both; family passages never appear for table codes.
+
+D19 Customer text and sensitive words beyond the table (after the D18 eval judged the generic "We're
+looking into this" unsafe and inaccurate). The fixed customer text is owned by code per code family and
+stage: MD -> no customer message until the specialist team decides; MS/SL -> "This payment did not complete
+and no reason was given. Please contact the other party."; AM -> "This payment could not be made for this
+amount."; all others -> "This payment did not complete." For returns (the money settled and came back) the
+same texts say "was returned", and SDD returns say "This collection" (Akshay's choice, 2026-10-19). A code
+check rejects "fraud", "sanction", "regulatory", "deceased" and "investigation" (and their forms) in an AI
+answer beyond the table unless the ISO definition or a cited passage uses the word; retry once, then escalate.
+
 ## V2 list
 Parked ideas, not in v1:
 - camt.056 (recall) and camt.029 (recall answer) parsing, with samples.
@@ -71,3 +102,10 @@ Parked ideas, not in v1:
 - Masking names written in free text (the xfail test in test_masking.py).
 - Treating a pacs.004 with FOCR as a recall answer rather than a return.
 - Spike monitoring for timeouts (AB05, DS24): a spike is a system problem and goes to a QC route (D14).
+
+v1.1 open items (from the D18/D19 evals, v1 frozen 2026-10-19):
+- sdd-am05: the SDD duplicate return wording is still judged unsafe; rework the table text.
+- sct-frad-reject: "We are reviewing this payment" newly judged unsafe; possibly judge variance, check with more passes.
+- sct-dnor (beyond the table): AI answer judged inaccurate; review the routing-family runbook or the answer.
+- sdd-sl01 (beyond the table): AI answer judged not actionable; review the MS/SL runbook guidance.
+- Review the code table's text line by line against its sources (fair grading scored it 70% accurate).

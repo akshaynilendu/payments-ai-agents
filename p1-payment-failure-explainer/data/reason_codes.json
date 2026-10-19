@@ -139,6 +139,14 @@
       "baseline_what_happened": "The payment was rejected because this type of transaction is not allowed for the account involved.",
       "baseline_what_to_do": "Ask the customer to agree a different account or payment method with the other party.",
       "baseline_customer_message": "Your payment could not be completed because this type of payment is not accepted for the account involved. Please agree another way to pay with the other party.",
+      "customer_message_by_rail": {
+        "RTP": "Your payment could not be completed because this type of payment isn't accepted for the account involved. We're checking whether anything on our side caused it."
+      },
+      "customer_message_review": {
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-19",
+        "note": "Team decision after the D17 fair-graded eval flagged the table text (retry/contact wording)."
+      },
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,
@@ -174,6 +182,14 @@
       "baseline_what_happened": "The payment failed because there were not enough funds to cover it.",
       "baseline_what_to_do": "Tell the customer (the creditor) the debtor's account lacked funds, and suggest they contact the debtor before collecting again.",
       "baseline_customer_message": "Your payment could not be completed this time. Please contact us or the other party if you would like to arrange the payment again.",
+      "customer_message_by_rail": {
+        "RTP": "Your payment could not be completed. Please don't resend it for now; we're checking the cause."
+      },
+      "customer_message_review": {
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-19",
+        "note": "Team decision after the D17 fair-graded eval flagged the table text (retry/contact wording)."
+      },
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SDD"],
       "needs_review": false,
@@ -207,6 +223,15 @@
       "baseline_what_happened": "The payment was rejected as a duplicate of an identical payment sent very recently.",
       "baseline_what_to_do": "Check whether an identical payment really went through earlier. If it did, no action is needed beyond telling the customer. If it did not, pass to the technical team to find why our system sent a duplicate.",
       "baseline_customer_message": "This payment was stopped because it matched one that was already sent. Please check your recent payments before sending it again.",
+      "customer_message_by_rail": {
+        "SEPA_INSTANT": "This payment was stopped because it matched one already sent. Please check whether the earlier payment went through before sending another.",
+        "SEPA_DD": "This collection was stopped because it matched one already submitted. Please check whether the earlier collection went through before submitting another."
+      },
+      "customer_message_review": {
+        "reviewed_by": "Akshay",
+        "reviewed_on": "2026-10-19",
+        "note": "Team decision after the D17 fair-graded eval flagged the table text (retry/contact wording)."
+      },
       "iso_code_sets": ["ExternalStatusReason1Code", "ExternalReturnReason1Code"],
       "source_ids": ["ISO", "EPC_SCT_INST", "EPC_SDD"],
       "needs_review": false,

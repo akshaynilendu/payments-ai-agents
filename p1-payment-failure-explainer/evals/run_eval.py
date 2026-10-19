@@ -20,10 +20,11 @@ from evals.judge import judge_case
 from evals.make_cases import case_path, load_golden
 from explainer import config
 from explainer.codes import Route, Stage, lookup
-from explainer.explain import case_facts, source_label
+from explainer.explain import beyond_table_facts, case_facts, source_label
+from explainer.iso_codes import lookup_iso
 from explainer.llm import AnthropicClient, LLMClient, LLMError, LLMResponse, cost_usd
 from explainer.parse import parse_file
-from explainer.pipeline import COMPLIANCE_NEXT_STEP, explain_case
+from explainer.pipeline import COMPLIANCE_NEXT_STEP, beyond_table_passages, explain_case
 from explainer.retrieve import Mode, retrieve
 
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
@@ -39,7 +40,7 @@ CONFIGS = {
 # Rough output sizes for the "typical" estimate; the worst case uses each model's max_tokens.
 TYPICAL_OUTPUT_TOKENS = {HAIKU45: 350, HAIKU55: 900, config.JUDGE_MODEL: 1200}
 CHARS_PER_TOKEN = 3  # deliberately low (more tokens), so estimates err high
-JUDGED_OUTCOMES = {"ai_ok", "ai_retry_ok", "baseline", "no_guidance", "escalated"}
+JUDGED_OUTCOMES = {"ai_ok", "ai_retry_ok", "ai_beyond_table", "baseline", "no_guidance", "escalated"}
 
 
 class BudgetExceeded(Exception):
@@ -120,7 +121,7 @@ def estimate(config_name: str, cases: list[dict], options: Options) -> dict:
                 system_typical += cost_usd(model, tokens, TYPICAL_OUTPUT_TOKENS[model])
                 # Worst case: both attempts (D3) use the whole token cap.
                 system_worst += 2 * cost_usd(model, tokens, config.MODEL_SETTINGS[model]["max_tokens"])
-        if case["expect"]["outcome"] in ("explained", "no_guidance") or chars:
+        if case["expect"]["outcome"] in ("explained", "no_guidance", "explained_beyond") or chars:
             judge_tokens = math.ceil((len(_reference_text(status, options.retrieve)) + 2500) / CHARS_PER_TOKEN)
             judge_typical += cost_usd(judge_model, judge_tokens, TYPICAL_OUTPUT_TOKENS[judge_model])
             judge_worst += cost_usd(judge_model, judge_tokens, config.MODEL_SETTINGS[judge_model]["max_tokens"])
@@ -132,19 +133,25 @@ def estimate(config_name: str, cases: list[dict], options: Options) -> dict:
 # --- one case -----------------------------------------------------------------
 
 def _reference(status, retrieve_options: dict) -> list[dict]:
-    """The same reference material for every system, so the judge compares like with like."""
-    code = lookup(status.reason_code)
-    if code is None or status.stage in (Stage.NOT_A_FAILURE, Stage.PENDING):
+    """The same reference material for every system: what the AI is given for this case (D13 fair grading).
+    Never the code table's own baseline text, so the baseline can't be graded against itself."""
+    if status.stage in (Stage.NOT_A_FAILURE, Stage.PENDING):
         return []
-    route = code.route_for(status.rail)
-    refs = [{"id": "CODE-TABLE", "label": "Code table", "text": (
-        f"{code.code} {code.name}: {code.meaning} What happened: {code.baseline_what_happened} "
-        f"What to do: {code.what_to_do_for(status.rail)} Customer message: {code.baseline_customer_message}")}]
-    if route is Route.COMPLIANCE:
-        refs.append({"id": "POLICY", "label": "Bank policy (fixed next_step on COMPLIANCE)", "text": COMPLIANCE_NEXT_STEP})
-    # Every passage the filter allows for this code, rail and stage, not just the top k.
-    found = retrieve(status.reason_code, status.rail, status.stage, Mode.FILTER_ONLY, k=100, **retrieve_options)
-    for item in found.all():
+    code = lookup(status.reason_code)
+    if code is None:
+        iso = lookup_iso(status.reason_code, status.message_type.value)
+        if iso is None:
+            return []
+        items = beyond_table_passages(iso, status.rail, status.stage)
+        refs = []
+    else:
+        refs = []
+        if code.route_for(status.rail) is Route.COMPLIANCE:
+            refs.append({"id": "POLICY", "label": "Bank policy (fixed next_step on COMPLIANCE)",
+                         "text": COMPLIANCE_NEXT_STEP})
+        # The passages the AI sees in rank mode (top k plus mandatory), the canonical reference for all systems.
+        items = retrieve(status.reason_code, status.rail, status.stage, Mode.FILTER_RANK, **retrieve_options).all()
+    for item in items:
         refs.append({"id": item.passage.id, "label": source_label(item.passage.source_type), "text": item.passage.text})
     return refs
 
@@ -193,7 +200,11 @@ def judge_record(case: dict, record: dict, judge_llm: LLMClient, options: Option
         return None  # fixed stop messages and unknown codes are graded by code only
     status = parse_file(case_path(case))
     code = lookup(status.reason_code)
-    facts = case_facts(code, status.rail, status.stage, Route(record["route"]))
+    if code is not None:
+        facts = case_facts(code, status.rail, status.stage, Route(record["route"]))
+    else:
+        # Outside the table (D17): the facts the beyond-the-table prompt gives the AI.
+        facts = beyond_table_facts(lookup_iso(status.reason_code, status.message_type.value), status.rail, status.stage)
     answer = {k: record[k] for k in ("what_happened", "next_step", "customer_message")}
     verdict = judge_case(judge_llm, facts, _reference(status, options.retrieve), answer)
     return {"id": case["id"], "grades": verdict.grades, "error": verdict.error,
@@ -206,11 +217,12 @@ def judge_record(case: dict, record: dict, judge_llm: LLMClient, options: Option
 def run(config_name: str, *, yes: bool, out_dir: Path | None = None,
         system_factory: Callable[[str], LLMClient] = AnthropicClient,
         judge_factory: Callable[[str], LLMClient] | None = AnthropicClient,
-        options: Options | None = None, case_ids: list[str] | None = None,
+        options: Options | None = None, case_ids: list[str] | None = None, slice_: str | None = None,
         cap_usd: float = CAP_USD, echo: Callable[[str], None] = print) -> Path | None:
     model, mode = CONFIGS[config_name]
     system_kind = "ai" if model else "baseline"
-    cases = [c for c in load_golden() if not case_ids or c["id"] in case_ids]
+    cases = [c for c in load_golden() if (not case_ids or c["id"] in case_ids)
+             and (not slice_ or c.get("slice", "in_table") == slice_)]
     with tempfile.TemporaryDirectory() as tmp:
         options = options or default_options(Path(tmp))
 
@@ -239,7 +251,7 @@ def run(config_name: str, *, yes: bool, out_dir: Path | None = None,
 
     run_dir = out_dir or RESULTS_DIR / f"{config_name}-{datetime.now(UTC).strftime('%Y%m%d-%H%M%S')}"
     run_dir.mkdir(parents=True, exist_ok=True)
-    meta = {"config": config_name, "model": model, "mode": mode.value,
+    meta = {"config": config_name, "slice": slice_ or "all", "model": model, "mode": mode.value,
             "settings": config.MODEL_SETTINGS.get(model) if model else None,
             "judge_model": config.JUDGE_MODEL if judge_factory else None,
             "judge_settings": config.MODEL_SETTINGS[config.JUDGE_MODEL] if judge_factory else None,
@@ -336,8 +348,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--config", required=True, choices=sorted(CONFIGS))
     parser.add_argument("--yes", action="store_true", help="actually run (and spend); without it, only estimate")
     parser.add_argument("--cases", nargs="*", help="run only these case ids")
+    parser.add_argument("--slice", choices=["in_table", "beyond"], help="run only one slice of the golden set")
     args = parser.parse_args(argv)
-    run(args.config, yes=args.yes, case_ids=args.cases)
+    run(args.config, yes=args.yes, case_ids=args.cases, slice_=args.slice)
     return 0
 
 

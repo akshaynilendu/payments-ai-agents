@@ -209,3 +209,56 @@ def test_policy_owned_customer_message_must_come_back_null():
     assert "policy_customer_message" in names(result)
     assert check(answer(customer_message=None), allowed_citations=ALLOWED, route=Route.DEVELOPER,
                  customer_policy=True).ok
+
+
+def test_required_citation_must_be_cited():
+    result = check(answer(), allowed_citations=ALLOWED | {"ISO-CNOR"}, route=None,
+                   required_citations=frozenset({"ISO-CNOR"}))
+    assert "missing_required_citation" in names(result)
+    cited = check(answer(citations=["ISO-CNOR"]), allowed_citations=ALLOWED | {"ISO-CNOR"}, route=None,
+                  required_citations=frozenset({"ISO-CNOR"}))
+    assert "missing_required_citation" not in names(cited)
+
+
+# --- D19: sensitive words beyond the table ------------------------------------------------
+
+SOURCES = {"ISO-CNOR": "Creditor bank is not registered under this BIC in the CSM",
+           "KB-ALL-FAM-BE-01": "Do not speculate about fraud or about why the details were rejected."}
+
+
+@pytest.mark.parametrize("text, stem", [
+    ("This may be fraudulent.", "fraud"), ("Check sanctions screening.", "sanction"),
+    ("A regulatory stop is likely.", "regulat"), ("The payer may be deceased.", "deceas"),
+    ("An investigation is under way.", "investigat"),
+])
+def test_unsupported_sensitive_word_is_blocked(text, stem):
+    result = check(answer(what_happened=text, citations=["ISO-CNOR"]), allowed_citations=set(SOURCES), route=None,
+                   sensitive_sources=SOURCES, always_allowed=SOURCES["ISO-CNOR"])
+    assert ("unsupported_sensitive_word", stem) in [(f.name, f.detail) for f in result.failures]
+
+
+def test_sensitive_word_allowed_when_a_cited_passage_uses_it():
+    text = answer(next_step="Do not speculate about fraud.", citations=["ISO-CNOR", "KB-ALL-FAM-BE-01"])
+    result = check(text, allowed_citations=set(SOURCES), route=None, sensitive_sources=SOURCES,
+                   always_allowed=SOURCES["ISO-CNOR"])
+    assert "unsupported_sensitive_word" not in names(result)
+
+
+def test_sensitive_word_not_allowed_by_an_uncited_passage():
+    text = answer(next_step="Do not speculate about fraud.", citations=["ISO-CNOR"])
+    result = check(text, allowed_citations=set(SOURCES), route=None, sensitive_sources=SOURCES,
+                   always_allowed=SOURCES["ISO-CNOR"])
+    assert "unsupported_sensitive_word" in names(result)
+
+
+def test_sensitive_word_allowed_when_the_iso_definition_uses_it():
+    result = check(answer(what_happened="The end customer is deceased.", citations=["ISO-MD07"]),
+                   allowed_citations={"ISO-MD07"}, route=None, sensitive_sources={"ISO-MD07": "End customer is deceased."},
+                   always_allowed="End customer is deceased.")
+    assert "unsupported_sensitive_word" not in names(result)
+
+
+def test_sensitive_word_check_is_off_for_table_codes():
+    # Table codes keep their own checks; the word list is for codes beyond the table (D19).
+    assert check(answer(what_happened="Possible regulatory reason."), allowed_citations=ALLOWED,
+                 route=Route.FIRST_LINE).ok

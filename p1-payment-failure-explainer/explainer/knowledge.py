@@ -21,6 +21,20 @@ class KbRail(StrEnum):
     ALL = "ALL"
 
 
+# D18: runbook families for ISO codes outside our table, so the AI gets team guidance on what to do next.
+CODE_FAMILIES = ("AC", "AG", "AM", "AB", "BE", "ROUTING", "MD", "MS_SL")
+
+
+def family_of(code: str | None) -> str | None:
+    """The runbook family of an ISO reason code, or None when we have no guidance for its family."""
+    code = (code or "").strip().upper()
+    if code in ("CNOR", "DNOR") or code.startswith("RC"):
+        return "ROUTING"  # bank or BIC routing problems
+    if code[:2] in ("MS", "SL"):
+        return "MS_SL"  # reason withheld or bank-specific service: never guess
+    return code[:2] if code[:2] in ("AC", "AG", "AM", "AB", "BE", "MD") else None
+
+
 class Topic(StrEnum):
     MEANING = "meaning"
     NEXT_STEP = "next_step"
@@ -37,6 +51,8 @@ class Passage:
     codes: tuple[str, ...]
     # Lifecycle stages where this advice is true; retrieval filters on it (D10).
     stages: tuple[Stage, ...]
+    # Code families this passage guides (D18). Such passages name no codes and only serve codes outside the table.
+    families: tuple[str, ...]
     topic: Topic
     # A guardrail for its codes: always returned for them, never ranked out (D8).
     mandatory: bool
@@ -59,6 +75,7 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
         rail=KbRail(raw["rail"]),
         codes=tuple(raw["codes"]),
         stages=tuple(Stage(s) for s in raw["stages"]),
+        families=tuple(raw.get("families", [])),
         topic=Topic(raw["topic"]),
         mandatory=raw.get("mandatory", False),
         source_type=SourceType(raw["source_type"]),
@@ -76,6 +93,12 @@ def _parse_entry(raw: dict, known_codes: set[str]) -> Passage:
     unknown = [c for c in passage.codes if c not in known_codes]
     if unknown:
         raise ValueError(f"unknown code(s) {unknown}")
+    unknown_families = [f for f in passage.families if f not in CODE_FAMILIES]
+    if unknown_families:
+        raise ValueError(f"unknown families {unknown_families}")
+    if passage.families and (passage.codes or passage.rail is not KbRail.ALL):
+        # A family passage is for codes outside the table, on any rail; codes would make it match table codes.
+        raise ValueError("a family passage names no codes and has rail ALL")
     if not passage.stages:
         raise ValueError("stages is empty")
     # NOT_A_FAILURE, PENDING and UNKNOWN describe a message, not a situation advice can be written for.

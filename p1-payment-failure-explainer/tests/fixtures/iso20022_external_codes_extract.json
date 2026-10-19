@@ -1,0 +1,37 @@
+{
+  "$comment": "ISO 20022 External Code Sets (2Q2026 v3). Not the official site; for the latest version see https://www.iso20022.org/ Extract of the codes used in tests and evals, in the official JSON shape; code definitions copied verbatim.",
+  "$comment_release": "2Q2026 v3",
+  "definitions": {
+    "ExternalStatusReason1Code": {
+      "description": "*`AB06`-Transaction stopped due to timeout at the Instructed Agent. *`AB07`-Agent of message is not online. Generic usage if it cannot be determined who exactly is not online. *`AC02`-Debtor account number invalid or missing *`AC13`-Debtor account type missing or invalid *`AG02`-Bank Operation code specified in the message is not valid for receiver *`AM23`-Transaction amount exceeds settlement limit. *`BE04`-Specification of creditor's address, which is required for payment, is missing/not correct (formerly IncorrectCreditorAddress). *`BE05`-Party who initiated the message is not recognised by the end customer *`CNOR`-Creditor bank is not registered under this BIC in the CSM *`DNOR`-Debtor bank is not registered under this BIC in the CSM *`MD07`-End customer is deceased. *`SL01`-Due to specific service offered by the Debtor Agent.",
+      "enum": [
+        "AB06",
+        "AB07",
+        "AC02",
+        "AC13",
+        "AG02",
+        "AM23",
+        "BE04",
+        "BE05",
+        "CNOR",
+        "DNOR",
+        "MD07",
+        "SL01"
+      ]
+    },
+    "ExternalReturnReason1Code": {
+      "description": "*`AC02`-Debtor account number invalid or missing. *`AC13`-Debtor account type is missing or invalid *`AG02`-Bank Operation code specified in the message is not valid for receiver *`BE04`-Specification of creditor's address, which is required for payment, is missing/not correct (formerly IncorrectCreditorAddress). *`BE05`-Party who initiated the message is not recognised by the end customer *`CNOR`-Creditor bank is not registered under this BIC in the CSM *`DNOR`-Debtor bank is not registered under this BIC in the CSM *`MD07`-End customer is deceased. *`SL01`-Due to specific service offered by the Debtor Agent",
+      "enum": [
+        "AC02",
+        "AC13",
+        "AG02",
+        "BE04",
+        "BE05",
+        "CNOR",
+        "DNOR",
+        "MD07",
+        "SL01"
+      ]
+    }
+  }
+}

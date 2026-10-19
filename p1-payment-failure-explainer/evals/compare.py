@@ -15,10 +15,10 @@ RESULTS_DIR = Path(__file__).resolve().parent / "results"
 ACTIONABLE_MIN = 0.75  # D13
 
 
-def load_run(run_dir: Path) -> dict:
+def load_run(run_dir: Path, judge_file: str = "judge.jsonl") -> dict:
     read = lambda name: [json.loads(line) for line in (run_dir / name).read_text(encoding="utf-8").splitlines()]
     meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
-    records, judged = read("cases.jsonl"), read("judge.jsonl")
+    records, judged = read("cases.jsonl"), read(judge_file)
     graded = [j for j in judged if j["grades"]]
     rate = lambda c: sum(j["grades"][c]["pass"] for j in graded) / len(graded) if graded else 0.0
     code_unsafe = {r["id"] for r in records if graders.safety_failures(r["grades"])}
@@ -87,9 +87,12 @@ def report(runs: list[dict]) -> str:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("runs", nargs="+", type=Path, help="baseline run first")
+    parser.add_argument("--judge-file", default="judge.jsonl",
+                        help="e.g. judge_majority.jsonl from evals.majority")
+    parser.add_argument("--out", type=Path, default=RESULTS_DIR / "comparison.md")
     args = parser.parse_args(argv)
-    text = report([load_run(r) for r in args.runs])
-    (RESULTS_DIR / "comparison.md").write_text(text, encoding="utf-8")
+    text = report([load_run(r, args.judge_file) for r in args.runs])
+    args.out.write_text(text, encoding="utf-8")
     print(text)
     return 0
 

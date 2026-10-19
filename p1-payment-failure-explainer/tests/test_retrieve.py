@@ -275,3 +275,19 @@ def test_cache_rebuilds_when_passage_set_differs(run):
     subset = [p for p in all_passages() if p.rail is KbRail.SEPA_INSTANT]
     run("AC04", Rail.SEPA_INSTANT, Stage.REJECT, embedder=fake, passages=subset)
     assert fake.passage_calls == 2
+
+
+# --- D18 -------------------------------------------------------------------------------
+
+@pytest.mark.parametrize("rail", list(Rail))
+def test_family_passages_never_appear_in_normal_retrieval(run, rail):
+    for entry in all_codes():
+        for item in run(entry.code, rail, Stage.REJECT, mode=Mode.FILTER_ONLY, k=50).all():
+            assert not item.passage.families, (entry.code, rail, item.passage.id)
+
+
+def test_family_passages_for_codes_outside_the_table():
+    from explainer.retrieve import family_passages
+    assert [r.passage.id for r in family_passages("CNOR", Stage.REJECT)] == ["KB-ALL-FAM-RT-01"]
+    assert [r.passage.id for r in family_passages("SL01", Stage.RETURN)] == ["KB-ALL-FAM-MS-01"]
+    assert family_passages("FF01", Stage.REJECT) == []

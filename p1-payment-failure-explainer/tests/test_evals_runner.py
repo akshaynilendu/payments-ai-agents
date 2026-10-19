@@ -12,7 +12,7 @@ from explainer.embed import FakeEmbedder
 from explainer.llm import LLMResponse
 from explainer.parse import parse_file
 
-SUBSET = ["sct-ac04", "sct-rr04", "rtp-am04", "sdd-am04", "sct-frad-reject", "sct-cnor-unknown",
+SUBSET = ["sct-ac04", "sct-rr04", "rtp-am04", "sdd-am04", "sct-frad-reject", "sct-cnor", "sct-zz99-invalid",
           "sct-acsc-settled", "sct-pdng-pending", "sct-ac04-injection"]
 
 
@@ -25,12 +25,16 @@ class FakeSystem:
 
     def complete(self, system, user, schema):
         self.calls.append(user)
-        first = re.search(r"^\[(KB-[A-Z0-9-]+)\]", user, re.MULTILINE).group(1)
+        # The first passage: a KB passage, or the ISO definition for a code outside the table (D17).
+        ids = re.findall(r"^\[((?:KB|ISO)-[A-Z0-9-]+)\]", user, re.MULTILINE)
+        first = ids[0]
+        family = [i for i in ids if "-FAM-" in i]  # D18: the family runbook must be cited too
         compliance = "Route (fixed by the routing table): COMPLIANCE" in user
+        policy = "Customer message: set by bank policy." in user
         answer = {"what_happened": "The payment was stopped for the reason in the code table.",
                   "next_step": "" if compliance else "Ask the customer to check the details with the other party.",
-                  "customer_message": None if compliance else "Your payment could not be completed.",
-                  "citations": [first]}
+                  "customer_message": None if compliance or policy else "Your payment could not be completed.",
+                  "citations": [first] + family}
         return LLMResponse(json.dumps(answer), 1500, 150, "end_turn")
 
 
@@ -99,7 +103,9 @@ def test_ai_run_grades_and_writes_results(options, made, tmp_path):
     assert records["sct-ac04"]["retrieval_candidates"], "rank mode records all candidate scores"
     # The judge grades explanations, not fixed stop messages or unknown codes.
     judged = {j["id"] for j in _read(run_dir, "judge.jsonl")}
-    assert judged == {"sct-ac04", "sct-rr04", "rtp-am04", "sdd-am04", "sct-frad-reject", "sct-ac04-injection"}
+    # sct-cnor is now explained beyond the table (D17), so it is judged; ZZ99 (not an ISO code) is not.
+    assert judged == {"sct-ac04", "sct-rr04", "rtp-am04", "sdd-am04", "sct-frad-reject", "sct-ac04-injection",
+                      "sct-cnor"}
 
 
 def test_judge_is_blind_to_the_system(options, made, tmp_path):
@@ -180,14 +186,15 @@ def test_golden_expectations_are_well_formed():
         assert e["outcome"] in OUTCOMES["ai"], c["id"]
         assert e["route"] in routes, c["id"]
         assert set(e["must_not_contain"]) <= {"any", "customer_message"}, c["id"]
-        if e["outcome"] != "explained":
+        if e["outcome"] not in ("explained", "explained_beyond"):
             assert e["must_cite"] == [], c["id"]
 
 
 def test_golden_covers_what_d13_asks_for():
     cases = load_golden()
     assert {c["rail"] for c in cases if c["code"] == "RR04"} == {"SEPA_INSTANT", "SEPA_DD", "RTP"}
-    assert {c["expect"]["outcome"] for c in cases} == {"explained", "no_guidance", "escalated", "not_a_failure", "pending"}
+    assert {c["expect"]["outcome"] for c in cases} == {"explained", "no_guidance", "escalated", "not_a_failure",
+                                                       "pending", "explained_beyond"}
     assert {c["expect"]["route"] for c in cases} >= {"FIRST_LINE", "DEVELOPER", "COMPLIANCE", "TREASURY", "FRAUD"}
     assert any(c.get("injection") for c in cases)
 
@@ -208,3 +215,41 @@ def test_rejudge_regrades_stored_answers_and_keeps_the_old_grades(options, made,
     assert (run_dir / "judge_summary_v1.md").exists() and (run_dir / "judge_summary.md").exists()
     assert (run_dir / "cases.jsonl").read_text() == answers_before  # no new AI answers
     assert len(_read(run_dir, "judge.jsonl")) == len(first.splitlines())
+
+
+# --- D17: beyond-the-table slice --------------------------------------------------------
+
+def test_beyond_cases_use_real_iso_codes_outside_our_table_with_verbatim_definitions():
+    from explainer.codes import lookup
+    from explainer.iso_codes import lookup_iso
+    beyond = [c for c in load_golden() if c.get("slice") == "beyond"]
+    assert len(beyond) >= 12
+    for c in beyond:
+        assert lookup(c["code"]) is None, c["id"]
+        iso = lookup_iso(c["code"], "PACS_004" if c["message"] == "pacs.004" else "PACS_002")
+        if c["expect"]["outcome"] == "explained_beyond":
+            # The hand-written definition must match the official list word for word (no circular answer key).
+            assert iso is not None and iso.definition == c["iso_definition"], c["id"]
+            assert c["expect"]["must_cite"] == [f"ISO-{c['code']}"] and c["expect"]["route"] is None
+        else:
+            assert iso is None, c["id"]
+
+
+def test_slice_option_runs_only_that_slice(options, made, tmp_path):
+    _, system_factory, judge_factory = made
+    run_dir = run("haiku45_rank", yes=True, system_factory=system_factory, judge_factory=judge_factory,
+                  options=options, slice_="beyond", out_dir=tmp_path / "run", echo=lambda _: None)
+    ids = {r["id"] for r in _read(run_dir, "cases.jsonl")}
+    assert ids == {c["id"] for c in load_golden() if c.get("slice") == "beyond"}
+    outcomes = {r["id"]: r["outcome"] for r in _read(run_dir, "cases.jsonl")}
+    assert outcomes["sct-ab06"] == "ai_beyond_table" and outcomes["sct-zz99-invalid"] == "escalated"
+
+
+def test_judge_reference_never_contains_the_code_table_text(options):
+    from evals.run_eval import _reference
+    for c in load_golden():
+        refs = _reference(parse_file(case_path(c)), options.retrieve)
+        assert all(r["id"] != "CODE-TABLE" for r in refs), c["id"]
+    beyond = _reference(parse_file(case_path(next(c for c in load_golden() if c["id"] == "sct-ab06"))),
+                        options.retrieve)
+    assert beyond[0]["id"] == "ISO-AB06" and beyond[0]["label"] == "ISO 20022 code list"

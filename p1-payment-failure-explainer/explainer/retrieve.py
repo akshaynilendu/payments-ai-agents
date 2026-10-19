@@ -14,7 +14,7 @@ import numpy as np
 from explainer import config, knowledge
 from explainer.codes import FAILURE_STAGES, Rail, Stage, lookup
 from explainer.embed import Embedder, FastEmbedEmbedder, passage_vectors
-from explainer.knowledge import KbRail, Passage, Topic, all_passages
+from explainer.knowledge import KbRail, Passage, Topic, all_passages, family_of
 
 
 class Mode(StrEnum):
@@ -63,7 +63,8 @@ def safe_code(code: str) -> str:
 def matches(passage: Passage, code: str, rail: Rail) -> bool:
     """Same rail (or ALL), and either about this code or a general passage that names no code."""
     rail_ok = passage.rail is KbRail.ALL or passage.rail.value == rail.value
-    return rail_ok and (code in passage.codes or not passage.codes)
+    # Family passages (D18) serve only codes outside the table, via family_passages().
+    return rail_ok and not passage.families and (code in passage.codes or not passage.codes)
 
 
 def stage_matches(passage: Passage, stage: Stage) -> bool:
@@ -71,6 +72,21 @@ def stage_matches(passage: Passage, stage: Stage) -> bool:
     if stage is Stage.UNKNOWN:
         return set(passage.stages) == set(FAILURE_STAGES)
     return stage in passage.stages
+
+
+def general_passages(rail: Rail | str, stage: Stage | str) -> list[Retrieved]:
+    """Passages that name no code, for this rail and stage: all a code outside our table can draw on (D17)."""
+    rail, stage = Rail(rail), Stage(stage)
+    found = [p for p in all_passages()
+             if not p.codes and not p.mandatory and matches(p, "", rail) and stage_matches(p, stage)]
+    return [Retrieved(p, None) for p in sorted(found, key=lambda p: (_TOPIC_ORDER.index(p.topic), p.id))]
+
+
+def family_passages(code: str, stage: Stage | str) -> list[Retrieved]:
+    """The team runbook passage(s) for the family of a code outside our table (D18)."""
+    family, stage = family_of(code), Stage(stage)
+    return [Retrieved(p, None) for p in all_passages()
+            if family and family in p.families and stage_matches(p, stage)]
 
 
 def build_query(code: str, rail: Rail) -> str:

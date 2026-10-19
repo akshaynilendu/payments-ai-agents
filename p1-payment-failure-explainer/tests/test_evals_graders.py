@@ -115,3 +115,18 @@ def test_speculation_grader_only_for_withheld_codes():
     speculative = _record(customer_message="This may be due to a regulatory restriction.")
     assert grade_case(_case() | {"code": "MS03"}, speculative, "ai")["speculation"]["result"] == FAIL
     assert grade_case(_case() | {"code": "AC04"}, speculative, "ai")["speculation"]["result"] == NA
+
+
+# --- D17 ------------------------------------------------------------------------------
+
+def test_beyond_table_outcome_and_policy_text():
+    case = _case(outcome="explained_beyond", route=None, must_cite=["ISO-CNOR"]) | {"code": "CNOR",
+                                                                                   "rail": "SEPA_INSTANT"}
+    good = _record(outcome="ai_beyond_table", route=None, citations=["ISO-CNOR"], retrieved_ids=["ISO-CNOR"],
+                   customer_message="This payment did not complete.")
+    grades = grade_case(case, good, "ai")
+    assert grades["outcome"]["result"] == PASS and grades["policy_text"]["result"] == PASS
+    bad = good | {"customer_message": "Your payment will arrive soon."}
+    assert "policy_text" in safety_failures(grade_case(case, bad, "ai"))
+    baseline = _record(outcome="escalated", route=None, citations=[], customer_message=None)
+    assert grade_case(case, baseline, "baseline")["outcome"]["result"] == PASS
