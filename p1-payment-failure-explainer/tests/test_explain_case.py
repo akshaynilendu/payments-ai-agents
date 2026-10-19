@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from explainer.codes import Route, lookup
+from explainer.codes import Route, lookup, policy_customer_message
 from explainer.embed import FakeEmbedder
 from explainer.explain import OUTPUT_SCHEMA, RULES
 from explainer.llm import FakeLLM, LLMError, LLMResponse
@@ -430,3 +430,60 @@ def test_unsupported_sensitive_word_is_retried_then_escalated(run):
     result, llm = run("sct_inst_cnor_unknown.xml", [fraud, fraud])
     assert "unsupported_sensitive_word (fraud)" in llm.calls[1]["user"]
     assert result.outcome is CaseOutcome.ESCALATED and result.customer_message is None
+
+
+# --- explain(): the table-first product entry point (D17) --------------------------------
+
+from explainer.pipeline import explain  # noqa: E402
+
+
+@pytest.fixture
+def product(tmp_path):
+    options = {"embedder": FakeEmbedder(), "cache_path": tmp_path / "e.npz", "gaps_path": tmp_path / "g.jsonl"}
+    return lambda status, llm: explain(status, llm, log_path=tmp_path / "explain.jsonl", **options)
+
+
+@pytest.mark.parametrize("sample", [s["file"] for s in EXPECTED if lookup(s["reason_code"])])
+def test_known_code_makes_no_model_call_and_uses_the_table_text(product, sample):
+    status = parse_file(SAMPLES_DIR / sample)
+    llm = FakeLLM([])  # any call would fail: no answers scripted
+    result = product(status, llm)
+    code = lookup(status.reason_code)
+    assert llm.calls == []
+    assert result.outcome is CaseOutcome.BASELINE and result.model is None and result.cost_usd == 0
+    assert result.route is code.route_for(status.rail)
+    if result.route is Route.COMPLIANCE:
+        assert result.customer_message is None  # tipping off: nothing to the customer (D12)
+    else:
+        assert result.customer_message == (policy_customer_message(code.code, status.rail)
+                                           or code.customer_message_for(status.rail))
+
+
+def test_unknown_iso_code_calls_the_model_but_never_returns_ai_customer_text(product):
+    status = parse_file(SAMPLES_DIR / "sct_inst_cnor_unknown.xml")
+    ai_text = "Your money will arrive tomorrow."
+    # Even if the model keeps writing a customer message, the checks reject it and the AI text never escapes.
+    llm = FakeLLM([beyond_answer(customer_message=ai_text), beyond_answer(customer_message=ai_text)])
+    result = product(status, llm)
+    assert len(llm.calls) == 2
+    assert result.customer_message != ai_text
+    assert result.outcome is CaseOutcome.ESCALATED and result.customer_message is None
+
+    llm = FakeLLM([beyond_answer()])
+    result = product(status, llm)
+    assert len(llm.calls) == 1 and result.outcome is CaseOutcome.AI_BEYOND_TABLE
+    assert result.customer_message == CNOR_CUSTOMER_TEXT  # the family's fixed text, not AI text
+
+
+def test_non_iso_code_escalates_without_a_model_call(product):
+    xml = (SAMPLES_DIR / "sct_inst_cnor_unknown.xml").read_text(encoding="utf-8").replace("<Cd>CNOR</Cd>", "<Cd>ZZ99</Cd>")
+    llm = FakeLLM([])
+    result = product(parse_xml(xml), llm)
+    assert llm.calls == [] and result.outcome is CaseOutcome.ESCALATED and result.note == "unknown_code"
+
+
+@pytest.mark.parametrize("status, outcome", [("ACSC", CaseOutcome.NOT_A_FAILURE), ("PDNG", CaseOutcome.PENDING)])
+def test_success_and_pending_make_no_model_call_through_explain(product, status, outcome):
+    llm = FakeLLM([])
+    result = product(parse_xml(_with_status(status, keep_reason=False)), llm)
+    assert llm.calls == [] and result.outcome is outcome

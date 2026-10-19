@@ -136,9 +136,26 @@ class CaseResult:
     latency_s: float
 
 
+def explain(status: PaymentStatus, llm: LLMClient, mode: Mode | str = Mode.FILTER_RANK, *,
+            log_path: Path = config.EXPLAIN_LOG, **retrieve_options) -> CaseResult:
+    """The product entry point (D17): table when it knows, AI for staff when the table has no answer.
+
+    - Code in the table: the table's reviewed text and route; the model is never passed in, so no AI call.
+    - Code outside the table that is a valid ISO 20022 code: the AI explains it for staff from the official
+      definition and the family runbook; the customer gets the family's fixed text, never AI text (D19).
+    - Anything else (stops, unknown codes): the fixed outcome, no AI call.
+    """
+    in_table = lookup(status.reason_code) is not None
+    return explain_case(status, None if in_table else llm, mode, log_path=log_path, **retrieve_options)
+
+
 def explain_case(status: PaymentStatus, llm: LLMClient | None, mode: Mode | str = Mode.FILTER_RANK, *,
                  log_path: Path = config.EXPLAIN_LOG, **retrieve_options) -> CaseResult:
-    """llm=None gives the no-AI baseline through the same stops, routing and policy as the AI path (D4)."""
+    """Eval-only (and explain()'s engine); product code calls explain().
+
+    Given a model, this runs the AI on any code, including codes in the table, so the evals can compare the
+    AI with the table. llm=None gives the no-AI baseline through the same stops, routing and policy (D4).
+    """
     started = time.perf_counter()
     result = _explain(status, llm, mode, retrieve_options)
     result = _with(result, latency_s=round(time.perf_counter() - started, 3))
