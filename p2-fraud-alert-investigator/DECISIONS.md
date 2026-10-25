@@ -100,3 +100,26 @@ both runs are reported.
   GENUINE. Policy in code, not prompts (Project 1's lesson).
 Caveat: rounds 1 and 2 use the same 40 alerts, so round 2 can overfit; the fixes are general rules, and the
 write-up reports both rounds.
+D14 Version H, code first then AI (Oct 24). Version A runs first; if a rule fires, its answer stands. Only when
+no rule fires does Version B run (with all its checks and the GENUINE gate). Computed after the fact from the A
+and B round-2 runs it scored 29/40 (textbook 23/23, variants 4/11, hard 2/6, cost 215, zero fraud labelled
+GENUINE), better than either alone; built as a real version so it is measured, not inferred.
+D15 Version C, agent (Oct 24). Core checks always run (the agent cannot skip them). The agent may call up to 4
+read-only tools (login_history, past_case_detail, receiving_account_network), then must submit through
+submit_assessment, whose input is exactly Version B's answer. Tool results become citable findings with ids;
+the same checks, payment-data fence and GENUINE gate apply; one fix for a failed submission, then fallback to
+Version A. Tools filter out anything after the alert (no hindsight). The question: does choosing extra checks
+beat a fixed set?
+D16 Version HC (Oct 24, Akshay's idea): code first, and the Version C agent (not one-shot B) only where no rule
+fires. The rule gaps are where digging deeper should help most, so this is the agent's best chance to earn its
+place, at the cost of only the alerts the rules can't answer.
+D17 Decision, v1 (Oct 24): ship Version H. Final runs (after the D13 check fixes; same 40 alerts):
+A 25/40 (cost 280); B 26 (245, $0.00075/case); C 29 (205, $0.00134); H 30, 30, 30 over 3 runs (200,
+$0.00017); HC 30-31 over 3 runs (190-205, $0.00028). Zero fraud labelled GENUINE in every run of every version
+(after D13). H is stable, perfect on textbook patterns and cheapest. HC's agent used a tool on one alert per run
+(C on 4 of 40), so the HC-H gap is run-to-run variation, not the tools; it costs ~65% more for no measurable
+gain. The agent stays in the repo as a measured experiment. Same conclusion as Project 1, reached
+independently: deterministic where you can, AI where you must.
+Limits: 40 made-up alerts; the variants were written knowing the rules (a stress test, not a measured miss
+rate); round 2 changed checks after seeing round 1 on the same alerts; LLM answers vary run to run (H did not
+here; HC did by one case). Next: a held-out set of new alerts nobody has tuned on, and more hard cases.

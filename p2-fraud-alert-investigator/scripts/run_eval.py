@@ -48,7 +48,7 @@ def error_cost(truth: str, got: str, amount: Decimal) -> Decimal:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--version", choices=["A", "B"], required=True)
+    ap.add_argument("--version", choices=["A", "B", "H", "C", "HC"], required=True)
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--model", default=config.CLAUDE_MODEL)
     args = ap.parse_args()
@@ -62,9 +62,11 @@ def main() -> None:
         run = lambda a: (run_a(ds, a), None)  # noqa: E731
     else:
         from investigator.llm import AnthropicClient
-        from investigator.version_b import investigate as run_b
+        module, func = {"B": ("version_b", "investigate"), "H": ("version_h", "investigate"),
+                        "C": ("version_c", "investigate"), "HC": ("version_h", "investigate_hc")}[args.version]
+        investigate = getattr(__import__(f"investigator.{module}", fromlist=[func]), func)
         llm = AnthropicClient(model=args.model)
-        run = lambda a: run_b(ds, a, llm)  # noqa: E731
+        run = lambda a: investigate(ds, a, llm)  # noqa: E731
 
     out_dir = config.RUNS_DIR / f"{datetime.now():%Y%m%d-%H%M%S}-{args.version}"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -87,7 +89,7 @@ def main() -> None:
         if meta is not None:
             spent += meta.cost_usd
             row.update(attempts=meta.attempts, fallback_to_a=meta.fallback_to_a, failures=meta.failures,
-                       genuine_gate=meta.genuine_gate,
+                       genuine_gate=meta.genuine_gate, tools_used=meta.tools_used,
                        input_tokens=meta.input_tokens, output_tokens=meta.output_tokens,
                        usd=round(meta.cost_usd, 6))
         rows.append(row)
@@ -127,8 +129,10 @@ def scoreboard(version: str, rows: list, spent: float, model: str) -> str:
         lines += ["", "**Model use**",
                   f"- Cost: ${spent:.4f} total, ${spent / n:.5f} per case",
                   f"- Slowest case: {max(r['seconds'] for r in rows):.1f}s",
-                  f"- Needed a retry: {sum(r.get('attempts', 1) > 1 for r in rows)}; "
+                  f"- An answer failed a check at least once: {sum(bool(r.get('failures')) for r in rows)}; "
                   f"fell back to Version A: {sum(r.get('fallback_to_a', False) for r in rows)}",
+                  f"- Extra tool calls (Version C): {sum(len(r.get('tools_used') or []) for r in rows)} "
+                  f"across {sum(bool(r.get('tools_used')) for r in rows)} cases",
                   f"- GENUINE blocked by the code gate (D13): {sum(bool(r.get('genuine_gate')) for r in rows)} "
                   + "(" + ", ".join(f"{r['alert_id']} truth {r['truth']}" for r in rows if r.get('genuine_gate')) + ")"]
     lines += ["", "**Misses**"]

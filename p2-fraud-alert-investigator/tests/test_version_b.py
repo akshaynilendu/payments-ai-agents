@@ -138,3 +138,31 @@ def test_genuine_is_allowed_without_red_flags(ds, gold):
 
 def test_prompt_says_vulnerability_is_not_evidence():
     assert "never what you suspect" in SYSTEM
+
+
+def test_version_h_uses_code_when_a_rule_fires_and_ai_otherwise(ds, gold):
+    from investigator.version_a import investigate as run_a
+    from investigator.version_h import investigate as run_h
+    for a in ds.alerts:
+        a_answer = run_a(ds, a).assessment.leading_hypothesis
+        findings = run_checks(ds, a)
+        llm = FakeLLM([_good(findings, "APP_PURCHASE")])
+        summary, meta = run_h(ds, a, llm)
+        if a_answer == Hypothesis.INSUFFICIENT_EVIDENCE:
+            assert len(llm.calls) == 1
+        else:
+            assert llm.calls == [] and summary.assessment.leading_hypothesis == a_answer
+
+
+def test_several_ids_in_one_bracket_are_accepted(case):
+    _, findings = case
+    ids = [f.id for f in findings if f.signals and not is_payment_data(f.id)][:2]
+    answer = {**_good(findings), "evidence_for": ids, "rationale": f"Two signs [{ids[0]}, {ids[1]}]."}
+    assert check_answer(answer, findings) == []
+
+
+def test_numbers_from_ids_are_not_invented(case):
+    _, findings = case
+    pid = next(f.id for f in findings if f.id.startswith("payee_risk:")).split(":")[1]
+    answer = {**_good(findings), "missing_information": [f"Who controls payee {pid}?"]}
+    assert check_answer(answer, findings) == []

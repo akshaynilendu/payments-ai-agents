@@ -121,7 +121,7 @@ def check_answer(answer: dict, findings: list[Finding]) -> list[str]:
     missing = answer.get("missing_information", [])
     if len(missing) > MAX_MISSING_ITEMS:
         problems.append(f"missing_information has more than {MAX_MISSING_ITEMS} items")
-    fact_numbers = set().union(*(_numbers(f.fact) for f in findings))
+    fact_numbers = set().union(*(_numbers(f.fact) | _numbers(f.id) for f in findings))
     stray = sorted({n for m in missing for n in _numbers(m)} - fact_numbers)
     if stray:
         problems.append(f"missing_information uses numbers that are not in the facts: {stray}")
@@ -129,7 +129,8 @@ def check_answer(answer: dict, findings: list[Finding]) -> list[str]:
     prose_words = len(re.sub(r"\[[^\[\]]+\]", "", rationale).split())
     if prose_words > MAX_RATIONALE_WORDS:
         problems.append(f"rationale has {prose_words} words; the limit is {MAX_RATIONALE_WORDS}, not counting [id] citations")
-    cited = re.findall(r"\[([^\[\]]+)\]", rationale)
+    # "[a] [b]" and "[a, b]" are both fine ways to cite.
+    cited = [c.strip() for group in re.findall(r"\[([^\[\]]+)\]", rationale) for c in group.split(",") if c.strip()]
     bad = [c for c in cited if c not in by_id]
     if bad:
         problems.append(f"rationale cites unknown ids: {bad}")
@@ -182,6 +183,7 @@ class RunMeta:
     fallback_to_a: bool = False
     failures: list = field(default_factory=list)
     genuine_gate: list = field(default_factory=list)  # red flags that blocked a GENUINE label (D13)
+    tools_used: list = field(default_factory=list)  # Version C only (D15)
 
 
 def assess_b(alert: Alert, findings: list[Finding], llm: LLMClient, meta: RunMeta) -> Result:

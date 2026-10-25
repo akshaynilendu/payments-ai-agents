@@ -86,3 +86,50 @@ def cost_usd(model: str, input_tokens: int, output_tokens: int) -> float:
         raise KeyError(f"no price for model {model!r} in config.MODEL_PRICES_PER_MTOK")
     i, o = config.MODEL_PRICES_PER_MTOK[model]
     return input_tokens * i / 1e6 + output_tokens * o / 1e6
+
+
+# ---- tool use (Version C) -------------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class AgentResponse:
+    blocks: list  # content blocks as plain dicts, echoed back unchanged (thinking blocks included)
+    input_tokens: int
+    output_tokens: int
+    stop_reason: str
+
+
+def _chat(self, system: str, messages: list, tools: list) -> AgentResponse:
+    kwargs = dict(model=self.model, max_tokens=self._settings["max_tokens"], system=system,
+                  messages=messages, tools=tools)
+    if "effort" in self._settings:
+        kwargs["output_config"] = {"effort": self._settings["effort"]}
+    try:
+        response = self._client.messages.create(**kwargs)
+    except self._anthropic.APIError as e:
+        raise LLMError(f"model call failed: {type(e).__name__}") from None
+    blocks = [b.model_dump(exclude_none=True) for b in response.content]
+    return AgentResponse(blocks, response.usage.input_tokens, response.usage.output_tokens,
+                         response.stop_reason or "")
+
+
+AnthropicClient.chat = _chat
+
+
+@dataclass
+class FakeAgentLLM:
+    """Scripted agent turns: each answer is a list of blocks, e.g. [{"type": "tool_use", ...}]."""
+    turns: list
+    model: str = config.CLAUDE_MODEL
+    input_tokens: int = 2000
+    output_tokens: int = 200
+    calls: list = field(default_factory=list)
+
+    def chat(self, system: str, messages: list, tools: list) -> AgentResponse:
+        self.calls.append({"system": system, "messages": json.loads(json.dumps(messages, default=str)),
+                           "tools": [t["name"] for t in tools]})
+        if len(self.calls) > len(self.turns):
+            raise AssertionError(f"FakeAgentLLM called {len(self.calls)} times but scripted {len(self.turns)} turns")
+        turn = self.turns[len(self.calls) - 1]
+        if isinstance(turn, Exception):
+            raise turn
+        return AgentResponse(turn, self.input_tokens, self.output_tokens, "tool_use")
