@@ -1,0 +1,5 @@
+# Pinned to the same versions as p1, so both projects behave the same.
+pydantic==2.13.5
+pytest==9.1.1
+anthropic==1.11.0
+python-dotenv==1.2.4  # loads ANTHROPIC_API_KEY from the gitignored .env.server

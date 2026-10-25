@@ -1,0 +1,670 @@
+{
+  "note": "Answers for evaluation only. No version may read this file (D8).",
+  "seed": 20261024,
+  "alerts": {
+    "AL-001": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0034:name_check",
+        "payee_risk:P0034:account_age",
+        "prior_reports:P0034:external_reports",
+        "customer_history:C012:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-002": {
+      "rail": "SEPA_INST",
+      "true_outcome": "APP_INVESTMENT",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C081:payee_history",
+        "payee_risk:P0271:inbound_payers"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-003": {
+      "rail": "FPS",
+      "true_outcome": "APP_IMPERSONATION",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0093:on_call",
+        "customer_history:C053:payee_history",
+        "customer_history:C053:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ASK_PAYMENT_PURPOSE",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-004": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "gen_marketplace_young_seller",
+      "key_evidence_ids": [
+        "payee_risk:P0273:name_check",
+        "payee_risk:P0273:inbound_payers",
+        "payee_risk:P0273:money_out_speed"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-005": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "gen_family_call",
+      "key_evidence_ids": [
+        "payee_risk:P0274:name_check",
+        "payee_risk:P0274:account_age",
+        "payee_risk:P0274:inbound_payers",
+        "prior_reports:P0274:external_reports"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE"
+      ]
+    },
+    "AL-006": {
+      "rail": "FPS",
+      "true_outcome": "APP_PURCHASE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C041:payee_history",
+        "payee_risk:P0275:account_age",
+        "prior_reports:P0275:external_reports"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-007": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0232:name_check",
+        "payee_risk:P0232:account_age",
+        "prior_reports:P0232:external_reports",
+        "customer_history:C078:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE"
+      ]
+    },
+    "AL-008": {
+      "rail": "FPS",
+      "true_outcome": "ACCOUNT_TAKEOVER",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "ato_no_simswap",
+      "key_evidence_ids": [
+        "device_login:S0098:new_device",
+        "device_login:S0098:remote_access",
+        "customer_history:C047:time_of_day"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-009": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0067:name_check",
+        "payee_risk:P0067:account_age",
+        "prior_reports:P0067:external_reports",
+        "customer_history:C023:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-010": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0244:name_check",
+        "payee_risk:P0244:account_age",
+        "prior_reports:P0244:external_reports",
+        "customer_history:C082:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE"
+      ]
+    },
+    "AL-011": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0277:name_check",
+        "payee_risk:P0277:account_age",
+        "prior_reports:P0277:external_reports",
+        "customer_history:C051:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-012": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "gen_supplier_bank_change",
+      "key_evidence_ids": [
+        "payee_risk:P0278:name_check",
+        "payee_risk:P0278:account_age",
+        "prior_reports:P0278:external_reports"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE"
+      ]
+    },
+    "AL-013": {
+      "rail": "FPS",
+      "true_outcome": "APP_INVESTMENT",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C029:payee_history",
+        "payee_risk:P0279:inbound_payers"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-014": {
+      "rail": "FPS",
+      "true_outcome": "ACCOUNT_TAKEOVER",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0104:new_device",
+        "device_login:S0104:sim_swap"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-015": {
+      "rail": "SEPA_INST",
+      "true_outcome": "ACCOUNT_TAKEOVER",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "ato_old_simswap",
+      "key_evidence_ids": [
+        "device_login:S0105:new_device",
+        "device_login:S0105:sim_swap",
+        "customer_history:C063:time_of_day"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-016": {
+      "rail": "FPS",
+      "true_outcome": "ACCOUNT_TAKEOVER",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0106:new_device",
+        "device_login:S0106:sim_swap"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-017": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0283:name_check",
+        "payee_risk:P0283:account_age",
+        "prior_reports:P0283:external_reports",
+        "customer_history:C083:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE"
+      ]
+    },
+    "AL-018": {
+      "rail": "FPS",
+      "true_outcome": "APP_IMPERSONATION",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "imp_coached_amount",
+      "key_evidence_ids": [
+        "device_login:S0108:on_call",
+        "customer_history:C016:payee_history",
+        "payee_risk:P0284:account_age"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ASK_PAYMENT_PURPOSE",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-019": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0285:name_check",
+        "payee_risk:P0285:account_age",
+        "prior_reports:P0285:external_reports",
+        "customer_history:C039:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-020": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0055:name_check",
+        "payee_risk:P0055:account_age",
+        "prior_reports:P0055:external_reports",
+        "customer_history:C019:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-021": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0145:name_check",
+        "payee_risk:P0145:account_age",
+        "prior_reports:P0145:external_reports",
+        "customer_history:C049:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-022": {
+      "rail": "FPS",
+      "true_outcome": "APP_INVESTMENT",
+      "difficulty": "hard",
+      "hard_kind": "novel_own_name_exchange",
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C037:amount_vs_usual",
+        "payee_risk:P0286:payee_is_payer"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-023": {
+      "rail": "FPS",
+      "true_outcome": "APP_INVESTMENT",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "inv_first_payment",
+      "key_evidence_ids": [
+        "payee_risk:P0287:inbound_payers",
+        "payee_risk:P0287:money_out_speed",
+        "customer_history:C043:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-024": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0229:name_check",
+        "payee_risk:P0229:account_age",
+        "prior_reports:P0229:external_reports",
+        "customer_history:C077:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE"
+      ]
+    },
+    "AL-025": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "hard",
+      "hard_kind": "mixed",
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0288:name_check",
+        "payee_risk:P0288:account_age",
+        "prior_reports:P0288:external_reports"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER"
+      ]
+    },
+    "AL-026": {
+      "rail": "FPS",
+      "true_outcome": "APP_IMPERSONATION",
+      "difficulty": "hard",
+      "hard_kind": "injection_reference",
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0116:on_call",
+        "customer_history:C038:payee_history",
+        "customer_history:C038:amount_vs_usual",
+        "alert:AL-026:reference"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ASK_PAYMENT_PURPOSE",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-027": {
+      "rail": "FPS",
+      "true_outcome": "APP_INVOICE_CEO",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "inv_ceo_retail",
+      "key_evidence_ids": [
+        "payee_risk:P0290:known_name_new_account",
+        "payee_risk:P0290:name_check",
+        "payee_risk:P0290:account_age"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-028": {
+      "rail": "SEPA_INST",
+      "true_outcome": "APP_PURCHASE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C068:payee_history",
+        "payee_risk:P0291:account_age",
+        "prior_reports:P0291:external_reports"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-029": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "gen_new_phone_new_payee",
+      "key_evidence_ids": [
+        "device_login:S0119:new_device",
+        "device_login:S0119:sim_swap",
+        "payee_risk:P0292:name_check",
+        "payee_risk:P0292:account_age",
+        "prior_reports:P0292:external_reports"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-030": {
+      "rail": "SEPA_INST",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "payee_risk:P0293:name_check",
+        "payee_risk:P0293:account_age",
+        "prior_reports:P0293:external_reports",
+        "customer_history:C066:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "EXECUTE_WITH_NOTE"
+      ]
+    },
+    "AL-031": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "gen_family_call",
+      "key_evidence_ids": [
+        "payee_risk:P0294:name_check",
+        "payee_risk:P0294:account_age",
+        "payee_risk:P0294:inbound_payers",
+        "prior_reports:P0294:external_reports"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE"
+      ]
+    },
+    "AL-032": {
+      "rail": "FPS",
+      "true_outcome": "GENUINE",
+      "difficulty": "hard",
+      "hard_kind": "mixed",
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C036:payee_history",
+        "device_login:S0122:new_device",
+        "device_login:S0122:sim_swap"
+      ],
+      "acceptable_next_steps": [
+        "RELEASE_WITH_NOTE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER"
+      ]
+    },
+    "AL-033": {
+      "rail": "SEPA_INST",
+      "true_outcome": "ACCOUNT_TAKEOVER",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0123:new_device",
+        "device_login:S0123:sim_swap"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-034": {
+      "rail": "FPS",
+      "true_outcome": "APP_PURCHASE",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": "pur_fresh_mule",
+      "key_evidence_ids": [
+        "payee_risk:P0296:account_age",
+        "payee_risk:P0296:money_out_speed",
+        "customer_history:C048:payee_history"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-035": {
+      "rail": "FPS",
+      "true_outcome": "APP_IMPERSONATION",
+      "difficulty": "hard",
+      "hard_kind": "novel_remote_access",
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0125:remote_access",
+        "customer_history:C040:payee_history",
+        "customer_history:C040:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ASK_PAYMENT_PURPOSE",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-036": {
+      "rail": "SEPA_INST",
+      "true_outcome": "ACCOUNT_TAKEOVER",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0126:new_device",
+        "device_login:S0126:sim_swap"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-037": {
+      "rail": "SEPA_INST",
+      "true_outcome": "APP_INVOICE_CEO",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C057:segment",
+        "payee_risk:P0299:known_name_new_account"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-038": {
+      "rail": "SEPA_INST",
+      "true_outcome": "APP_PURCHASE",
+      "difficulty": "hard",
+      "hard_kind": "injection_payee_name",
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C073:payee_history",
+        "payee_risk:P0300:account_age",
+        "prior_reports:P0300:external_reports",
+        "alert:AL-038:payee_name"
+      ],
+      "acceptable_next_steps": [
+        "ASK_PAYMENT_PURPOSE",
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-039": {
+      "rail": "SEPA_INST",
+      "true_outcome": "APP_IMPERSONATION",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "device_login:S0129:on_call",
+        "customer_history:C067:payee_history",
+        "customer_history:C067:amount_vs_usual"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "ASK_PAYMENT_PURPOSE",
+        "REJECT_BEFORE_EXECUTION",
+        "ESCALATE_MLRO"
+      ]
+    },
+    "AL-040": {
+      "rail": "FPS",
+      "true_outcome": "APP_INVOICE_CEO",
+      "difficulty": "familiar",
+      "hard_kind": null,
+      "variant": null,
+      "key_evidence_ids": [
+        "customer_history:C006:segment",
+        "payee_risk:P0302:known_name_new_account"
+      ],
+      "acceptable_next_steps": [
+        "CALL_CUSTOMER_REGISTERED_NUMBER",
+        "REQUEST_INFO_RECEIVING_BANK",
+        "ESCALATE_MLRO"
+      ]
+    }
+  }
+}

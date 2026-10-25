@@ -1,0 +1,1946 @@
+[
+  {
+    "case_id": "PC001",
+    "closed_at": "2026-03-17T19:00:00+00:00",
+    "customer_id": "C074",
+    "payee_id": "P0272",
+    "receiving_account": "60-62-79 40941764",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "TYPING_HESITATION"
+    ]
+  },
+  {
+    "case_id": "PC002",
+    "closed_at": "2026-01-13T20:00:00+00:00",
+    "customer_id": "C072",
+    "payee_id": "P0275",
+    "receiving_account": "42-57-68 85610344",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC003",
+    "closed_at": "2026-08-19T23:00:00+01:00",
+    "customer_id": "C021",
+    "payee_id": "P0291",
+    "receiving_account": "BE83459303353725380554",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC004",
+    "closed_at": "2026-08-23T07:00:00+01:00",
+    "customer_id": "C040",
+    "payee_id": "P0303",
+    "receiving_account": "29-59-84 88917009",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "MANY_INBOUND",
+      "NEW_PAYEE",
+      "ON_CALL"
+    ]
+  },
+  {
+    "case_id": "PC005",
+    "closed_at": "2026-04-02T08:00:00+01:00",
+    "customer_id": "C010",
+    "payee_id": "P0304",
+    "receiving_account": "91-69-81 46165647",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC006",
+    "closed_at": "2026-08-16T22:00:00+01:00",
+    "customer_id": "C059",
+    "payee_id": "P0305",
+    "receiving_account": "IT32396340580927466545",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC007",
+    "closed_at": "2026-06-09T17:00:00+01:00",
+    "customer_id": "C072",
+    "payee_id": "P0306",
+    "receiving_account": "NL23420659401583721592",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "REMOTE_ACCESS"
+    ]
+  },
+  {
+    "case_id": "PC008",
+    "closed_at": "2025-12-17T19:00:00+00:00",
+    "customer_id": "C007",
+    "payee_id": "P0307",
+    "receiving_account": "70-23-68 45031760",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC009",
+    "closed_at": "2026-01-11T04:00:00+00:00",
+    "customer_id": "C085",
+    "payee_id": "P0308",
+    "receiving_account": "FR48975116796281644980",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC010",
+    "closed_at": "2026-05-29T00:00:00+01:00",
+    "customer_id": "C057",
+    "payee_id": "P0309",
+    "receiving_account": "ES70853399179311722953",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC011",
+    "closed_at": "2026-06-01T06:00:00+01:00",
+    "customer_id": "C070",
+    "payee_id": "P0310",
+    "receiving_account": "NL84729933082201972220",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC012",
+    "closed_at": "2026-08-11T02:00:00+01:00",
+    "customer_id": "C085",
+    "payee_id": "P0311",
+    "receiving_account": "NL29350458624881065247",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC013",
+    "closed_at": "2025-10-29T10:00:00+00:00",
+    "customer_id": "C085",
+    "payee_id": "P0312",
+    "receiving_account": "IE69700942958819152340",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC014",
+    "closed_at": "2025-10-21T04:00:00+01:00",
+    "customer_id": "C031",
+    "payee_id": "P0313",
+    "receiving_account": "39-18-52 18596401",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC015",
+    "closed_at": "2025-11-29T07:00:00+00:00",
+    "customer_id": "C023",
+    "payee_id": "P0314",
+    "receiving_account": "15-87-84 67685459",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC016",
+    "closed_at": "2026-06-23T13:00:00+01:00",
+    "customer_id": "C047",
+    "payee_id": "P0315",
+    "receiving_account": "52-50-11 31991749",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "ON_CALL"
+    ]
+  },
+  {
+    "case_id": "PC017",
+    "closed_at": "2026-04-20T09:00:00+01:00",
+    "customer_id": "C003",
+    "payee_id": "P0316",
+    "receiving_account": "45-91-77 64986565",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_DEVICE",
+      "SIM_SWAP_72H"
+    ]
+  },
+  {
+    "case_id": "PC018",
+    "closed_at": "2026-08-08T10:00:00+01:00",
+    "customer_id": "C048",
+    "payee_id": "P0317",
+    "receiving_account": "36-11-51 84890885",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC019",
+    "closed_at": "2025-12-22T05:00:00+00:00",
+    "customer_id": "C038",
+    "payee_id": "P0318",
+    "receiving_account": "76-78-65 70661782",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC020",
+    "closed_at": "2026-09-12T08:00:00+01:00",
+    "customer_id": "C090",
+    "payee_id": "P0319",
+    "receiving_account": "IT48265991712189503485",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC021",
+    "closed_at": "2026-01-19T02:00:00+00:00",
+    "customer_id": "C090",
+    "payee_id": "P0320",
+    "receiving_account": "BE90643879331162903198",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "MANY_INBOUND",
+      "NEW_PAYEE",
+      "ON_CALL"
+    ]
+  },
+  {
+    "case_id": "PC022",
+    "closed_at": "2026-09-23T05:00:00+01:00",
+    "customer_id": "C061",
+    "payee_id": "P0321",
+    "receiving_account": "IT92904960099594793313",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC023",
+    "closed_at": "2026-04-01T01:00:00+01:00",
+    "customer_id": "C082",
+    "payee_id": "P0322",
+    "receiving_account": "IT23797605896658904833",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC024",
+    "closed_at": "2026-06-04T14:00:00+01:00",
+    "customer_id": "C001",
+    "payee_id": "P0323",
+    "receiving_account": "84-21-49 23634017",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC025",
+    "closed_at": "2026-04-06T09:00:00+01:00",
+    "customer_id": "C086",
+    "payee_id": "P0324",
+    "receiving_account": "BE57681182975542955923",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC026",
+    "closed_at": "2025-10-27T20:00:00+00:00",
+    "customer_id": "C055",
+    "payee_id": "P0325",
+    "receiving_account": "NL65329985852688971165",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC027",
+    "closed_at": "2025-11-08T22:00:00+00:00",
+    "customer_id": "C075",
+    "payee_id": "P0326",
+    "receiving_account": "IT99543894807870976004",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC028",
+    "closed_at": "2025-11-25T08:00:00+00:00",
+    "customer_id": "C065",
+    "payee_id": "P0327",
+    "receiving_account": "IT95422881057547986550",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC029",
+    "closed_at": "2025-10-07T20:00:00+01:00",
+    "customer_id": "C087",
+    "payee_id": "P0328",
+    "receiving_account": "IE96923386570818053839",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC030",
+    "closed_at": "2026-03-27T22:00:00+00:00",
+    "customer_id": "C078",
+    "payee_id": "P0329",
+    "receiving_account": "FR20638362131903307930",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC031",
+    "closed_at": "2026-09-28T14:00:00+01:00",
+    "customer_id": "C081",
+    "payee_id": "P0330",
+    "receiving_account": "FR88545546178407575531",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC032",
+    "closed_at": "2025-12-14T13:00:00+00:00",
+    "customer_id": "C086",
+    "payee_id": "P0331",
+    "receiving_account": "BE47254955773486803881",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "ON_CALL"
+    ]
+  },
+  {
+    "case_id": "PC033",
+    "closed_at": "2026-07-01T09:00:00+01:00",
+    "customer_id": "C055",
+    "payee_id": "P0332",
+    "receiving_account": "IT24227425932798454874",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC034",
+    "closed_at": "2025-10-29T07:00:00+00:00",
+    "customer_id": "C084",
+    "payee_id": "P0333",
+    "receiving_account": "NL13058875348744067321",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC035",
+    "closed_at": "2025-11-15T23:00:00+00:00",
+    "customer_id": "C084",
+    "payee_id": "P0334",
+    "receiving_account": "IE54291440476945281899",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC036",
+    "closed_at": "2026-06-27T03:00:00+01:00",
+    "customer_id": "C071",
+    "payee_id": "P0335",
+    "receiving_account": "NL23052672224102434572",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC037",
+    "closed_at": "2026-08-10T00:00:00+01:00",
+    "customer_id": "C089",
+    "payee_id": "P0336",
+    "receiving_account": "IE72881460044936114512",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC038",
+    "closed_at": "2026-01-23T07:00:00+00:00",
+    "customer_id": "C082",
+    "payee_id": "P0337",
+    "receiving_account": "ES52843001879062027684",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC039",
+    "closed_at": "2026-01-08T12:00:00+00:00",
+    "customer_id": "C086",
+    "payee_id": "P0338",
+    "receiving_account": "DE63144694878581749546",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "NEW_DEVICE",
+      "NEW_PAYEE",
+      "SIM_SWAP_72H"
+    ]
+  },
+  {
+    "case_id": "PC040",
+    "closed_at": "2026-07-24T04:00:00+01:00",
+    "customer_id": "C047",
+    "payee_id": "P0339",
+    "receiving_account": "47-98-19 55486688",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC041",
+    "closed_at": "2025-12-16T01:00:00+00:00",
+    "customer_id": "C016",
+    "payee_id": "P0340",
+    "receiving_account": "98-14-45 51401263",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC042",
+    "closed_at": "2026-08-14T11:00:00+01:00",
+    "customer_id": "C007",
+    "payee_id": "P0341",
+    "receiving_account": "52-37-35 78126711",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC043",
+    "closed_at": "2025-11-05T13:00:00+00:00",
+    "customer_id": "C083",
+    "payee_id": "P0342",
+    "receiving_account": "IT63073780789345057826",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC044",
+    "closed_at": "2026-08-29T12:00:00+01:00",
+    "customer_id": "C084",
+    "payee_id": "P0343",
+    "receiving_account": "NL59985306102747953120",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "AMOUNT_3X",
+      "NAME_NO_MATCH",
+      "NEW_DEVICE",
+      "SIM_SWAP_72H"
+    ]
+  },
+  {
+    "case_id": "PC045",
+    "closed_at": "2025-12-23T00:00:00+00:00",
+    "customer_id": "C050",
+    "payee_id": "P0344",
+    "receiving_account": "32-35-19 95608357",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC046",
+    "closed_at": "2026-03-04T03:00:00+00:00",
+    "customer_id": "C031",
+    "payee_id": "P0345",
+    "receiving_account": "39-32-86 39422330",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC047",
+    "closed_at": "2026-09-09T04:00:00+01:00",
+    "customer_id": "C061",
+    "payee_id": "P0346",
+    "receiving_account": "BE19116524235770359842",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC048",
+    "closed_at": "2026-08-17T11:00:00+01:00",
+    "customer_id": "C003",
+    "payee_id": "P0347",
+    "receiving_account": "68-17-47 99068188",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC049",
+    "closed_at": "2026-02-06T10:00:00+00:00",
+    "customer_id": "C018",
+    "payee_id": "P0348",
+    "receiving_account": "46-27-74 99817853",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC050",
+    "closed_at": "2026-02-02T22:00:00+00:00",
+    "customer_id": "C031",
+    "payee_id": "P0349",
+    "receiving_account": "40-25-95 31394281",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC051",
+    "closed_at": "2026-04-20T01:00:00+01:00",
+    "customer_id": "C056",
+    "payee_id": "P0350",
+    "receiving_account": "FR35842458544063702614",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "AMOUNT_3X",
+      "NAME_NO_MATCH",
+      "NEW_DEVICE",
+      "SIM_SWAP_72H"
+    ]
+  },
+  {
+    "case_id": "PC052",
+    "closed_at": "2026-09-04T12:00:00+01:00",
+    "customer_id": "C078",
+    "payee_id": "P0351",
+    "receiving_account": "DE64611268070850490327",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC053",
+    "closed_at": "2026-01-26T02:00:00+00:00",
+    "customer_id": "C015",
+    "payee_id": "P0352",
+    "receiving_account": "47-34-19 57177954",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC054",
+    "closed_at": "2026-07-25T08:00:00+01:00",
+    "customer_id": "C057",
+    "payee_id": "P0353",
+    "receiving_account": "DE76842472350136462141",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC055",
+    "closed_at": "2026-03-30T23:00:00+01:00",
+    "customer_id": "C024",
+    "payee_id": "P0354",
+    "receiving_account": "80-24-96 79991976",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC056",
+    "closed_at": "2026-06-23T07:00:00+01:00",
+    "customer_id": "C061",
+    "payee_id": "P0355",
+    "receiving_account": "IT88668407110406971235",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC057",
+    "closed_at": "2026-07-11T23:00:00+01:00",
+    "customer_id": "C001",
+    "payee_id": "P0356",
+    "receiving_account": "25-81-63 92626031",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC058",
+    "closed_at": "2026-02-22T10:00:00+00:00",
+    "customer_id": "C022",
+    "payee_id": "P0357",
+    "receiving_account": "45-15-12 48750772",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC059",
+    "closed_at": "2026-05-10T12:00:00+01:00",
+    "customer_id": "C029",
+    "payee_id": "P0358",
+    "receiving_account": "86-34-86 84546840",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC060",
+    "closed_at": "2026-06-23T04:00:00+01:00",
+    "customer_id": "C012",
+    "payee_id": "P0359",
+    "receiving_account": "64-98-60 53922243",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC061",
+    "closed_at": "2025-12-12T21:00:00+00:00",
+    "customer_id": "C012",
+    "payee_id": "P0360",
+    "receiving_account": "29-13-84 57950501",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC062",
+    "closed_at": "2025-12-12T17:00:00+00:00",
+    "customer_id": "C005",
+    "payee_id": "P0361",
+    "receiving_account": "44-77-53 53124881",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC063",
+    "closed_at": "2026-02-05T16:00:00+00:00",
+    "customer_id": "C058",
+    "payee_id": "P0362",
+    "receiving_account": "IT30092913147910693803",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC064",
+    "closed_at": "2026-08-14T05:00:00+01:00",
+    "customer_id": "C086",
+    "payee_id": "P0363",
+    "receiving_account": "IT84320516515124898947",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC065",
+    "closed_at": "2026-09-20T12:00:00+01:00",
+    "customer_id": "C072",
+    "payee_id": "P0364",
+    "receiving_account": "BE95605907382800439277",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC066",
+    "closed_at": "2026-05-11T11:00:00+01:00",
+    "customer_id": "C044",
+    "payee_id": "P0365",
+    "receiving_account": "42-81-89 28337487",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "NEW_DEVICE",
+      "OUT_OF_HOURS",
+      "SIM_SWAP_72H"
+    ]
+  },
+  {
+    "case_id": "PC067",
+    "closed_at": "2026-03-14T19:00:00+00:00",
+    "customer_id": "C088",
+    "payee_id": "P0366",
+    "receiving_account": "IT81490736695362171396",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC068",
+    "closed_at": "2025-10-05T10:00:00+01:00",
+    "customer_id": "C059",
+    "payee_id": "P0367",
+    "receiving_account": "FR20661153802851692156",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC069",
+    "closed_at": "2025-11-17T14:00:00+00:00",
+    "customer_id": "C035",
+    "payee_id": "P0368",
+    "receiving_account": "38-87-76 65636843",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC070",
+    "closed_at": "2025-12-21T07:00:00+00:00",
+    "customer_id": "C031",
+    "payee_id": "P0369",
+    "receiving_account": "98-52-48 62331057",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC071",
+    "closed_at": "2026-01-23T14:00:00+00:00",
+    "customer_id": "C050",
+    "payee_id": "P0370",
+    "receiving_account": "32-71-19 91922804",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC072",
+    "closed_at": "2026-02-12T14:00:00+00:00",
+    "customer_id": "C072",
+    "payee_id": "P0371",
+    "receiving_account": "DE45153299756654400962",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC073",
+    "closed_at": "2026-06-28T05:00:00+01:00",
+    "customer_id": "C056",
+    "payee_id": "P0372",
+    "receiving_account": "ES48470796390652717906",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC074",
+    "closed_at": "2025-12-07T07:00:00+00:00",
+    "customer_id": "C050",
+    "payee_id": "P0373",
+    "receiving_account": "80-45-27 22820364",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC075",
+    "closed_at": "2026-08-02T20:00:00+01:00",
+    "customer_id": "C077",
+    "payee_id": "P0374",
+    "receiving_account": "IE19839755859613610588",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC076",
+    "closed_at": "2026-01-19T18:00:00+00:00",
+    "customer_id": "C040",
+    "payee_id": "P0375",
+    "receiving_account": "65-14-42 35087428",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC077",
+    "closed_at": "2026-07-03T20:00:00+01:00",
+    "customer_id": "C004",
+    "payee_id": "P0376",
+    "receiving_account": "70-26-88 30053183",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC078",
+    "closed_at": "2025-11-08T17:00:00+00:00",
+    "customer_id": "C049",
+    "payee_id": "P0377",
+    "receiving_account": "25-81-16 33865915",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC079",
+    "closed_at": "2026-01-09T02:00:00+00:00",
+    "customer_id": "C039",
+    "payee_id": "P0378",
+    "receiving_account": "61-98-86 42157023",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_DEVICE",
+      "SIM_SWAP_72H",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC080",
+    "closed_at": "2025-10-24T05:00:00+01:00",
+    "customer_id": "C050",
+    "payee_id": "P0379",
+    "receiving_account": "81-80-77 69835280",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC081",
+    "closed_at": "2026-09-06T18:00:00+01:00",
+    "customer_id": "C070",
+    "payee_id": "P0380",
+    "receiving_account": "FR73363661836762437965",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC082",
+    "closed_at": "2025-12-04T03:00:00+00:00",
+    "customer_id": "C007",
+    "payee_id": "P0381",
+    "receiving_account": "43-50-25 82346317",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC083",
+    "closed_at": "2025-12-14T14:00:00+00:00",
+    "customer_id": "C067",
+    "payee_id": "P0382",
+    "receiving_account": "FR12433945156951658274",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC084",
+    "closed_at": "2025-11-17T15:00:00+00:00",
+    "customer_id": "C021",
+    "payee_id": "P0383",
+    "receiving_account": "26-38-79 15310212",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC085",
+    "closed_at": "2026-01-22T15:00:00+00:00",
+    "customer_id": "C038",
+    "payee_id": "P0384",
+    "receiving_account": "45-59-51 57088547",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC086",
+    "closed_at": "2025-11-11T05:00:00+00:00",
+    "customer_id": "C014",
+    "payee_id": "P0385",
+    "receiving_account": "42-85-67 16311335",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC087",
+    "closed_at": "2025-11-02T06:00:00+00:00",
+    "customer_id": "C055",
+    "payee_id": "P0386",
+    "receiving_account": "ES35477157730331073880",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC088",
+    "closed_at": "2026-07-14T05:00:00+01:00",
+    "customer_id": "C061",
+    "payee_id": "P0387",
+    "receiving_account": "IE89265427565138038836",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC089",
+    "closed_at": "2026-01-31T11:00:00+00:00",
+    "customer_id": "C068",
+    "payee_id": "P0388",
+    "receiving_account": "IT20014090883881975799",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "REMOTE_ACCESS",
+      "TYPING_HESITATION"
+    ]
+  },
+  {
+    "case_id": "PC090",
+    "closed_at": "2026-07-05T23:00:00+01:00",
+    "customer_id": "C041",
+    "payee_id": "P0389",
+    "receiving_account": "10-86-95 72849303",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC091",
+    "closed_at": "2026-09-14T08:00:00+01:00",
+    "customer_id": "C030",
+    "payee_id": "P0390",
+    "receiving_account": "92-80-63 46282837",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC092",
+    "closed_at": "2026-01-08T08:00:00+00:00",
+    "customer_id": "C071",
+    "payee_id": "P0391",
+    "receiving_account": "IT29282000093785970257",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC093",
+    "closed_at": "2026-01-31T19:00:00+00:00",
+    "customer_id": "C008",
+    "payee_id": "P0392",
+    "receiving_account": "74-64-77 73686137",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC094",
+    "closed_at": "2026-02-21T08:00:00+00:00",
+    "customer_id": "C061",
+    "payee_id": "P0393",
+    "receiving_account": "IT43271517898960683160",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC095",
+    "closed_at": "2026-02-16T07:00:00+00:00",
+    "customer_id": "C041",
+    "payee_id": "P0394",
+    "receiving_account": "23-89-36 70557780",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC096",
+    "closed_at": "2026-08-22T19:00:00+01:00",
+    "customer_id": "C058",
+    "payee_id": "P0395",
+    "receiving_account": "DE27402034417330739315",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC097",
+    "closed_at": "2026-05-07T06:00:00+01:00",
+    "customer_id": "C006",
+    "payee_id": "P0396",
+    "receiving_account": "80-80-54 39246879",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC098",
+    "closed_at": "2026-04-25T18:00:00+01:00",
+    "customer_id": "C058",
+    "payee_id": "P0397",
+    "receiving_account": "NL97574437242111544173",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC099",
+    "closed_at": "2026-07-01T10:00:00+01:00",
+    "customer_id": "C048",
+    "payee_id": "P0398",
+    "receiving_account": "98-19-93 48867406",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "NEW_DEVICE",
+      "SIM_SWAP_72H",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC100",
+    "closed_at": "2025-11-25T08:00:00+00:00",
+    "customer_id": "C055",
+    "payee_id": "P0399",
+    "receiving_account": "IE28200151948868742522",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "NAME_NO_MATCH",
+      "NEW_DEVICE",
+      "SIM_SWAP_72H"
+    ]
+  },
+  {
+    "case_id": "PC101",
+    "closed_at": "2025-12-07T23:00:00+00:00",
+    "customer_id": "C017",
+    "payee_id": "P0400",
+    "receiving_account": "79-19-64 25347937",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC102",
+    "closed_at": "2026-06-08T20:00:00+01:00",
+    "customer_id": "C003",
+    "payee_id": "P0401",
+    "receiving_account": "79-42-82 58062189",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC103",
+    "closed_at": "2026-05-01T06:00:00+01:00",
+    "customer_id": "C001",
+    "payee_id": "P0402",
+    "receiving_account": "82-88-90 36301568",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC104",
+    "closed_at": "2026-06-16T05:00:00+01:00",
+    "customer_id": "C039",
+    "payee_id": "P0403",
+    "receiving_account": "94-70-21 86865921",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC105",
+    "closed_at": "2026-04-30T18:00:00+01:00",
+    "customer_id": "C024",
+    "payee_id": "P0404",
+    "receiving_account": "72-97-53 47221260",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC106",
+    "closed_at": "2026-01-31T20:00:00+00:00",
+    "customer_id": "C069",
+    "payee_id": "P0405",
+    "receiving_account": "DE88789946350729967382",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC107",
+    "closed_at": "2026-03-19T15:00:00+00:00",
+    "customer_id": "C076",
+    "payee_id": "P0406",
+    "receiving_account": "IT86754474901502912386",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC108",
+    "closed_at": "2026-03-18T08:00:00+00:00",
+    "customer_id": "C001",
+    "payee_id": "P0407",
+    "receiving_account": "21-60-71 28705328",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC109",
+    "closed_at": "2026-03-05T04:00:00+00:00",
+    "customer_id": "C064",
+    "payee_id": "P0408",
+    "receiving_account": "ES65622511124616186588",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC110",
+    "closed_at": "2026-04-11T22:00:00+01:00",
+    "customer_id": "C057",
+    "payee_id": "P0409",
+    "receiving_account": "DE30566752711622267228",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC111",
+    "closed_at": "2026-06-02T20:00:00+01:00",
+    "customer_id": "C069",
+    "payee_id": "P0410",
+    "receiving_account": "BE41824874094717076379",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC112",
+    "closed_at": "2025-11-12T08:00:00+00:00",
+    "customer_id": "C020",
+    "payee_id": "P0411",
+    "receiving_account": "43-79-22 32186904",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC113",
+    "closed_at": "2026-02-18T04:00:00+00:00",
+    "customer_id": "C072",
+    "payee_id": "P0412",
+    "receiving_account": "FR23130961237265051523",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC114",
+    "closed_at": "2026-05-18T07:00:00+01:00",
+    "customer_id": "C081",
+    "payee_id": "P0413",
+    "receiving_account": "BE60826035941790592075",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC115",
+    "closed_at": "2025-12-05T13:00:00+00:00",
+    "customer_id": "C068",
+    "payee_id": "P0414",
+    "receiving_account": "BE84237015981741892231",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC116",
+    "closed_at": "2026-08-25T16:00:00+01:00",
+    "customer_id": "C089",
+    "payee_id": "P0415",
+    "receiving_account": "FR36532907371678584741",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC117",
+    "closed_at": "2026-02-15T22:00:00+00:00",
+    "customer_id": "C055",
+    "payee_id": "P0416",
+    "receiving_account": "BE78847975378211367278",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "MANY_INBOUND",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "TYPING_HESITATION"
+    ]
+  },
+  {
+    "case_id": "PC118",
+    "closed_at": "2025-10-18T11:00:00+01:00",
+    "customer_id": "C054",
+    "payee_id": "P0417",
+    "receiving_account": "28-71-29 33630128",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC119",
+    "closed_at": "2026-05-28T02:00:00+01:00",
+    "customer_id": "C077",
+    "payee_id": "P0418",
+    "receiving_account": "BE18156966893264880405",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "ON_CALL"
+    ]
+  },
+  {
+    "case_id": "PC120",
+    "closed_at": "2026-01-19T02:00:00+00:00",
+    "customer_id": "C006",
+    "payee_id": "P0419",
+    "receiving_account": "55-14-88 68745410",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC121",
+    "closed_at": "2026-08-08T13:00:00+01:00",
+    "customer_id": "C018",
+    "payee_id": "P0420",
+    "receiving_account": "86-58-50 80963734",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC122",
+    "closed_at": "2026-02-13T07:00:00+00:00",
+    "customer_id": "C011",
+    "payee_id": "P0421",
+    "receiving_account": "64-90-39 82970962",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC123",
+    "closed_at": "2026-03-02T09:00:00+00:00",
+    "customer_id": "C011",
+    "payee_id": "P0422",
+    "receiving_account": "14-99-15 70250912",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC124",
+    "closed_at": "2026-04-03T13:00:00+01:00",
+    "customer_id": "C068",
+    "payee_id": "P0423",
+    "receiving_account": "IE75032837022461957287",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC125",
+    "closed_at": "2025-12-31T08:00:00+00:00",
+    "customer_id": "C025",
+    "payee_id": "P0424",
+    "receiving_account": "60-91-40 29238566",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC126",
+    "closed_at": "2026-01-13T02:00:00+00:00",
+    "customer_id": "C026",
+    "payee_id": "P0425",
+    "receiving_account": "56-21-85 64461578",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC127",
+    "closed_at": "2026-03-16T18:00:00+00:00",
+    "customer_id": "C073",
+    "payee_id": "P0426",
+    "receiving_account": "IT41596404998122745255",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "FAST_MONEY_OUT",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "REMOTE_ACCESS"
+    ]
+  },
+  {
+    "case_id": "PC128",
+    "closed_at": "2026-06-02T23:00:00+01:00",
+    "customer_id": "C039",
+    "payee_id": "P0427",
+    "receiving_account": "45-14-76 68464594",
+    "outcome": "ACCOUNT_TAKEOVER",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_DEVICE",
+      "SIM_SWAP_72H",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC129",
+    "closed_at": "2026-02-09T22:00:00+00:00",
+    "customer_id": "C074",
+    "payee_id": "P0428",
+    "receiving_account": "NL34867365451695569740",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC130",
+    "closed_at": "2026-07-04T08:00:00+01:00",
+    "customer_id": "C014",
+    "payee_id": "P0429",
+    "receiving_account": "46-69-75 94875232",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "TYPING_HESITATION"
+    ]
+  },
+  {
+    "case_id": "PC131",
+    "closed_at": "2026-07-04T23:00:00+01:00",
+    "customer_id": "C022",
+    "payee_id": "P0430",
+    "receiving_account": "72-69-97 89312337",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "MANY_INBOUND",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "TYPING_HESITATION"
+    ]
+  },
+  {
+    "case_id": "PC132",
+    "closed_at": "2026-07-01T00:00:00+01:00",
+    "customer_id": "C069",
+    "payee_id": "P0431",
+    "receiving_account": "IT87188707542853644638",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "REMOTE_ACCESS",
+      "TYPING_HESITATION"
+    ]
+  },
+  {
+    "case_id": "PC133",
+    "closed_at": "2026-07-08T20:00:00+01:00",
+    "customer_id": "C064",
+    "payee_id": "P0432",
+    "receiving_account": "NL53097134875342924988",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC134",
+    "closed_at": "2026-05-12T00:00:00+01:00",
+    "customer_id": "C001",
+    "payee_id": "P0433",
+    "receiving_account": "69-39-38 95007409",
+    "outcome": "APP_IMPERSONATION",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE",
+      "ON_CALL",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC135",
+    "closed_at": "2026-09-20T02:00:00+01:00",
+    "customer_id": "C058",
+    "payee_id": "P0434",
+    "receiving_account": "NL88178639667377420210",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC136",
+    "closed_at": "2026-04-14T18:00:00+01:00",
+    "customer_id": "C060",
+    "payee_id": "P0435",
+    "receiving_account": "IT99757689397619682894",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC137",
+    "closed_at": "2026-06-14T10:00:00+01:00",
+    "customer_id": "C037",
+    "payee_id": "P0436",
+    "receiving_account": "95-85-69 98021526",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC138",
+    "closed_at": "2026-03-15T17:00:00+00:00",
+    "customer_id": "C003",
+    "payee_id": "P0437",
+    "receiving_account": "64-63-91 48281471",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "AMOUNT_3X",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC139",
+    "closed_at": "2025-10-23T12:00:00+01:00",
+    "customer_id": "C034",
+    "payee_id": "P0438",
+    "receiving_account": "47-29-87 88531118",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC140",
+    "closed_at": "2026-02-08T19:00:00+00:00",
+    "customer_id": "C014",
+    "payee_id": "P0439",
+    "receiving_account": "23-81-24 88228338",
+    "outcome": "APP_INVOICE_CEO",
+    "signals": [
+      "KNOWN_NAME_NEW_ACCOUNT",
+      "NAME_NO_MATCH",
+      "NEW_PAYEE",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC141",
+    "closed_at": "2026-01-01T08:00:00+00:00",
+    "customer_id": "C024",
+    "payee_id": "P0440",
+    "receiving_account": "10-93-48 32976012",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X",
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC142",
+    "closed_at": "2026-07-21T04:00:00+01:00",
+    "customer_id": "C053",
+    "payee_id": "P0441",
+    "receiving_account": "63-48-76 76701625",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE"
+    ]
+  },
+  {
+    "case_id": "PC143",
+    "closed_at": "2026-01-01T18:00:00+00:00",
+    "customer_id": "C009",
+    "payee_id": "P0442",
+    "receiving_account": "52-29-69 70563780",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC144",
+    "closed_at": "2026-03-31T12:00:00+01:00",
+    "customer_id": "C009",
+    "payee_id": "P0443",
+    "receiving_account": "13-26-43 48186428",
+    "outcome": "APP_INVESTMENT",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "GROWING_SERIES",
+      "MANY_INBOUND"
+    ]
+  },
+  {
+    "case_id": "PC145",
+    "closed_at": "2026-08-28T14:00:00+01:00",
+    "customer_id": "C017",
+    "payee_id": "P0444",
+    "receiving_account": "10-44-33 20298668",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC146",
+    "closed_at": "2026-01-17T06:00:00+00:00",
+    "customer_id": "C005",
+    "payee_id": "P0445",
+    "receiving_account": "88-94-45 77859680",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC147",
+    "closed_at": "2026-01-17T13:00:00+00:00",
+    "customer_id": "C025",
+    "payee_id": "P0446",
+    "receiving_account": "80-10-84 44779173",
+    "outcome": "GENUINE",
+    "signals": [
+      "AMOUNT_3X"
+    ]
+  },
+  {
+    "case_id": "PC148",
+    "closed_at": "2025-11-27T19:00:00+00:00",
+    "customer_id": "C043",
+    "payee_id": "P0447",
+    "receiving_account": "24-36-30 56495991",
+    "outcome": "GENUINE",
+    "signals": [
+      "OUT_OF_HOURS"
+    ]
+  },
+  {
+    "case_id": "PC149",
+    "closed_at": "2025-11-18T01:00:00+00:00",
+    "customer_id": "C058",
+    "payee_id": "P0448",
+    "receiving_account": "BE77632767895632390877",
+    "outcome": "APP_PURCHASE",
+    "signals": [
+      "FAST_MONEY_OUT",
+      "NAME_CLOSE_MATCH",
+      "NEW_PAYEE",
+      "PRIOR_REPORTS",
+      "YOUNG_ACCOUNT"
+    ]
+  },
+  {
+    "case_id": "PC150",
+    "closed_at": "2026-05-10T22:00:00+01:00",
+    "customer_id": "C037",
+    "payee_id": "P0449",
+    "receiving_account": "90-90-81 77576377",
+    "outcome": "GENUINE",
+    "signals": [
+      "NEW_PAYEE",
+      "OUT_OF_HOURS"
+    ]
+  }
+]

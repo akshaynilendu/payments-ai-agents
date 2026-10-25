@@ -1,0 +1,1738 @@
+[
+  {
+    "customer_id": "C001",
+    "display_name": "Bosk Interieur BV",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "45-64",
+    "usual_amount": "5487",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0001",
+      "P0002",
+      "P0003"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C002",
+    "display_name": "Brisk Courier Ltd",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "65-79",
+    "usual_amount": "4802",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0004",
+      "P0005",
+      "P0006"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C003",
+    "display_name": "Velde Logistik GmbH",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "80+",
+    "usual_amount": "7428",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0007",
+      "P0008",
+      "P0009"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C004",
+    "display_name": "Brisk Courier Ltd",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "30-44",
+    "usual_amount": "2525",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0010",
+      "P0011",
+      "P0012"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C005",
+    "display_name": "Ravello Ceramiche Srl",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "18-29",
+    "usual_amount": "4270",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0013",
+      "P0014",
+      "P0015"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C006",
+    "display_name": "Copperleaf Studio",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "30-44",
+    "usual_amount": "1658",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0016",
+      "P0017",
+      "P0018"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C007",
+    "display_name": "Lumen Haus GmbH",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "45-64",
+    "usual_amount": "4174",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0019",
+      "P0020",
+      "P0021"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "CARER"
+    ]
+  },
+  {
+    "customer_id": "C008",
+    "display_name": "Velde Logistik GmbH",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "45-64",
+    "usual_amount": "7046",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0022",
+      "P0023",
+      "P0024"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C009",
+    "display_name": "Hollin Joinery Ltd",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "30-44",
+    "usual_amount": "2109",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0025",
+      "P0026",
+      "P0027"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C010",
+    "display_name": "Hollin Joinery Ltd",
+    "home_rail": "FPS",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "45-64",
+    "usual_amount": "3835",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0028",
+      "P0029",
+      "P0030"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C011",
+    "display_name": "Wilhelmina Ulvaeus",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "215",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0031",
+      "P0032",
+      "P0033"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C012",
+    "display_name": "Gethin Garside",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "212",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0034",
+      "P0035",
+      "P0036"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C013",
+    "display_name": "Delphine Quarrie",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "258",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0037",
+      "P0038",
+      "P0039"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C014",
+    "display_name": "Lorcan Varga",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "260",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0040",
+      "P0041",
+      "P0042"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C015",
+    "display_name": "Hana Zanetti",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "378",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0043",
+      "P0044",
+      "P0045"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C016",
+    "display_name": "Ulrich Tolver",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "161",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0046",
+      "P0047",
+      "P0048"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C017",
+    "display_name": "Hana Dunmore",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "269",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0049",
+      "P0050",
+      "P0051"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C018",
+    "display_name": "Zeno Whitlock",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "268",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0052",
+      "P0053",
+      "P0054"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C019",
+    "display_name": "Kezia Abernethy",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "395",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0055",
+      "P0056",
+      "P0057"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C020",
+    "display_name": "Ulrich Whitlock",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "244",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0058",
+      "P0059",
+      "P0060"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C021",
+    "display_name": "Quillan Fennick",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "82",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0061",
+      "P0062",
+      "P0063"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C022",
+    "display_name": "Kezia Marchetti",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "133",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0064",
+      "P0065",
+      "P0066"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C023",
+    "display_name": "Bryony Ellery",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "162",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0067",
+      "P0068",
+      "P0069"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "LONG_TERM_ILLNESS"
+    ]
+  },
+  {
+    "customer_id": "C024",
+    "display_name": "Lorcan Zanetti",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "233",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0070",
+      "P0071",
+      "P0072"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C025",
+    "display_name": "Ulrich Varga",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "356",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0073",
+      "P0074",
+      "P0075"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "CARER"
+    ]
+  },
+  {
+    "customer_id": "C026",
+    "display_name": "Ilsa Brackwell",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "166",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0076",
+      "P0077",
+      "P0078"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C027",
+    "display_name": "Rosalind Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "363",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0079",
+      "P0080",
+      "P0081"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C028",
+    "display_name": "Lorcan Strand",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "364",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0082",
+      "P0083",
+      "P0084"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "LOW_DIGITAL_CONFIDENCE"
+    ]
+  },
+  {
+    "customer_id": "C029",
+    "display_name": "Xander Ulvaeus",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "48",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0085",
+      "P0086",
+      "P0087"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C030",
+    "display_name": "Osric Lindqvist",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "213",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0088",
+      "P0089",
+      "P0090"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C031",
+    "display_name": "Maren Halloran",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "122",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0091",
+      "P0092",
+      "P0093"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C032",
+    "display_name": "Yusra Halloran",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "150",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0094",
+      "P0095",
+      "P0096"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C033",
+    "display_name": "Priya Rendle",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "313",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0097",
+      "P0098",
+      "P0099"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C034",
+    "display_name": "Wilhelmina Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "179",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0100",
+      "P0101",
+      "P0102"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "RECENT_BEREAVEMENT"
+    ]
+  },
+  {
+    "customer_id": "C035",
+    "display_name": "Freya Tolver",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "304",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0103",
+      "P0104",
+      "P0105"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C036",
+    "display_name": "Emeka Marchetti",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "186",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0106",
+      "P0107",
+      "P0108"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C037",
+    "display_name": "Maren Ellery",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "111",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0109",
+      "P0110",
+      "P0111"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C038",
+    "display_name": "Yusra Varga",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "117",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0112",
+      "P0113",
+      "P0114"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C039",
+    "display_name": "Gethin Lindqvist",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "298",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0115",
+      "P0116",
+      "P0117"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C040",
+    "display_name": "Cormac Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "388",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0118",
+      "P0119",
+      "P0120"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C041",
+    "display_name": "Vesna Marchetti",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "184",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0121",
+      "P0122",
+      "P0123"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C042",
+    "display_name": "Kezia Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "220",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0124",
+      "P0125",
+      "P0126"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C043",
+    "display_name": "Aled Rendle",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "190",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0127",
+      "P0128",
+      "P0129"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C044",
+    "display_name": "Tamsin Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "54",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0130",
+      "P0131",
+      "P0132"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C045",
+    "display_name": "Emeka Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "272",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0133",
+      "P0134",
+      "P0135"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C046",
+    "display_name": "Xander Dunmore",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "130",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0136",
+      "P0137",
+      "P0138"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C047",
+    "display_name": "Niamh Lindqvist",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "108",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0139",
+      "P0140",
+      "P0141"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C048",
+    "display_name": "Emeka Ulvaeus",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "400",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0142",
+      "P0143",
+      "P0144"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C049",
+    "display_name": "Bryony Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "85",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0145",
+      "P0146",
+      "P0147"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C050",
+    "display_name": "Aled Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "263",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0148",
+      "P0149",
+      "P0150"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "LONG_TERM_ILLNESS"
+    ]
+  },
+  {
+    "customer_id": "C051",
+    "display_name": "Osric Carrow",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "124",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0151",
+      "P0152",
+      "P0153"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C052",
+    "display_name": "Tamsin Abernethy",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "248",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0154",
+      "P0155",
+      "P0156"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C053",
+    "display_name": "Ulrich Garside",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "47",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0157",
+      "P0158",
+      "P0159"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "LOW_DIGITAL_CONFIDENCE"
+    ]
+  },
+  {
+    "customer_id": "C054",
+    "display_name": "Cormac Norcott",
+    "home_rail": "FPS",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "288",
+    "currency": "GBP",
+    "usual_payee_ids": [
+      "P0160",
+      "P0161",
+      "P0162"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C055",
+    "display_name": "Hollin Joinery Ltd",
+    "home_rail": "SEPA_INST",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "65-79",
+    "usual_amount": "7665",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0163",
+      "P0164",
+      "P0165"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C056",
+    "display_name": "Atelier Morvan SARL",
+    "home_rail": "SEPA_INST",
+    "segment": "CORPORATE",
+    "age_band": "18-29",
+    "usual_amount": "3789",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0166",
+      "P0167",
+      "P0168"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C057",
+    "display_name": "Mardale Print Co",
+    "home_rail": "SEPA_INST",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "18-29",
+    "usual_amount": "3287",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0169",
+      "P0170",
+      "P0171"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C058",
+    "display_name": "Velde Logistik GmbH",
+    "home_rail": "SEPA_INST",
+    "segment": "CORPORATE",
+    "age_band": "30-44",
+    "usual_amount": "5975",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0172",
+      "P0173",
+      "P0174"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C059",
+    "display_name": "Velde Logistik GmbH",
+    "home_rail": "SEPA_INST",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "18-29",
+    "usual_amount": "5824",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0175",
+      "P0176",
+      "P0177"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C060",
+    "display_name": "Velde Logistik GmbH",
+    "home_rail": "SEPA_INST",
+    "segment": "CORPORATE",
+    "age_band": "18-29",
+    "usual_amount": "4193",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0178",
+      "P0179",
+      "P0180"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C061",
+    "display_name": "Oakhurst Tiling",
+    "home_rail": "SEPA_INST",
+    "segment": "MICRO_ENTERPRISE",
+    "age_band": "80+",
+    "usual_amount": "2342",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0181",
+      "P0182",
+      "P0183"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C062",
+    "display_name": "Velde Logistik GmbH",
+    "home_rail": "SEPA_INST",
+    "segment": "CORPORATE",
+    "age_band": "18-29",
+    "usual_amount": "4242",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0184",
+      "P0185",
+      "P0186"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C063",
+    "display_name": "Delphine Marchetti",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "347",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0187",
+      "P0188",
+      "P0189"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C064",
+    "display_name": "Soren Whitlock",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "152",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0190",
+      "P0191",
+      "P0192"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C065",
+    "display_name": "Quillan Abernethy",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "270",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0193",
+      "P0194",
+      "P0195"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C066",
+    "display_name": "Wilhelmina Carrow",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "209",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0196",
+      "P0197",
+      "P0198"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C067",
+    "display_name": "Zeno Ellery",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "117",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0199",
+      "P0200",
+      "P0201"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "CARER"
+    ]
+  },
+  {
+    "customer_id": "C068",
+    "display_name": "Xander Ulvaeus",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "80+",
+    "usual_amount": "370",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0202",
+      "P0203",
+      "P0204"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C069",
+    "display_name": "Tamsin Lindqvist",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "363",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0205",
+      "P0206",
+      "P0207"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C070",
+    "display_name": "Delphine Carrow",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "218",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0208",
+      "P0209",
+      "P0210"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C071",
+    "display_name": "Quillan Yarrow",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "375",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0211",
+      "P0212",
+      "P0213"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C072",
+    "display_name": "Kezia Rendle",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "342",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0214",
+      "P0215",
+      "P0216"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C073",
+    "display_name": "Ilsa Garside",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "270",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0217",
+      "P0218",
+      "P0219"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C074",
+    "display_name": "Ulrich Tolver",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "190",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0220",
+      "P0221",
+      "P0222"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "LONG_TERM_ILLNESS"
+    ]
+  },
+  {
+    "customer_id": "C075",
+    "display_name": "Ilsa Varga",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "381",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0223",
+      "P0224",
+      "P0225"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C076",
+    "display_name": "Bryony Brackwell",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "87",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0226",
+      "P0227",
+      "P0228"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C077",
+    "display_name": "Soren Whitlock",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "236",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0229",
+      "P0230",
+      "P0231"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C078",
+    "display_name": "Vesna Zanetti",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "65-79",
+    "usual_amount": "322",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0232",
+      "P0233",
+      "P0234"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "CARER"
+    ]
+  },
+  {
+    "customer_id": "C079",
+    "display_name": "Hana Lindqvist",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "164",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0235",
+      "P0236",
+      "P0237"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C080",
+    "display_name": "Maren Lindqvist",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "154",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0238",
+      "P0239",
+      "P0240"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C081",
+    "display_name": "Gethin Quarrie",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "227",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0241",
+      "P0242",
+      "P0243"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "CARER"
+    ]
+  },
+  {
+    "customer_id": "C082",
+    "display_name": "Maren Varga",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "375",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0244",
+      "P0245",
+      "P0246"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C083",
+    "display_name": "Quillan Lindqvist",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "286",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0247",
+      "P0248",
+      "P0249"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C084",
+    "display_name": "Ilsa Lindqvist",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "390",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0250",
+      "P0251",
+      "P0252"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C085",
+    "display_name": "Osric Marchetti",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "157",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0253",
+      "P0254",
+      "P0255"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "RECENT_BEREAVEMENT"
+    ]
+  },
+  {
+    "customer_id": "C086",
+    "display_name": "Niamh Halloran",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "387",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0256",
+      "P0257",
+      "P0258"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C087",
+    "display_name": "Ilsa Iveson",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "30-44",
+    "usual_amount": "75",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0259",
+      "P0260",
+      "P0261"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C088",
+    "display_name": "Ilsa Zanetti",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "45-64",
+    "usual_amount": "46",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0262",
+      "P0263",
+      "P0264"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C089",
+    "display_name": "Osric Zanetti",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "95",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0265",
+      "P0266",
+      "P0267"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": []
+  },
+  {
+    "customer_id": "C090",
+    "display_name": "Joran Ulvaeus",
+    "home_rail": "SEPA_INST",
+    "segment": "RETAIL",
+    "age_band": "18-29",
+    "usual_amount": "327",
+    "currency": "EUR",
+    "usual_payee_ids": [
+      "P0268",
+      "P0269",
+      "P0270"
+    ],
+    "usual_hours": [
+      7,
+      22
+    ],
+    "vulnerability_flags": [
+      "LONG_TERM_ILLNESS"
+    ]
+  }
+]
