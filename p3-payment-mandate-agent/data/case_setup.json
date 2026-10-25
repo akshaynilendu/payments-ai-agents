@@ -1,0 +1,74 @@
+{
+  "RQ-07": {
+    "extra_ledger": [
+      {
+        "ledger_id": "L-S07a",
+        "date": "2026-10-20",
+        "mandate_id": "MND-GB-01",
+        "action": "TRANSFER",
+        "payee_id": "SUP-05",
+        "amount": 4300.0,
+        "currency": "GBP",
+        "invoice_ref": "HP-3290",
+        "approved_by": "maya.holloway@hollowbrookceramics.co.uk"
+      },
+      {
+        "ledger_id": "L-S07b",
+        "date": "2026-10-20",
+        "mandate_id": "MND-GB-01",
+        "action": "TRANSFER",
+        "payee_id": "SUP-04",
+        "amount": 3780.0,
+        "currency": "GBP",
+        "invoice_ref": "GC-1180",
+        "approved_by": "maya.holloway@hollowbrookceramics.co.uk"
+      }
+    ]
+  },
+  "RQ-27": {
+    "mandate_overrides": {
+      "MND-EU-01": {
+        "valid_to": "2026-10-20"
+      }
+    }
+  },
+  "RQ-28": {
+    "mandate_overrides": {
+      "MND-EU-01": {
+        "status": "REVOKED",
+        "revoked_at": "2026-10-21T09:00:00+02:00"
+      }
+    }
+  },
+  "RQ-29": {
+    "spent_before_october": {
+      "MND-EU-01": 45700.0
+    }
+  },
+  "RQ-35": {
+    "extra_ledger": [
+      {
+        "ledger_id": "L-S35a",
+        "date": "2026-10-23",
+        "mandate_id": "MND-EU-01",
+        "action": "TRANSFER",
+        "payee_id": "SUP-07",
+        "amount": 1100.0,
+        "currency": "EUR",
+        "invoice_ref": "RE-2026-118",
+        "instalment": "1/3"
+      },
+      {
+        "ledger_id": "L-S35b",
+        "date": "2026-10-23",
+        "mandate_id": "MND-EU-01",
+        "action": "TRANSFER",
+        "payee_id": "SUP-07",
+        "amount": 1100.0,
+        "currency": "EUR",
+        "invoice_ref": "RE-2026-118",
+        "instalment": "2/3"
+      }
+    ]
+  }
+}

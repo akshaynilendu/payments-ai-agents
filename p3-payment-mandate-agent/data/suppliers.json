@@ -1,0 +1,78 @@
+[
+  {
+    "payee_id": "SUP-01",
+    "name": "Kilnworks Supplies Ltd",
+    "currency": "GBP",
+    "sort_code": "20-31-55",
+    "account_number": "41870236",
+    "contact": "accounts@kilnworks.co.uk"
+  },
+  {
+    "payee_id": "SUP-02",
+    "name": "Brightpack Packaging Ltd",
+    "currency": "GBP",
+    "sort_code": "40-12-77",
+    "account_number": "60331984",
+    "contact": "billing@brightpack.co.uk"
+  },
+  {
+    "payee_id": "SUP-03",
+    "name": "Moss & Fell Logistics Ltd",
+    "currency": "GBP",
+    "sort_code": "30-95-02",
+    "account_number": "17266405",
+    "contact": "invoices@mossandfell.co.uk"
+  },
+  {
+    "payee_id": "SUP-04",
+    "name": "Glazecraft UK Ltd",
+    "currency": "GBP",
+    "sort_code": "60-83-14",
+    "account_number": "88120557",
+    "contact": "finance@glazecraft.co.uk"
+  },
+  {
+    "payee_id": "SUP-05",
+    "name": "Harbour Print Co",
+    "currency": "GBP",
+    "sort_code": "09-01-28",
+    "account_number": "30458812",
+    "contact": "hello@harbourprint.co.uk"
+  },
+  {
+    "payee_id": "SUP-06",
+    "name": "Ferro Studio Rentals Ltd",
+    "currency": "GBP",
+    "sort_code": "23-14-70",
+    "account_number": "50927361",
+    "contact": "office@ferrostudio.co.uk"
+  },
+  {
+    "payee_id": "SUP-07",
+    "name": "Tonwerk Keramik GmbH",
+    "currency": "EUR",
+    "iban": "DE89370400440532013000",
+    "contact": "buchhaltung@tonwerkkeramik.de"
+  },
+  {
+    "payee_id": "SUP-08",
+    "name": "Atelier Email SARL",
+    "currency": "EUR",
+    "iban": "FR1420041010050500013M02606",
+    "contact": "compta@atelier-email.fr"
+  },
+  {
+    "payee_id": "SUP-09",
+    "name": "Verpakking Noord BV",
+    "currency": "EUR",
+    "iban": "NL20INGB0001234567",
+    "contact": "facturen@verpakkingnoord.nl"
+  },
+  {
+    "payee_id": "SUP-10",
+    "name": "Ceramiche Riva Srl",
+    "currency": "EUR",
+    "iban": "IT60X0542811101000000123456",
+    "contact": "amministrazione@ceramicheriva.it"
+  }
+]

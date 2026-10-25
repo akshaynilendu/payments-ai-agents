@@ -1,0 +1,28 @@
+{
+  "business": "Hollowbrook Ceramics Ltd",
+  "domain": "hollowbrookceramics.co.uk",
+  "staff": [
+    {
+      "email": "maya.holloway@hollowbrookceramics.co.uk",
+      "name": "Maya Holloway",
+      "role": "Owner, can instruct transfers"
+    },
+    {
+      "email": "tom.reyes@hollowbrookceramics.co.uk",
+      "name": "Tom Reyes",
+      "role": "Operations, can instruct transfers"
+    }
+  ],
+  "supplier_contacts": {
+    "SUP-01": "accounts@kilnworks.co.uk",
+    "SUP-02": "billing@brightpack.co.uk",
+    "SUP-03": "invoices@mossandfell.co.uk",
+    "SUP-04": "finance@glazecraft.co.uk",
+    "SUP-05": "hello@harbourprint.co.uk",
+    "SUP-06": "office@ferrostudio.co.uk",
+    "SUP-07": "buchhaltung@tonwerkkeramik.de",
+    "SUP-08": "compta@atelier-email.fr",
+    "SUP-09": "facturen@verpakkingnoord.nl",
+    "SUP-10": "amministrazione@ceramicheriva.it"
+  }
+}

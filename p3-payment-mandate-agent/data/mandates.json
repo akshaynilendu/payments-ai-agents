@@ -1,0 +1,58 @@
+[
+  {
+    "mandate_id": "MND-GB-01",
+    "currency": "GBP",
+    "rail": "FPS",
+    "status": "ACTIVE",
+    "agent_id": "agent-hb-ops-01",
+    "granted_by": "maya.holloway@hollowbrookceramics.co.uk",
+    "allowed_actions": [
+      "REFUND",
+      "TRANSFER"
+    ],
+    "allowed_payees": [
+      "SUP-01",
+      "SUP-02",
+      "SUP-03",
+      "SUP-04",
+      "SUP-05",
+      "SUP-06",
+      "ORIGINAL_PAYER"
+    ],
+    "max_per_payment": 5000.0,
+    "approval_threshold": 1000.0,
+    "monthly_limit": 12000.0,
+    "budget_total": 40000.0,
+    "max_payments": 150,
+    "refund_window_days": 60,
+    "valid_from": "2026-10-01",
+    "valid_to": "2026-12-31"
+  },
+  {
+    "mandate_id": "MND-EU-01",
+    "currency": "EUR",
+    "rail": "SEPA_INST",
+    "status": "ACTIVE",
+    "agent_id": "agent-hb-ops-01",
+    "granted_by": "maya.holloway@hollowbrookceramics.co.uk",
+    "allowed_actions": [
+      "REFUND",
+      "TRANSFER"
+    ],
+    "allowed_payees": [
+      "SUP-07",
+      "SUP-08",
+      "SUP-09",
+      "SUP-10",
+      "ORIGINAL_PAYER"
+    ],
+    "max_per_payment": 6000.0,
+    "approval_threshold": 1200.0,
+    "monthly_limit": 14000.0,
+    "budget_total": 50000.0,
+    "max_payments": 150,
+    "refund_window_days": 60,
+    "valid_from": "2026-10-01",
+    "valid_to": "2026-12-31"
+  }
+]

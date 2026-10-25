@@ -1,0 +1,81 @@
+{
+  "list_name": "Made-up sanctions list (styled like the UK Sanctions List)",
+  "list_version": "2026-10-20",
+  "entries": [
+    {
+      "id": "MU-0001",
+      "name": "VOLKOV TRADING PARTNERS LLP",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0002",
+      "name": "KESTREL MARITIME HOLDINGS",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0003",
+      "name": "ARDENT BRIDGE FINANCE FZE",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0004",
+      "name": "ORLOV, Dmitri Pavlovich",
+      "type": "individual"
+    },
+    {
+      "id": "MU-0005",
+      "name": "SILVERLINE COMMODITIES SA",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0006",
+      "name": "NARVA STEEL EXPORT OOO",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0007",
+      "name": "HALCYON ROUTE LOGISTICS LTD",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0008",
+      "name": "BRANKOVIC, Milos",
+      "type": "individual"
+    },
+    {
+      "id": "MU-0009",
+      "name": "TAMARIND GATE INVESTMENTS",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0010",
+      "name": "EASTWIND AVIATION SERVICES",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0011",
+      "name": "GRANITE PEAK MINING CORP",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0012",
+      "name": "SABLE COAST SHIPPING",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0013",
+      "name": "PETROVA, Irina Sergeyevna",
+      "type": "individual"
+    },
+    {
+      "id": "MU-0014",
+      "name": "MERIDIAN CROSS TRADE FZCO",
+      "type": "entity"
+    },
+    {
+      "id": "MU-0015",
+      "name": "BLACKFEN INDUSTRIAL GROUP",
+      "type": "entity"
+    }
+  ]
+}

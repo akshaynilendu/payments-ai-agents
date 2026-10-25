@@ -1,0 +1,98 @@
+[
+  {
+    "ledger_id": "L-0001",
+    "date": "2026-10-05",
+    "mandate_id": "MND-GB-01",
+    "action": "TRANSFER",
+    "payee_id": "SUP-01",
+    "amount": 1240.0,
+    "currency": "GBP",
+    "invoice_ref": "INV-KW-2207",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  },
+  {
+    "ledger_id": "L-0002",
+    "date": "2026-10-08",
+    "mandate_id": "MND-GB-01",
+    "action": "TRANSFER",
+    "payee_id": "SUP-02",
+    "amount": 212.0,
+    "currency": "GBP",
+    "invoice_ref": "INV-BP-0412",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  },
+  {
+    "ledger_id": "L-0003",
+    "date": "2026-10-12",
+    "mandate_id": "MND-GB-01",
+    "action": "TRANSFER",
+    "payee_id": "SUP-03",
+    "amount": 1950.0,
+    "currency": "GBP",
+    "invoice_ref": "MF-88310",
+    "approved_by": "maya.holloway@hollowbrookceramics.co.uk",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  },
+  {
+    "ledger_id": "L-0004",
+    "date": "2026-10-15",
+    "mandate_id": "MND-GB-01",
+    "action": "REFUND",
+    "order_id": "ORD-1007",
+    "amount": 80.0,
+    "currency": "GBP",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  },
+  {
+    "ledger_id": "L-0005",
+    "date": "2026-10-06",
+    "mandate_id": "MND-EU-01",
+    "action": "TRANSFER",
+    "payee_id": "SUP-07",
+    "amount": 2600.0,
+    "currency": "EUR",
+    "invoice_ref": "RE-2026-097",
+    "approved_by": "maya.holloway@hollowbrookceramics.co.uk",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  },
+  {
+    "ledger_id": "L-0006",
+    "date": "2026-10-14",
+    "mandate_id": "MND-EU-01",
+    "action": "TRANSFER",
+    "payee_id": "SUP-09",
+    "amount": 980.0,
+    "currency": "EUR",
+    "invoice_ref": "VN-5521",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  },
+  {
+    "ledger_id": "L-0007",
+    "date": "2026-10-22",
+    "mandate_id": "MND-EU-01",
+    "action": "TRANSFER",
+    "payee_id": "SUP-08",
+    "amount": 430.0,
+    "currency": "EUR",
+    "invoice_ref": "INV-AE-778",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  },
+  {
+    "ledger_id": "L-0008",
+    "date": "2026-10-19",
+    "mandate_id": "MND-EU-01",
+    "action": "REFUND",
+    "order_id": "ORD-2016",
+    "amount": 45.0,
+    "currency": "EUR",
+    "agent_id": "agent-hb-ops-01",
+    "status": "EXECUTED"
+  }
+]
