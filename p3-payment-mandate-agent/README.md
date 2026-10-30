@@ -80,9 +80,21 @@ What each row taught:
 - **EU AI Act:** as far as I can tell, an agent paying a business's own invoices isn't one of the Annex III high-risk uses (credit scoring is). It still has the safeguards the Act asks of high-risk systems: human oversight, logging, and a way to stop it.
 - **Not real:** signatures and passkeys are simulated with hashes and a boolean; the sanctions list and every account are invented.
 
+## Owner console
+Live demo: **https://owner-console-glance.lovable.app** (made-up data, no login)
+
+The agent's job is to propose; the owner's job is to stay in control. The console shows the 40 emails from the Version B run from the owner's side:
+- **Approval queue:** the 4 payments waiting for a passkey sign-off (over the threshold, a new payee, a close-match name check, a split invoice).
+- **Needs review:** the 16 the agent handed to a person, with its note and each reason in plain English.
+- **Mandates:** revoke a mandate or pause all agent payments. These are owner-only; the agent has no tool for either.
+- **Activity log:** every email → tools the agent called → proposal → checks → decision, with RQ-14 (hidden £2,400 instruction ignored) and RQ-28 (mandate revoked that morning) pinned.
+- **Evidence pack:** the hash-chained log. "Verify chain" recomputes SHA-256 in the browser; "Tamper demo" edits one amount and every entry after it breaks.
+
+How it was built: `scripts/export_console_data.py` turns a saved run into one JSON file (`console/console_data.json`), re-chaining the 40 decisions into one log in arrival order with the same hashing as `audit.py`; a test checks the chain verifies. The UI was built in Lovable from a written spec and that file. It is a static front end: no backend and no API keys, and approve, revoke and pause only change state in the browser. The agent and rules engine still run locally.
+
 ## What v2 would add
 - A persistent store, so the owner console and the agent share one live state (today each test case starts fresh).
-- An owner console UI for the approval queue, revoke and evidence packs.
+- Wire the console to the MCP server's owner tools (approve, revoke, pause), so its buttons act on the live engine instead of the browser.
 - Real signatures on the mandate and on each authorisation (AP2-style), and agent identity checks (Visa TAP / Mastercard Know Your Agent style).
 - Card rails, and the agent paying merchants rather than suppliers.
 - Bigger and nastier test sets, including multi-email attacks.
@@ -91,9 +103,10 @@ What each row taught:
 ```
 python3 -m venv ~/venvs/p3 && ~/venvs/p3/bin/pip install -r requirements.txt
 ~/venvs/p3/bin/python scripts/generate_data.py     # rebuild the made-up world (same seed, same files)
-~/venvs/p3/bin/python -m pytest -q                 # 71 tests, no network
+~/venvs/p3/bin/python -m pytest -q                 # 72 tests, no network
 ~/venvs/p3/bin/python scripts/run_eval.py --version A
 ~/venvs/p3/bin/python scripts/run_eval.py --version B   # needs ANTHROPIC_API_KEY in .env.server (gitignored)
 ~/venvs/p3/bin/python scripts/compare_runs.py
+~/venvs/p3/bin/python scripts/export_console_data.py   # data file for the owner console
 ```
 Made-up data only. Nothing from any employer.
