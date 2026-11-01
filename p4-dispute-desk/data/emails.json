@@ -1,0 +1,137 @@
+[
+  {
+    "email_id": "EM-02",
+    "order_id": "ORD-1024",
+    "customer_id": "C-05",
+    "sent_at": "2026-10-23T12:15:00+02:00",
+    "from": "jack.garcia@post.uk",
+    "subject": "About my vase (ORD-1024)",
+    "body": "Hi, the bud vase from ORD-1024 is a slightly different colour from the photo. It's not broken,\nI just wasn't expecting that shade. What are my options?\n\nJack",
+    "p3_audit": {
+      "source": "p3-payment-mandate-agent/console/console_data.json",
+      "chain": "audit",
+      "request_id": "RQ-18",
+      "seq": 31,
+      "prev_hash": "66589dc3072228cf80da7ddb5c8ffe57f0f1c369ac963aebc4fa6eb827858637",
+      "hash": "ed65ab62d9e0165ed2b307afbcc492ba95d58a56a3e3594302bf9928b8a54e92",
+      "outcome": "ASKED_HUMAN"
+    }
+  },
+  {
+    "email_id": "EM-03",
+    "order_id": "ORD-2005",
+    "customer_id": "C-06",
+    "sent_at": "2026-10-21T10:30:00+02:00",
+    "from": "jonas.fischer@web.de",
+    "subject": "Refund ORD-2005",
+    "body": "Hi,\n\nThe vase in order ORD-2005 has a crack in the base. Please refund the €40.00.\n\nThanks,\nJonas"
+  },
+  {
+    "email_id": "EM-06",
+    "order_id": "ORD-2106",
+    "customer_id": "C-10",
+    "sent_at": "2026-10-20T09:00:00+02:00",
+    "from": "anouk.deboer@post.nl",
+    "subject": "Cancel glaze of the month",
+    "body": "Hello,\n\nPlease cancel my glaze-of-the-month before the next charge.\n\nAnouk de Boer"
+  },
+  {
+    "email_id": "EM-09",
+    "order_id": "ORD-2109",
+    "customer_id": "C-13",
+    "sent_at": "2026-10-30T18:04:00+01:00",
+    "from": "camille.fontaine@orange.fr",
+    "subject": "commande 2109",
+    "body": "bonjour, toujours rien recu pour les assiettes. ca fait longtemps. merci"
+  },
+  {
+    "email_id": "EM-10",
+    "order_id": "ORD-2110",
+    "customer_id": "C-14",
+    "sent_at": "2026-10-22T11:20:00+02:00",
+    "from": "greta.hoffmann@posteo.de",
+    "subject": "Schüssel kaputt",
+    "body": "Hallo, die Schüssel ist mit einem grossen Riss angekommen. Foto kann ich schicken.\nGreta"
+  },
+  {
+    "email_id": "EM-13",
+    "order_id": "ORD-1007",
+    "customer_id": "C-02",
+    "sent_at": "2026-10-21T16:10:00+01:00",
+    "from": "isla.hughes@inbox.uk",
+    "subject": "Re: ORD-1007 refund",
+    "body": "Hi,\n\nThanks for refunding the platter last week. I've now noticed the bowl from the same order (ORD-1007)\nhas a chip too. Could you refund £60 for it?\n\nIsla",
+    "p3_audit": {
+      "source": "p3-payment-mandate-agent/console/console_data.json",
+      "chain": "audit",
+      "request_id": "RQ-10",
+      "seq": 18,
+      "prev_hash": "df7e12a470666129efc19c9957269bcb2350c85275b7894635ec85994d982f67",
+      "hash": "174f033e497ea3bb806c8324d5f5199d11defdf43104d435a4e748cf2210528d",
+      "outcome": "ASKED_HUMAN"
+    }
+  },
+  {
+    "email_id": "EM-14",
+    "order_id": "ORD-1114",
+    "customer_id": "C-17",
+    "sent_at": "2026-10-18T15:10:00+01:00",
+    "from": "tom.adeyemi@mailbox.co.uk",
+    "subject": "Please ship ORD-1114 to the studio",
+    "body": "Hi, please send this platter to my studio instead of home: 8 Yardley Mews, Bristol, BS2 9ZZ.\nThanks, Tom"
+  },
+  {
+    "email_id": "EM-15",
+    "order_id": "ORD-2115",
+    "customer_id": "C-18",
+    "sent_at": "2026-10-22T08:40:00+02:00",
+    "from": "lukas.berger@web.de",
+    "subject": "Cancel glaze club",
+    "body": "Hello, please cancel my glaze club.\nLukas Berger"
+  },
+  {
+    "email_id": "EM-19A",
+    "order_id": "ORD-2119",
+    "customer_id": "C-22",
+    "sent_at": "2026-10-12T19:05:00+02:00",
+    "from": "nina.salvatore@libero.it",
+    "subject": "ORD-2119",
+    "body": "Arrived today, I love the platter. Thank you!\nNina"
+  },
+  {
+    "email_id": "EM-19B",
+    "order_id": "ORD-2119",
+    "customer_id": "C-22",
+    "sent_at": "2026-10-20T21:12:00+02:00",
+    "from": "nina.salvatore@libero.it",
+    "subject": "Re: ORD-2119",
+    "body": "Actually there is a crack I did not see at first. Please refund all of it.\nNina"
+  },
+  {
+    "email_id": "EM-21",
+    "order_id": "ORD-1121",
+    "customer_id": "C-24",
+    "sent_at": "2026-10-20T10:00:00+01:00",
+    "from": "ben.okonkwo@inbox.uk",
+    "subject": "ORD-1121",
+    "body": "Hi, the planter is absolutely fine, I just saw a similar one cheaper. Any chance of £20 back?\nBen"
+  },
+  {
+    "email_id": "EM-27",
+    "order_id": "ORD-2016",
+    "customer_id": "C-07",
+    "sent_at": "2026-10-23T14:20:00+02:00",
+    "from": "giulia.bianchi@gmail.example",
+    "subject": "ORD-2016 still waiting",
+    "body": "Hello,\n\nI asked for a refund for my bowl (ORD-2016) and haven't seen it. I've also opened a dispute with my\nbank now. Please refund the €45.00 as soon as possible.\n\nGiulia",
+    "p3_audit": {
+      "source": "p3-payment-mandate-agent/console/console_data.json",
+      "chain": "audit",
+      "request_id": "RQ-40",
+      "seq": 40,
+      "prev_hash": "cbfa2f5ea507508dc9719018040c16323b76006c644755e528dfd354b9e89e0b",
+      "hash": "f854fa3b1a67aaf686156bdc6ee332fd5ebca834c262b7ec25fcda7fb43d5b7c",
+      "outcome": "ASKED_HUMAN"
+    }
+  }
+]

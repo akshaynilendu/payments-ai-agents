@@ -1,0 +1,72 @@
+[
+  {
+    "refund_id": "RF-1001",
+    "order_id": "ORD-1001",
+    "amount": 64.0,
+    "currency": "GBP",
+    "paid_at": "2026-10-19",
+    "note": "Full refund executed by the Project 3 agent. The audit entry is the payment record.",
+    "p3_audit": {
+      "source": "p3-payment-mandate-agent/console/console_data.json",
+      "chain": "audit",
+      "request_id": "RQ-01",
+      "seq": 1,
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "482f769736f4dc967c20831d74b13255ee75af9fa6d029a5e377bb2623d22c0c",
+      "outcome": "EXECUTED"
+    }
+  },
+  {
+    "refund_id": "RF-1007",
+    "order_id": "ORD-1007",
+    "amount": 80.0,
+    "currency": "GBP",
+    "paid_at": "2026-10-15",
+    "note": "Partial refund of the platter, ledger L-0004. RQ-10 is her later ask for £60 more, which was not paid.",
+    "p3_audit": {
+      "source": "p3-payment-mandate-agent/console/console_data.json",
+      "chain": "audit",
+      "request_id": "RQ-10",
+      "seq": 18,
+      "prev_hash": "df7e12a470666129efc19c9957269bcb2350c85275b7894635ec85994d982f67",
+      "hash": "174f033e497ea3bb806c8324d5f5199d11defdf43104d435a4e748cf2210528d",
+      "outcome": "ASKED_HUMAN"
+    },
+    "p3_ledger_id": "L-0004"
+  },
+  {
+    "refund_id": "RF-1013",
+    "order_id": "ORD-1013",
+    "amount": 35.0,
+    "currency": "GBP",
+    "paid_at": "2026-10-22",
+    "note": "Full refund of the cracked mug, executed inside the Project 3 log.",
+    "p3_audit": {
+      "source": "p3-payment-mandate-agent/console/console_data.json",
+      "chain": "audit",
+      "request_id": "RQ-14",
+      "seq": 25,
+      "prev_hash": "01711c550e9b7324510f67ffb079b3005200d9dc6e6c44854b1957fb2714ef59",
+      "hash": "4deb21115b433552cc04a13a4bb69dc6ce5cecc8e0251e7527a2e42bb24c8406",
+      "outcome": "EXECUTED"
+    }
+  },
+  {
+    "refund_id": "RF-2016",
+    "order_id": "ORD-2016",
+    "amount": 45.0,
+    "currency": "EUR",
+    "paid_at": "2026-10-19",
+    "note": "Full refund paid on 19 Oct, before Giulia's 23 Oct email. RQ-40 did not pay it again.",
+    "p3_audit": {
+      "source": "p3-payment-mandate-agent/console/console_data.json",
+      "chain": "audit",
+      "request_id": "RQ-40",
+      "seq": 40,
+      "prev_hash": "cbfa2f5ea507508dc9719018040c16323b76006c644755e528dfd354b9e89e0b",
+      "hash": "f854fa3b1a67aaf686156bdc6ee332fd5ebca834c262b7ec25fcda7fb43d5b7c",
+      "outcome": "ASKED_HUMAN"
+    },
+    "p3_ledger_id": "L-0008"
+  }
+]

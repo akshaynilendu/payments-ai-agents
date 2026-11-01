@@ -1,0 +1,14 @@
+{
+  "desk_as_of": "2026-11-16",
+  "response_window_days": 30,
+  "dispute_fee": {
+    "GBP": 15.0,
+    "EUR": 15.0
+  },
+  "fight_cost_estimate": {
+    "GBP": 25.0,
+    "EUR": 25.0
+  },
+  "fee_returned_on_win": false,
+  "note": "The fee is kept on a win and on an acceptance. Fight cost is staff time. A full refund already on the ledger is decided first. After that, accept when the disputed amount is below the fight-cost estimate. A reply due tomorrow is still that outcome, filed the same day."
+}

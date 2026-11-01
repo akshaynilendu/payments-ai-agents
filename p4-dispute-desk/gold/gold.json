@@ -1,0 +1,366 @@
+[
+  {
+    "id": "DP-01",
+    "slice": "textbook",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1018",
+      "shipment:SH-1018"
+    ],
+    "why": "Tracking shows the tea set delivered to the address on the order."
+  },
+  {
+    "id": "DP-02",
+    "slice": "textbook",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1024",
+      "email:EM-02",
+      "p3_audit:RQ-18"
+    ],
+    "why": "His earlier email says the vase is not broken, and the listing says the glaze colour varies."
+  },
+  {
+    "id": "DP-03",
+    "slice": "textbook",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-2005",
+      "email:EM-03",
+      "shipment:SH-2005"
+    ],
+    "why": "He reported a crack, the ledger has no refund, and nothing shows the vase arrived intact."
+  },
+  {
+    "id": "DP-04",
+    "slice": "textbook",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1104",
+      "shipment:SH-1104"
+    ],
+    "why": "The same planter was captured twice and only one was shipped."
+  },
+  {
+    "id": "DP-05",
+    "slice": "textbook",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1105"
+    ],
+    "why": "The Clay Club renewal has no cancellation on file."
+  },
+  {
+    "id": "DP-06",
+    "slice": "textbook",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-2106",
+      "email:EM-06"
+    ],
+    "why": "Her cancellation is dated 20 Oct, before the 1 Nov renewal."
+  },
+  {
+    "id": "DP-07",
+    "slice": "textbook",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1107",
+      "shipment:SH-1107",
+      "customer:C-11"
+    ],
+    "why": "This is the first order on the card, so Compelling Evidence 3.0 does not allow a fight."
+  },
+  {
+    "id": "DP-08",
+    "slice": "textbook",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-2108",
+      "shipment:SH-2108"
+    ],
+    "why": "Delivered to the address on the order."
+  },
+  {
+    "id": "DP-09",
+    "slice": "messy",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-2109",
+      "shipment:SH-2109",
+      "email:EM-09"
+    ],
+    "why": "Tracking shows the plates delivered to her address."
+  },
+  {
+    "id": "DP-10",
+    "slice": "messy",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-2110",
+      "email:EM-10",
+      "shipment:SH-2110"
+    ],
+    "why": "She reported the bowl cracked on arrival, and there is no refund."
+  },
+  {
+    "id": "DP-11",
+    "slice": "messy",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1111",
+      "shipment:SH-1111"
+    ],
+    "why": "The listing says each speckled mug looks different, and nothing says they arrived broken."
+  },
+  {
+    "id": "DP-12",
+    "slice": "messy",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1112",
+      "shipment:SH-1112"
+    ],
+    "why": "The carrier still has the parcel; it was never delivered."
+  },
+  {
+    "id": "DP-13",
+    "slice": "tricky",
+    "outcome": "ASK_HUMAN",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1007",
+      "refund:RF-1007",
+      "email:EM-13",
+      "p3_audit:RQ-10"
+    ],
+    "why": "£80 of the £120 was already refunded, so the rest needs a person."
+  },
+  {
+    "id": "DP-14",
+    "slice": "tricky",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1114",
+      "shipment:SH-1114",
+      "email:EM-14"
+    ],
+    "why": "He asked by email to ship to the studio, and the parcel was delivered there."
+  },
+  {
+    "id": "DP-15",
+    "slice": "tricky",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-2115",
+      "email:EM-15"
+    ],
+    "why": "The cancellation is dated 22 Oct, two days after this charge."
+  },
+  {
+    "id": "DP-16",
+    "slice": "tricky",
+    "outcome": "ASK_HUMAN",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1116",
+      "shipment:SH-1116A",
+      "shipment:SH-1116B"
+    ],
+    "why": "One parcel was delivered and the other was lost, so the full amount needs a person."
+  },
+  {
+    "id": "DP-17",
+    "slice": "tricky",
+    "outcome": "ASK_HUMAN",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1117"
+    ],
+    "why": "The dispute is for £150 and the order total is £64."
+  },
+  {
+    "id": "DP-18",
+    "slice": "tricky",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1118",
+      "shipment:SH-1118"
+    ],
+    "why": "Tracking shows delivery to his address, and the pack uses that scan."
+  },
+  {
+    "id": "DP-19",
+    "slice": "tricky",
+    "outcome": "ASK_HUMAN",
+    "priority": "NORMAL",
+    "evidence": [
+      "email:EM-19A",
+      "email:EM-19B",
+      "order:ORD-2119"
+    ],
+    "why": "One email says the platter arrived fine and a later one says it is cracked."
+  },
+  {
+    "id": "DP-20",
+    "slice": "tricky",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1120",
+      "shipment:SH-1120"
+    ],
+    "why": "A label was created, the carrier never collected the parcel, and there is no refund."
+  },
+  {
+    "id": "DP-21",
+    "slice": "tricky",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1121",
+      "email:EM-21"
+    ],
+    "why": "His email says the planter is fine and asks for a price match."
+  },
+  {
+    "id": "DP-22",
+    "slice": "tricky",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "customer:C-25",
+      "order:ORD-2122",
+      "shipment:SH-2122",
+      "order:ORD-2080",
+      "order:ORD-2081"
+    ],
+    "why": "ORD-2080 and ORD-2081 are 106 and 52 days earlier, inside the 120-day minimum, so Compelling Evidence 3.0 does not allow a fight."
+  },
+  {
+    "id": "DP-23",
+    "slice": "tricky",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1123",
+      "shipment:SH-1123",
+      "refund:RF-1001",
+      "p3_audit:RQ-01"
+    ],
+    "why": "This vase was delivered to her address; the £64 refund in the Project 3 log is for ORD-1001."
+  },
+  {
+    "id": "DP-24",
+    "slice": "tricky",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-2124"
+    ],
+    "why": "The second attempt was voided the same day, so only one charge was settled."
+  },
+  {
+    "id": "DP-25",
+    "slice": "trap",
+    "outcome": "FIGHT",
+    "priority": "SUBMIT_TODAY",
+    "evidence": [
+      "order:ORD-1125",
+      "shipment:SH-1125",
+      "fees:desk_as_of"
+    ],
+    "why": "Delivered to the address on the order, and the response is due tomorrow, so the fight is submitted today.",
+    "tag": "deadline_tomorrow"
+  },
+  {
+    "id": "DP-26",
+    "slice": "trap",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1126",
+      "shipment:SH-1126",
+      "customer:C-28"
+    ],
+    "why": "Delivered in Liverpool; his order address is Cardiff, and there is no email asking for that.",
+    "tag": "delivered_elsewhere"
+  },
+  {
+    "id": "DP-27",
+    "slice": "trap",
+    "outcome": "ALREADY_REFUNDED",
+    "priority": "NORMAL",
+    "evidence": [
+      "refund:RF-2016",
+      "p3_audit:RQ-40",
+      "email:EM-27",
+      "order:ORD-2016"
+    ],
+    "why": "Project 3 paid the €45 on 19 Oct (ledger L-0008); the later audit entry did not pay it again.",
+    "tag": "already_refunded_p3"
+  },
+  {
+    "id": "DP-28",
+    "slice": "trap",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "customer:C-03",
+      "order:ORD-1128",
+      "shipment:SH-1128",
+      "order:ORD-1088",
+      "shipment:SH-1088",
+      "order:ORD-1089",
+      "shipment:SH-1089",
+      "order:ORD-1090",
+      "shipment:SH-1090",
+      "order:ORD-1013",
+      "refund:RF-1013"
+    ],
+    "why": "ORD-1088 and ORD-1089 are 225 and 159 days earlier, on the same card, with the same device, address and login.",
+    "tag": "fraud_with_history"
+  },
+  {
+    "id": "DP-29",
+    "slice": "trap",
+    "outcome": "ACCEPT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1129",
+      "shipment:SH-1129",
+      "fees:fight_cost_estimate"
+    ],
+    "why": "£18 is below the £25 fight-cost estimate, and the £15 fee is charged either way.",
+    "tag": "below_fight_cost"
+  },
+  {
+    "id": "DP-30",
+    "slice": "trap",
+    "outcome": "FIGHT",
+    "priority": "NORMAL",
+    "evidence": [
+      "order:ORD-1130",
+      "shipment:SH-1130",
+      "order:ORD-1131",
+      "shipment:SH-1131"
+    ],
+    "why": "Two orders a week apart, both delivered; the matching amounts are two purchases.",
+    "tag": "two_real_orders"
+  }
+]
